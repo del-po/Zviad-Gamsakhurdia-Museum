@@ -1,9 +1,8 @@
 (() => {
   "use strict";
 
-  const repository = window.ZG_BLOG;
-  const posts = repository?.posts || {};
-  const order = Array.isArray(repository?.order) ? repository.order : [];
+  const BLOG_API_URL =
+    "https://script.google.com/macros/s/AKfycbxPDWn9c6D81WMC8Qjqus3ZsWEVnbSWZBlGCPYLNcjyMl2jYhUD4PZMng4tb_rrTeyX8Q/exec";
 
   const elements = {
     header: document.getElementById("site-header"),
@@ -39,43 +38,27 @@
   };
 
   const params = new URLSearchParams(window.location.search);
-  const requestedId = params.get("post") || order[0] || "";
-  const post = posts[requestedId];
-  let headingObserver = null;
+  const requestedSlug = params.get("post") || "";
 
-  function normalizeSlug(value) {
-    return String(value || "")
-      .toLocaleLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  }
+  let currentPost = null;
+  let allPosts = [];
+  let headingObserver = null;
 
   function createTextElement(tagName, className, text) {
     const element = document.createElement(tagName);
-    if (className) element.className = className;
+
+    if (className) {
+      element.className = className;
+    }
+
     element.textContent = text || "";
+
     return element;
   }
 
-  function appendInlineText(container, text) {
-    container.textContent = text || "";
-  }
-
-  function getBlockText(block) {
-    if (!block) return "";
-    if (Array.isArray(block.items)) return block.items.join(" ");
-    return `${block.text || ""} ${block.title || ""} ${block.caption || ""}`;
-  }
-
-  function calculateReadingTime(currentPost) {
-    const words = [
-      currentPost.title,
-      currentPost.deck,
-      ...(currentPost.blocks || []).map(getBlockText),
-    ]
-      .join(" ")
+  function calculateReadingTime(text) {
+    const words = String(text || "")
+      .replace(/<[^>]*>/g, " ")
       .trim()
       .split(/\s+/)
       .filter(Boolean).length;
@@ -83,144 +66,98 @@
     return Math.max(1, Math.ceil(words / 210));
   }
 
-  function createHeading(block) {
-    const level = block.level === 3 ? 3 : 2;
-    const heading = createTextElement(`h${level}`, "", block.text);
-    heading.id = block.id || normalizeSlug(block.text);
-    heading.dataset.tocHeading = "true";
-    return heading;
-  }
+  function formatDate(date) {
+    if (!date) return "";
 
-  function createQuote(block) {
-    const wrapper = document.createElement("figure");
-    wrapper.className = "article-quote";
+    const parsed = new Date(date);
 
-    const quote = createTextElement("blockquote", "", block.text);
-    wrapper.appendChild(quote);
-
-    if (block.cite) {
-      wrapper.appendChild(createTextElement("cite", "", block.cite));
+    if (Number.isNaN(parsed.getTime())) {
+      return date;
     }
 
-    return wrapper;
-  }
-
-  function createList(block) {
-    const list = document.createElement(block.ordered ? "ol" : "ul");
-    (block.items || []).forEach((item) => {
-      list.appendChild(createTextElement("li", "", item));
+    return parsed.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
-    return list;
   }
 
-  function createNote(block) {
-    const note = document.createElement("aside");
-    note.className = "article-note";
-    note.appendChild(createTextElement("strong", "", block.title || "Note"));
-    note.appendChild(createTextElement("p", "", block.text));
-    return note;
-  }
+  function showNotFound() {
+    elements.articleHero?.setAttribute("hidden", "");
+    elements.articleLayout?.setAttribute("hidden", "");
+    elements.pagination?.setAttribute("hidden", "");
 
-  function createFigure(block, index) {
-    const figure = document.createElement("figure");
-    figure.className = "article-figure";
-
-    const image = document.createElement("img");
-    image.src = block.src;
-    image.alt = block.alt || "";
-    image.loading = "lazy";
-    image.decoding = "async";
-    figure.appendChild(image);
-
-    if (block.caption || block.credit) {
-      const caption = document.createElement("figcaption");
-      caption.appendChild(
-        createTextElement("span", "", block.label || `Figure ${index + 1}`),
-      );
-      caption.appendChild(
-        createTextElement(
-          "span",
-          "",
-          [block.caption, block.credit].filter(Boolean).join(" — "),
-        ),
-      );
-      figure.appendChild(caption);
+    if (elements.relatedSection) {
+      elements.relatedSection.hidden = true;
     }
 
-    return figure;
+    if (elements.notFound) {
+      elements.notFound.hidden = false;
+    }
   }
 
-  function renderBody(currentPost) {
+  function renderBody(post) {
     if (!elements.body) return;
 
-    elements.body.replaceChildren();
-    let figureIndex = 0;
+    elements.body.innerHTML = post.content || "";
 
-    (currentPost.blocks || []).forEach((block) => {
-      let node = null;
+    const headings = [...elements.body.querySelectorAll("h2, h3")];
 
-      switch (block.type) {
-        case "lead":
-          node = createTextElement("p", "article-lead", block.text);
-          break;
-        case "heading":
-          node = createHeading(block);
-          break;
-        case "paragraph":
-          node = createTextElement("p", "", block.text);
-          break;
-        case "quote":
-          node = createQuote(block);
-          break;
-        case "list":
-          node = createList(block);
-          break;
-        case "note":
-          node = createNote(block);
-          break;
-        case "figure":
-          if (block.src) {
-            node = createFigure(block, figureIndex);
-            figureIndex += 1;
-          }
-          break;
-        default:
-          break;
+    headings.forEach((heading, index) => {
+      if (!heading.id) {
+        heading.id =
+          heading.textContent
+            ?.toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s-]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/-+/g, "-") || `section-${index + 1}`;
       }
 
-      if (node) elements.body.appendChild(node);
+      heading.dataset.tocHeading = "true";
     });
   }
 
   function renderToc() {
     if (!elements.toc || !elements.body) return;
+
+    const headings = [
+      ...elements.body.querySelectorAll('[data-toc-heading="true"]'),
+    ];
+
     elements.toc.replaceChildren();
 
-    const headings = [...elements.body.querySelectorAll("[data-toc-heading]")];
+    if (headings.length === 0) {
+      elements.toc.closest("section")?.setAttribute("hidden", "");
+      return;
+    }
+
+    elements.toc.closest("section")?.removeAttribute("hidden");
 
     headings.forEach((heading) => {
+      const item = document.createElement("li");
       const link = document.createElement("a");
+
       link.href = `#${heading.id}`;
-      link.textContent = heading.textContent;
       link.dataset.target = heading.id;
-      elements.toc.appendChild(link);
+      link.textContent = heading.textContent || "";
+
+      item.appendChild(link);
+      elements.toc.appendChild(item);
     });
 
-    setupHeadingObserver(headings);
-  }
-
-  function setupHeadingObserver(headings) {
     headingObserver?.disconnect();
 
-    if (!("IntersectionObserver" in window) || headings.length === 0) return;
+    if (!("IntersectionObserver" in window)) return;
 
     headingObserver = new IntersectionObserver(
       (entries) => {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
         if (visible.length === 0) return;
+
         const activeId = visible[0].target.id;
 
         elements.toc?.querySelectorAll("a").forEach((link) => {
@@ -233,13 +170,18 @@
       },
     );
 
-    headings.forEach((heading) => headingObserver.observe(heading));
+    headings.forEach((heading) => {
+      headingObserver.observe(heading);
+    });
   }
 
-  function renderSources(currentPost) {
-    if (!elements.sources || !elements.sourcesSection) return;
+  function renderSources(post) {
+    if (!elements.sources || !elements.sourcesSection) {
+      return;
+    }
 
-    const sources = Array.isArray(currentPost.sources) ? currentPost.sources : [];
+    const sources = Array.isArray(post.sources) ? post.sources : [];
+
     elements.sources.replaceChildren();
     elements.sourcesSection.hidden = sources.length === 0;
 
@@ -249,6 +191,7 @@
 
       if (source.href) {
         const link = createTextElement("a", "", source.label || source.href);
+
         link.href = source.href;
 
         if (/^https?:\/\//i.test(source.href)) {
@@ -258,7 +201,9 @@
 
         content.appendChild(link);
       } else {
-        content.appendChild(createTextElement("strong", "", source.label));
+        content.appendChild(
+          createTextElement("strong", "", source.label || ""),
+        );
       }
 
       if (source.note) {
@@ -270,83 +215,106 @@
     });
   }
 
-  function setPaginationLink(anchor, targetId) {
+  function setPaginationLink(anchor, post) {
     if (!anchor) return;
-    const target = posts[targetId];
 
-    if (!target) {
+    if (!post) {
       anchor.hidden = true;
       anchor.removeAttribute("href");
       return;
     }
 
     anchor.hidden = false;
-    anchor.href = `./blog-post.html?post=${encodeURIComponent(target.id)}`;
+    anchor.href = `./blog-post.html?post=${encodeURIComponent(post.slug)}`;
+
     const title = anchor.querySelector("strong");
-    if (title) title.textContent = target.title;
+
+    if (title) {
+      title.textContent = post.title || "";
+    }
   }
 
-  function renderPagination(currentPost) {
-    const currentIndex = order.indexOf(currentPost.id);
-    const previousId = currentIndex > 0 ? order[currentIndex - 1] : null;
-    const nextId = currentIndex >= 0 && currentIndex < order.length - 1
-      ? order[currentIndex + 1]
-      : null;
+  function renderPagination(post) {
+    if (!Array.isArray(allPosts)) return;
 
-    setPaginationLink(elements.previous, previousId);
-    setPaginationLink(elements.next, nextId);
+    const currentIndex = allPosts.findIndex((item) => item.slug === post.slug);
+
+    const previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+
+    const nextPost =
+      currentIndex >= 0 && currentIndex < allPosts.length - 1
+        ? allPosts[currentIndex + 1]
+        : null;
+
+    setPaginationLink(elements.previous, previousPost);
+    setPaginationLink(elements.next, nextPost);
   }
 
-  function createRelatedCard(relatedPost) {
+  function createRelatedCard(post) {
     const article = document.createElement("article");
     article.className = "related-card";
 
     const link = document.createElement("a");
-    link.href = `./blog-post.html?post=${encodeURIComponent(relatedPost.id)}`;
+
+    link.href = `./blog-post.html?post=${encodeURIComponent(post.slug)}`;
 
     const meta = document.createElement("div");
     meta.className = "related-card__meta";
-    meta.appendChild(createTextElement("span", "", relatedPost.category));
-    meta.appendChild(createTextElement("time", "", relatedPost.displayDate));
-    meta.querySelector("time").dateTime = relatedPost.date;
+
+    meta.appendChild(createTextElement("span", "", post.category || "Journal"));
+
+    const time = createTextElement("time", "", formatDate(post.date));
+
+    time.dateTime = post.date || "";
+
+    meta.appendChild(time);
 
     link.appendChild(meta);
-    link.appendChild(createTextElement("h3", "", relatedPost.title));
-    link.appendChild(createTextElement("p", "", relatedPost.deck));
+
+    link.appendChild(createTextElement("h3", "", post.title || ""));
+
+    link.appendChild(createTextElement("p", "", post.deck || ""));
+
     article.appendChild(link);
 
     return article;
   }
 
-  function renderRelated(currentPost) {
-    if (!elements.related || !elements.relatedSection) return;
+  function renderRelated(post) {
+    if (!elements.related || !elements.relatedSection) {
+      return;
+    }
 
-    const relatedPosts = (currentPost.related || [])
-      .map((id) => posts[id])
-      .filter(Boolean)
+    const candidates = allPosts
+      .filter((item) => item.slug !== post.slug)
       .slice(0, 3);
 
     elements.related.replaceChildren();
-    elements.relatedSection.hidden = relatedPosts.length === 0;
-    relatedPosts.forEach((item) => elements.related.appendChild(createRelatedCard(item)));
+
+    elements.relatedSection.hidden = candidates.length === 0;
+
+    candidates.forEach((item) => {
+      elements.related.appendChild(createRelatedCard(item));
+    });
   }
 
-  function updateStructuredData(currentPost) {
-    const oldSchema = document.getElementById("article-schema");
-    oldSchema?.remove();
+  function updateStructuredData(post) {
+    document.getElementById("article-schema")?.remove();
 
     const schema = document.createElement("script");
+
     schema.id = "article-schema";
     schema.type = "application/ld+json";
+
     schema.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      headline: currentPost.title,
-      description: currentPost.deck,
-      datePublished: currentPost.date,
+      headline: post.title,
+      description: post.deck,
+      datePublished: post.date,
       author: {
         "@type": "Organization",
-        name: currentPost.author,
+        name: post.author || "Digital Museum Editorial Team",
       },
       publisher: {
         "@type": "Organization",
@@ -354,57 +322,63 @@
       },
       mainEntityOfPage: window.location.href,
     });
+
     document.head.appendChild(schema);
   }
 
-  function renderPost(currentPost) {
-    document.title = `${currentPost.title} | Zviad Gamsakhurdia Digital Museum`;
+  function renderPost(post) {
+    currentPost = post;
 
-    if (elements.description) {
-      elements.description.setAttribute("content", currentPost.deck || "");
-    }
+    document.title = `${post.title} | Zviad Gamsakhurdia Digital Museum`;
 
-    appendInlineText(elements.category, currentPost.category);
-    appendInlineText(elements.title, currentPost.title);
-    appendInlineText(elements.deck, currentPost.deck);
-    appendInlineText(elements.author, currentPost.author || "Digital Museum Editorial Team");
-    appendInlineText(elements.heroLabel, currentPost.heroLabel || currentPost.category);
-    appendInlineText(elements.heroNumber, currentPost.heroNumber || "00");
+    elements.description?.setAttribute("content", post.deck || "");
 
-    const minutes = currentPost.readingTime || calculateReadingTime(currentPost);
-    appendInlineText(elements.readingTime, `${minutes} min read`);
+    elements.category.textContent = post.category || "Journal";
+
+    elements.title.textContent = post.title || "";
+
+    elements.deck.textContent = post.deck || "";
+
+    elements.author.textContent =
+      post.author || "Digital Museum Editorial Team";
 
     if (elements.date) {
-      elements.date.dateTime = currentPost.date || "";
-      elements.date.textContent = currentPost.displayDate || currentPost.date || "";
+      elements.date.dateTime = post.date || "";
+
+      elements.date.textContent = formatDate(post.date);
+    }
+
+    const minutes = calculateReadingTime(post.content || "");
+
+    if (elements.readingTime) {
+      elements.readingTime.textContent = `${minutes} min read`;
     }
 
     if (elements.heroVisual) {
-      const categoryClass = `category-${normalizeSlug(currentPost.category)}`;
+      const categoryClass = `category-${String(post.category || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")}`;
+
       elements.heroVisual.classList.add(categoryClass);
     }
 
-    renderBody(currentPost);
-    renderToc();
-    renderSources(currentPost);
-    renderPagination(currentPost);
-    renderRelated(currentPost);
-
-    if (elements.editorialNote && elements.editorialNoteText) {
-      elements.editorialNote.hidden = !currentPost.editorialNote;
-      elements.editorialNoteText.textContent = currentPost.editorialNote || "";
+    if (elements.heroLabel) {
+      elements.heroLabel.textContent = post.category || "Journal";
     }
 
-    updateStructuredData(currentPost);
-  }
+    if (elements.heroNumber) {
+      const index = allPosts.findIndex((item) => item.slug === post.slug);
 
-  function showNotFound() {
-    document.title = "Article Not Found | Zviad Gamsakhurdia Digital Museum";
-    elements.articleHero?.setAttribute("hidden", "");
-    elements.articleLayout?.setAttribute("hidden", "");
-    elements.pagination?.setAttribute("hidden", "");
-    if (elements.relatedSection) elements.relatedSection.hidden = true;
-    if (elements.notFound) elements.notFound.hidden = false;
+      elements.heroNumber.textContent = String(index + 1).padStart(2, "0");
+    }
+
+    renderBody(post);
+    renderToc();
+    renderSources(post);
+    renderPagination(post);
+    renderRelated(post);
+    updateStructuredData(post);
   }
 
   function updateHeader() {
@@ -412,12 +386,18 @@
   }
 
   function updateReadingProgress() {
-    if (!elements.progressBar || !elements.body) return;
+    if (!elements.progressBar || !elements.body) {
+      return;
+    }
 
     const bodyRect = elements.body.getBoundingClientRect();
+
     const articleTop = window.scrollY + bodyRect.top;
+
     const articleHeight = elements.body.offsetHeight;
+
     const viewportMarker = window.scrollY + window.innerHeight * 0.22;
+
     const progress = Math.min(
       1,
       Math.max(0, (viewportMarker - articleTop) / Math.max(1, articleHeight)),
@@ -427,9 +407,14 @@
   }
 
   function setMenu(open) {
-    if (!elements.menuButton || !elements.navigation) return;
+    if (!elements.menuButton || !elements.navigation) {
+      return;
+    }
+
     elements.menuButton.setAttribute("aria-expanded", String(open));
+
     elements.navigation.classList.toggle("is-open", open);
+
     document.body.classList.toggle("menu-open", open);
   }
 
@@ -438,17 +423,27 @@
 
     try {
       await navigator.clipboard.writeText(url);
-      if (elements.copyStatus) elements.copyStatus.textContent = "Link copied.";
+
+      if (elements.copyStatus) {
+        elements.copyStatus.textContent = "Link copied.";
+      }
     } catch {
       const temporaryInput = document.createElement("textarea");
+
       temporaryInput.value = url;
       temporaryInput.setAttribute("readonly", "");
+
       temporaryInput.style.position = "fixed";
       temporaryInput.style.opacity = "0";
+
       document.body.appendChild(temporaryInput);
+
       temporaryInput.select();
+
       const copied = document.execCommand("copy");
+
       temporaryInput.remove();
+
       if (elements.copyStatus) {
         elements.copyStatus.textContent = copied
           ? "Link copied."
@@ -457,8 +452,57 @@
     }
   }
 
+  async function loadPost() {
+    if (!requestedSlug) {
+      showNotFound();
+      return;
+    }
+
+    try {
+      const [postResponse, postsResponse] = await Promise.all([
+        fetch(
+          `${BLOG_API_URL}?action=getPost&slug=${encodeURIComponent(
+            requestedSlug,
+          )}`,
+          {
+            cache: "no-store",
+          },
+        ),
+
+        fetch(`${BLOG_API_URL}?action=getPosts`, {
+          cache: "no-store",
+        }),
+      ]);
+
+      if (!postResponse.ok) {
+        throw new Error(`Post request failed: HTTP ${postResponse.status}`);
+      }
+
+      if (!postsResponse.ok) {
+        throw new Error(`Posts request failed: HTTP ${postsResponse.status}`);
+      }
+
+      const post = await postResponse.json();
+      const posts = await postsResponse.json();
+
+      if (!post || post.error || !post.title) {
+        showNotFound();
+        return;
+      }
+
+      allPosts = Array.isArray(posts) ? posts : [];
+
+      renderPost(post);
+    } catch (error) {
+      console.error("Unable to load blog post:", error);
+
+      showNotFound();
+    }
+  }
+
   elements.menuButton?.addEventListener("click", () => {
     const open = elements.menuButton.getAttribute("aria-expanded") !== "true";
+
     setMenu(open);
   });
 
@@ -478,20 +522,19 @@
   );
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 860) setMenu(false);
+    if (window.innerWidth > 860) {
+      setMenu(false);
+    }
+
     updateReadingProgress();
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setMenu(false);
+    if (event.key === "Escape") {
+      setMenu(false);
+    }
   });
 
-  if (post) {
-    renderPost(post);
-  } else {
-    showNotFound();
-  }
-
   updateHeader();
-  updateReadingProgress();
+  loadPost();
 })();
