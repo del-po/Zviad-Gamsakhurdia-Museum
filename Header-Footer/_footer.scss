@@ -1,0 +1,147 @@
+@use "../fonts" as *;
+
+footer {
+  position: relative;
+  z-index: 35;
+
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto minmax(160px, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 64px);
+
+  width: 100%;
+  min-height: 100px;
+  padding: 20px clamp(18px, 3vw, 52px);
+
+  border-top: 1px solid var(--line);
+
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+
+  font-family: $font-body;
+  font-size: clamp(9px, 0.8vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  a {
+    padding: 5px 0;
+
+    color: var(--muted-ink);
+    text-decoration: none;
+
+    transition: color 200ms ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--ink);
+
+      text-decoration: underline;
+      text-decoration-color: #fedd00;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+  }
+
+  .footer-copyright {
+    display: grid;
+    gap: 4px;
+
+    span {
+      color: var(--ink);
+    }
+
+    a {
+      color: var(--muted-ink);
+    }
+  }
+
+  .footer-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 1.7vw, 28px);
+  }
+
+  .footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+}
+
+/* Homepage scroll-reveal footer only */
+
+#home-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: rgba(
+    255,
+    255,
+    255,
+    calc(0.25 + var(--footer-progress) * 0.25)
+  );
+
+  backdrop-filter: blur(calc(var(--footer-progress) * 16px));
+
+  opacity: var(--footer-progress);
+
+  transform: translateY(calc((1 - var(--footer-progress)) * 110%));
+
+  pointer-events: none;
+
+  &.is-interactive {
+    pointer-events: auto;
+  }
+}
+@media (max-width: 1000px) {
+  footer {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    align-items: stretch;
+    gap: 0 40px;
+
+    min-height: 150px;
+    padding: 24px 18px;
+
+    font-size: 9px;
+
+    .footer-social {
+      grid-column: 1;
+      grid-row: 1;
+
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      justify-self: start;
+
+      gap: 6px;
+    }
+
+    .footer-copyright {
+      grid-column: 1;
+      grid-row: 3;
+
+      justify-self: start;
+      align-self: end;
+    }
+
+    .footer-menu {
+      grid-column: 2;
+      grid-row: 1 / 4;
+
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      justify-self: end;
+
+      height: 100%;
+
+      text-align: right;
+    }
+  }
+}

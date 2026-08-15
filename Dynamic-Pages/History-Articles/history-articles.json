@@ -1,0 +1,80 @@
+{
+  "upbringing": {
+    "documentTitle": "Raised in Konstantine Gamsakhurdia’s Household | Zviad Gamsakhurdia Digital Museum",
+    "description": "Explore Zviad Gamsakhurdia’s childhood in the household of Konstantine Gamsakhurdia and Miranda Palavandishvili.",
+    "label": "Family / Chapter One",
+    "title": "Raised in Konstantine Gamsakhurdia’s Household",
+    "introduction": "Zviad Gamsakhurdia was born in Tbilisi in 1939 to the writer and academician Konstantine Gamsakhurdia and Miranda Palavandishvili. His childhood unfolded inside a household closely connected with Georgian literature, historical memory and the preservation of national culture under Soviet rule.",
+    "period": "1939—1950s",
+    "category": "Personal Life & Family",
+    "breadcrumbs": [
+      {
+        "label": "Home",
+        "href": "/index.html"
+      },
+      {
+        "label": "Family",
+        "href": "/Family/family.html"
+      },
+      {
+        "label": "Upbringing"
+      }
+    ],
+    "heroImage": {
+      "src": "/Images/Life-and-Family/zviadi-da-konstantine.png",
+      "alt": "Zviad Gamsakhurdia with his father, Konstantine Gamsakhurdia",
+      "caption": "Zviad Gamsakhurdia and Konstantine Gamsakhurdia. Replace this caption with the verified date, source and rights information."
+    },
+    "sections": [
+      {
+        "id": "literary-home",
+        "number": "01",
+        "label": "Household",
+        "title": "A Literary Home",
+        "paragraphs": [
+          "Konstantine Gamsakhurdia was one of the central Georgian novelists of the twentieth century. Books, writers and the historical imagination were therefore part of the household’s ordinary environment.",
+          "This section can be expanded with verified information about the family home, its visitors, the books available to the children and the place of literature in everyday family life."
+        ],
+        "image": {
+          "src": "/Images/Life-and-Family/konstantine-gamsakhurdia.png",
+          "alt": "Konstantine Gamsakhurdia",
+          "caption": "Konstantine Gamsakhurdia. Add the archive source and date here."
+        }
+      },
+      {
+        "id": "language-as-inheritance",
+        "number": "02",
+        "label": "Language and culture",
+        "title": "Language as Inheritance",
+        "paragraphs": [
+          "The household presented Georgian language and literature not merely as academic subjects, but as forms of cultural continuity and responsibility.",
+          "This section can later contain fuller textual history, quotations from documented sources and photographs or manuscript material relevant to language, education and cultural memory."
+        ]
+      },
+      {
+        "id": "private-formation",
+        "number": "03",
+        "label": "Formation",
+        "title": "Private Formation, Public Consequence",
+        "paragraphs": [
+          "The themes that later defined Gamsakhurdia’s scholarship and politics—history, faith, national culture and moral duty—were already present in the world in which he grew up.",
+          "The purpose of this section is to connect the documented circumstances of his upbringing with later developments without presenting interpretation as established fact."
+        ],
+        "quote": {
+          "text": "A highlighted quotation or short archival excerpt may be placed here when a verified source is available.",
+          "source": "Source attribution"
+        }
+      }
+    ],
+    "related": [
+      {
+        "label": "Return to Family overview",
+        "href": "/Family/family.html#upbringing"
+      },
+      {
+        "label": "Explore related archive records",
+        "href": "/Archive/archive.html"
+      }
+    ]
+  }
+}

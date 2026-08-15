@@ -1,0 +1,27 @@
+@keyframes image-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes reveal-family-card-text {
+  from {
+    transform: translateY(calc(-100% - var(--card-padding)));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes header-image-movement {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
+}

@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// მთლიანი ვებ-გვერდი აღარ დაპატარავდება 320px-ზე ქვემოთ. Wix-საც იგივე სტანდარტი აქვს.
+
+html,
+body {
+  min-width: 320px;
+}
+
+body {
+  overflow-x: auto;
+}

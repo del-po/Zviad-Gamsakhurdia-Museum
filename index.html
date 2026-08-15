@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Scroll-controlled opening animation prototype for the Zviad Gamsakhurdia Online Museum."
+    />
+    <title>Zviad Gamsakhurdia's Digital Museum</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <div class="experience" aria-label="Scroll-controlled opening animation">
+      <canvas id="scene" aria-hidden="true"></canvas>
+
+      <div class="interface-grid" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <header>
+        <a
+          class="header-logo"
+          href="/index.html"
+          aria-label="Zviad Gamsakhurdia Digital Museum home"
+        >
+          <video
+            class="logo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-hidden="true"
+          >
+            <source src="/Images/logo.mp4" type="video/mp4" />
+          </video>
+        </a>
+
+        <button
+          class="header-burger-menu"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="header-menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="header-menu" class="header-menu" aria-label="Main navigation">
+          <a href="/Family/family.html">Family</a>
+          <a href="/Politics/dissent-and-politics.html">Politics</a>
+          <a href="/Works/works.html">Works</a>
+          <a href="/Blog/blog.html">Blog</a>
+          <a href="/Archive/archive.html">Archive</a>
+        </nav>
+      </header>
+
+      <section class="opening-copy" id="top">
+        <h1>
+          <span
+            >„The path of the Georgian nation is the path of Christ: the thorny
+            path of crucifixion and inevitable resurrection!“</span
+          >
+        </h1>
+        <p class="opening-description">– Zviad Gamsakhurdia</p>
+      </section>
+
+      <article class="reveal-card" id="reveal-card">
+        <div class="card-corners" aria-hidden="true"></div>
+        <h2>Zviad Gamsakhurdia</h2>
+        <p>
+          Writer, scholar, dissident and the first President of independent
+          Georgia. Explore a life reconstructed through works, testimony and
+          archival material.
+        </p>
+        <a class="enter-museum-button" href="#life">Enter the museum</a>
+      </article>
+
+      <footer id="home-footer">
+        <div class="footer-copyright">
+          <span>Zviad Gamsakhurdia Digital Museum</span>
+
+          <a
+            href="https://www.ailaw.llc/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="copyright-symbol">©</span> 2026 AI Law LLC
+          </a>
+        </div>
+
+        <nav class="footer-menu" aria-label="Footer navigation">
+          <a href="/About/index.html">About</a>
+          <a href="/Contact/index.html">Contact</a>
+          <a href="/Policies/index.html#editorial-policy">Editorial Policy</a>
+          <a href="/Policies/index.html#privacy-policy">Privacy Policy</a>
+          <a href="/Policies/index.html#accessibility">Accessibility</a>
+        </nav>
+
+        <nav class="footer-social" aria-label="Social media">
+          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
+        </nav>
+      </footer>
+
+      <div class="scroll-instruction" aria-hidden="true">
+        <a class="scroll-to-archive" href="#archive-entry"
+          ><span>Scroll to enter the archive</span></a
+        >
+
+        <span class="scroll-line"></span>
+      </div>
+    </div>
+
+    <main class="scroll-track">
+      <section id="life" aria-label="Animation scroll space"></section>
+      <section id="politics" aria-hidden="true"></section>
+      <section id="works" aria-hidden="true"></section>
+      <section id="archive" aria-hidden="true"></section>
+      <div id="archive-entry"></div>
+    </main>
+
+    <noscript>
+      <p class="noscript-message">
+        This prototype requires JavaScript because the three-dimensional scene
+        is rendered in real time.
+      </p>
+    </noscript>
+    <script src="/Header-Footer/header-burger.js"></script>
+    <script
+      type="module"
+      src="./Javascripts/zviad-opening-animation-script.js"
+    ></script>
+  </body>
+</html>

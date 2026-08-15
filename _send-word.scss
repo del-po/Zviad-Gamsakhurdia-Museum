@@ -1,0 +1,330 @@
+@use "../fonts" as *;
+
+footer {
+  background-color: #f5f5f5;
+}
+
+.footer-wrapper {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 600px;
+  padding: clamp(50px, 7vw, 100px) clamp(20px, 6vw, 90px) 30px;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #f5f5f5;
+
+  background-image:
+    linear-gradient(
+      135deg,
+      rgba(245, 245, 245, 0.92) 0%,
+      rgba(245, 245, 245, 0.72) 50%,
+      rgba(245, 245, 245, 0.9) 100%
+    ),
+    url("../Images/Header-Footer/Untitled - August 01, 2026 at 14.24.42.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background:
+      radial-gradient(
+        circle at 20% 30%,
+        rgba(254, 221, 0, 0.08),
+        transparent 35%
+      ),
+      linear-gradient(to bottom, transparent 65%, rgba(0, 0, 0, 0.05));
+
+    pointer-events: none;
+  }
+
+  .footer-main {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 500px);
+    align-items: center;
+    gap: clamp(40px, 7vw, 100px);
+  }
+
+  .footer-message {
+    position: relative;
+    padding-left: 28px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+
+      width: 3px;
+
+      background: linear-gradient(
+        to bottom,
+        #fedd00 0%,
+        #8f0000 55%,
+        transparent 100%
+      );
+    }
+
+    .footer-project-name {
+      margin-bottom: 14px;
+
+      font-family: $font-body;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+
+      font-family: $font-heading;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 0.95;
+      color: #111111;
+    }
+
+    .footer-text {
+      max-width: 620px;
+      margin-bottom: 16px;
+
+      font-family: $font-body;
+      font-size: clamp(15px, 1.4vw, 18px);
+      line-height: 1.8;
+      color: #2c2c2c;
+      text-align: justify;
+    }
+  }
+
+  .footer-contact {
+    width: 100%;
+    padding: clamp(20px, 3vw, 34px);
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    background-color: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+
+    box-shadow:
+      0 18px 50px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    backdrop-filter: blur(8px);
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 18px;
+
+      border: 1px solid rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+      outline: none;
+      resize: vertical;
+
+      font-family: $font-body;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #111111;
+
+      background-color: rgba(255, 255, 255, 0.7);
+
+      transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+
+      &::placeholder {
+        color: #777777;
+      }
+
+      &:hover {
+        border-color: rgba(0, 0, 0, 0.6);
+      }
+
+      &:focus {
+        border-color: #fedd00;
+        background-color: rgba(255, 255, 255, 0.92);
+
+        box-shadow:
+          0 0 0 3px rgba(254, 221, 0, 0.2),
+          0 10px 30px rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    .footer-contact-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .footer-contact-counter {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+
+      font-family: $font-body;
+      font-size: 13px;
+      color: #707070;
+
+      #footer-contact-word-count {
+        font-size: 13px;
+        color: #111111;
+      }
+    }
+
+    button {
+      min-width: 130px;
+      padding: 12px 22px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+
+      border: 1px solid #111111;
+      border-radius: 6px;
+
+      background-color: #111111;
+      color: white;
+      cursor: pointer;
+
+      font-family: $font-body;
+      font-size: 15px;
+      font-weight: 600;
+
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+      &:hover {
+        background-color: #fedd00;
+        border-color: #fedd00;
+        color: #111111;
+
+        transform: translateY(-2px);
+
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  
+}
+
+@media (max-width: 1100px) {
+  .footer-wrapper {
+    .footer-main {
+      grid-template-columns: 1fr;
+      max-width: 650px;
+    }
+
+    .footer-message {
+      padding-left: 22px;
+    }
+
+    .footer-contact {
+      max-width: none;
+    }
+
+    .footer-bottom {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 18px;
+      text-align: center;
+
+      .footer-copyright,
+      .footer-navigation,
+      .footer-social-media {
+        justify-self: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-wrapper {
+    min-height: auto;
+    padding: 50px 20px 25px;
+
+    .footer-message {
+      padding-left: 18px;
+
+      .footer-text {
+        line-height: 1.7;
+      }
+    }
+
+    .footer-contact {
+      padding: 18px;
+      border-radius: 8px;
+
+      textarea {
+        min-height: 160px;
+      }
+
+      .footer-contact-bottom {
+        align-items: flex-end;
+      }
+
+      button {
+        min-width: 110px;
+      }
+    }
+
+    .footer-bottom {
+      margin-top: 65px;
+    }
+  }
+}
+
+@media (max-width: 408px) {
+  .footer-wrapper {
+    .footer-contact {
+      .footer-contact-bottom {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .footer-contact-counter {
+        justify-content: center;
+        white-space: nowrap;
+      }
+
+      button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  }
+}
