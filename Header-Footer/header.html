@@ -1,52 +1,39 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
+<header>
+  <a
+    class="header-logo"
+    href="/Home/index.html"
+    aria-label="Zviad Gamsakhurdia Digital Museum home"
+  >
+    <video
+      class="logo"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+    >
+      <source src="/Images/logo.mp4" type="video/mp4" />
+    </video>
+  </a>
 
-  <body>
-    <header>
-      <a
-        class="header-logo"
-        href="/Home/index.html"
-        aria-label="Zviad Gamsakhurdia Digital Museum home"
-      >
-        <video
-          class="logo"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source src="/Images/logo.mp4" type="video/mp4" />
-        </video>
-      </a>
+  <button
+    class="header-burger-menu"
+    type="button"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="header-menu"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-      <button
-        class="header-burger-menu"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-        aria-controls="header-menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav id="header-menu" class="header-menu" aria-label="Main navigation">
-        <a href="/Family/family.html">Family</a>
-        <a href="/Politics/politics.html">Politics</a>
-        <a href="/Works/works.html">Works</a>
-        <a href="/Blog/blog.html">Blog</a>
-        <a href="/Archive/archive.html">Archive</a>
-      </nav>
-    </header>
-    <script src="/Header-Footer/header-burger.js"></script>
-  </body>
-</html>
+  <nav id="header-menu" class="header-menu" aria-label="Main navigation">
+    <a href="/Family/family.html">Family</a>
+    <a href="/Politics/politics.html">Politics</a>
+    <a href="/Works/works.html">Works</a>
+    <a href="/Blog/blog.html">Blog</a>
+    <a href="/Archive/archive.html">Archive</a>
+  </nav>
+</header>

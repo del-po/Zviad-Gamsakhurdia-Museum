@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Submit documents, photographs, recordings and other historical materials to the Zviad Gamsakhurdia Digital Museum."
+    />
+
+    <title>Submit Materials | Zviad Gamsakhurdia Digital Museum</title>
+
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#submission-content">Skip to content</a>
+
+    <div class="submission-page">
+      <header>
+        <a
+          class="header-logo"
+          href="/index.html"
+          aria-label="Zviad Gamsakhurdia Digital Museum home"
+        >
+          <video
+            class="logo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-hidden="true"
+          >
+            <source src="/Images/logo.mp4" type="video/mp4" />
+          </video>
+        </a>
+
+        <button
+          class="header-burger-menu"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="header-menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="header-menu" class="header-menu" aria-label="Main navigation">
+          <a href="/Family/family.html">Family</a>
+          <a href="/Politics/dissent-and-politics.html">Politics</a>
+          <a href="/Works/works.html">Works</a>
+          <a href="/Blog/blog.html">Blog</a>
+          <a href="/Archive/archive.html">Archive</a>
+        </nav>
+      </header>
+
+      <main id="submission-content">
+        <section class="submission-hero">
+          <div class="submission-hero__copy">
+            <p class="section-label">Collaborate / Contribute</p>
+
+            <h1>Help Extend the Historical Record.</h1>
+
+            <p>
+              Submit documents, photographs, recordings, correspondence or other
+              materials that may contribute to the historical record of Zviad
+              Gamsakhurdia and his era.
+            </p>
+          </div>
+
+          <div class="submission-hero__visual" aria-hidden="true">
+            <div class="submission-monitor">
+              <div class="submission-monitor__header">
+                <span>ARCHIVE INTAKE</span>
+                <strong>LIVE RECORD</strong>
+              </div>
+
+              <div class="submission-monitor__stage">
+                <span class="submission-monitor__grid"></span>
+
+                <span class="submission-sheet submission-sheet--one"></span>
+                <span class="submission-sheet submission-sheet--two"></span>
+                <span class="submission-sheet submission-sheet--three"></span>
+
+                <span class="submission-scanline"></span>
+              </div>
+
+              <div class="submission-monitor__footer">
+                <span class="submission-monitor__label">PAGES SCANNED</span>
+
+                <span class="submission-monitor__count" id="pages-scanned"
+                  >001</span
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="submission-form-section">
+          <div class="submission-form-section__intro">
+            <p class="section-label">Material submission</p>
+
+            <h2>Tell us what you are contributing.</h2>
+
+            <p>
+              Please describe the materials, their origin and any information
+              that may help us understand their historical context.
+            </p>
+          </div>
+
+          <form
+            class="submission-form"
+            id="material-submission-form"
+            enctype="multipart/form-data"
+          >
+            <div class="submission-form__field">
+              <label for="submission-name">Name</label>
+              <input
+                id="submission-name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div class="submission-form__field">
+              <label for="submission-email">Email</label>
+              <input
+                id="submission-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="name@example.com"
+                required
+              />
+            </div>
+
+            <div class="submission-form__field submission-form__field--full">
+              <label for="submission-description">
+                Describe the materials
+              </label>
+
+              <textarea
+                id="submission-description"
+                name="description"
+                rows="10"
+                placeholder="What are you submitting? Who created or preserved these materials? What dates, people, places or events are connected with them?"
+                required
+              ></textarea>
+            </div>
+
+            <div
+              class="submission-form__field submission-form__field--full submission-form__field--upload"
+            >
+              <label class="submission-upload" for="submission-files">
+                <input
+                  id="submission-files"
+                  name="files"
+                  type="file"
+                  multiple
+                  required
+                />
+
+                <span class="submission-upload__plus" aria-hidden="true"
+                  >+</span
+                >
+
+                <span class="submission-upload__copy">
+                  <strong>Select materials</strong>
+                  <span>Drag files here or click to browse</span>
+                </span>
+
+                <span class="submission-upload__types">
+                  PDF · PHOTOS · DOCUMENTS · AUDIO · VIDEO
+                </span>
+              </label>
+
+              <small
+                class="submission-upload__status"
+                id="submission-file-status"
+                aria-live="polite"
+              >
+                No files selected
+              </small>
+            </div>
+
+            <label class="submission-form__consent">
+              <input
+                id="submission-consent"
+                name="consent"
+                type="checkbox"
+                required
+              />
+
+              <span>
+                I confirm that I am authorized to submit these materials for
+                review by the museum.
+              </span>
+            </label>
+
+            <div class="submission-form__actions">
+              <button type="submit" class="submission-form__submit">
+                <span>Submit materials</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <p
+              class="submission-form__status"
+              id="submission-status"
+              aria-live="polite"
+            ></p>
+          </form>
+        </section>
+        <div data-collaboration></div>
+      </main>
+
+      <footer class="archive-footer">
+        <div class="archive-footer__copyright">
+          <span>Zviad Gamsakhurdia Digital Museum</span>
+
+          <a
+            href="https://www.ailaw.llc"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            © 2026 AI Law LLC
+          </a>
+        </div>
+
+        <nav class="archive-footer__pages" aria-label="Secondary navigation">
+          <a href="../about.html">About</a>
+          <a href="../contact.html">Contact</a>
+          <a href="../editorial-policy.html">Editorial Policy</a>
+          <a href="../privacy-policy.html">Privacy Policy</a>
+          <a href="../accessibility.html">Accessibility</a>
+        </nav>
+
+        <nav class="archive-footer__social" aria-label="Social media">
+          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
+        </nav>
+      </footer>
+    </div>
+
+    <script src="/Header-Footer/header-burger.js"></script>
+    <script src="./submit-materials.js"></script>
+    <script src="/Collaboration/collaboration.js"></script>
+  </body>
+</html>

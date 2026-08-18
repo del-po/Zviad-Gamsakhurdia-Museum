@@ -1,0 +1,144 @@
+@use "../fonts" as *;
+
+.collaboration-panel {
+  display: grid;
+  grid-template-columns:
+    minmax(120px, 0.18fr)
+    minmax(0, 0.57fr)
+    minmax(240px, 0.25fr);
+  align-items: stretch;
+  min-height: 450px;
+  background: var(--ink);
+  color: white;
+
+  &__submit {
+    display: grid;
+    place-items: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--yellow);
+    text-decoration: none;
+    transition:
+      background 200ms ease,
+      color 200ms ease;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+  }
+
+  &__mark {
+    font-family: $font-heading;
+    font-size: clamp(100px, 14vw, 230px);
+    line-height: 1;
+    transition: transform 300ms ease;
+  }
+
+  &__submit:hover &__mark,
+  &__submit:focus-visible &__mark {
+    transform: rotate(90deg);
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(48px, 7vw, 110px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+
+    .section-label {
+      color: rgba(255, 255, 255, 0.54);
+    }
+
+    h2 {
+      margin: 22px 0 28px;
+      font-family: $font-heading;
+      font-size: clamp(40px, 5vw, 84px);
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: -0.052em;
+      text-transform: uppercase;
+    }
+
+    > p:last-child {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.67);
+      font-size: 11px;
+      line-height: 1.85;
+    }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 34px;
+    color: white;
+    font-family: $font-heading;
+    font-size: clamp(24px, 3vw, 48px);
+    line-height: 0.95;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background 200ms ease,
+      color 200ms ease;
+
+    b {
+      align-self: flex-end;
+      color: var(--yellow);
+      font-family: $font-body;
+      font-size: 28px;
+      transition: transform 180ms ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--yellow);
+      color: var(--ink);
+
+      b {
+        color: var(--ink);
+        transform: translate(5px, -5px);
+      }
+    }
+  }
+}
+
+@media (max-width: 1180px) {
+  .collaboration-panel {
+    grid-template-columns: 120px 1fr;
+
+    &__copy {
+      border-right: 0;
+    }
+
+    &__contact {
+      grid-column: 1 / -1;
+      min-height: 230px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  .collaboration-panel {
+    grid-template-columns: 1fr;
+
+    &__submit {
+      min-height: 180px;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    &__copy {
+      padding: 44px 24px;
+    }
+
+    &__contact {
+      grid-column: auto;
+      min-height: 200px;
+    }
+  }
+}

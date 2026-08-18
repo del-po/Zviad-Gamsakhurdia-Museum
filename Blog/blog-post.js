@@ -452,6 +452,21 @@
     }
   }
 
+  async function recordPostView(slug) {
+    if (!slug) return;
+
+    try {
+      await fetch(
+        `${BLOG_API_URL}?action=recordView&slug=${encodeURIComponent(slug)}`,
+        {
+          cache: "no-store",
+        },
+      );
+    } catch (error) {
+      console.error("Unable to record post view:", error);
+    }
+  }
+
   async function loadPost() {
     if (!requestedSlug) {
       showNotFound();
@@ -493,6 +508,7 @@
       allPosts = Array.isArray(posts) ? posts : [];
 
       renderPost(post);
+      recordPostView(post.slug);
     } catch (error) {
       console.error("Unable to load blog post:", error);
 

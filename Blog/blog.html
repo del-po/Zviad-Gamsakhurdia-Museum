@@ -15,35 +15,43 @@
     <a class="skip-link" href="#blog-content">Skip to content</a>
 
     <div class="blog-page">
-      <header class="site-header" id="site-header">
-        <a class="brand" href="./index.html" aria-label="Digital Museum home">
-          <span class="brand-mark" aria-hidden="true">ZG</span>
-          <span class="brand-copy">
-            <span>Zviad Gamsakhurdia</span>
-            <span>Digital Museum</span>
-          </span>
+      <header>
+        <a
+          class="header-logo"
+          href="/index.html"
+          aria-label="Zviad Gamsakhurdia Digital Museum home"
+        >
+          <video
+            class="logo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-hidden="true"
+          >
+            <source src="/Images/logo.mp4" type="video/mp4" />
+          </video>
         </a>
 
         <button
-          class="menu-button"
+          class="header-burger-menu"
           type="button"
+          aria-label="Open navigation menu"
           aria-expanded="false"
-          aria-controls="main-navigation"
+          aria-controls="header-menu"
         >
-          <span>Menu</span>
-          <span class="menu-button__line" aria-hidden="true"></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
 
-        <nav
-          class="main-navigation"
-          id="main-navigation"
-          aria-label="Main navigation"
-        >
-          <a href="./life-and-family.html">Family</a>
-          <a href="./dissent-and-politics.html">Politics</a>
-          <a href="./works.html">Works</a>
-          <a class="active" href="./blog.html" aria-current="page">Blog</a>
-          <a href="./archive.html">Archive</a>
+        <nav id="header-menu" class="header-menu" aria-label="Main navigation">
+          <a href="/Family/family.html">Family</a>
+          <a href="/Politics/dissent-and-politics.html">Politics</a>
+          <a href="/Works/works.html">Works</a>
+          <a class="active" href="/Blog/blog.html">Blog</a>
+          <a href="/Archive/archive.html">Archive</a>
         </nav>
       </header>
 
@@ -89,27 +97,32 @@
           </div>
         </section>
 
-        <section class="featured-story reveal-on-scroll">
+        <section
+          class="featured-story reveal-on-scroll"
+          id="featured-story"
+          hidden
+        >
           <div class="featured-story__meta">
             <span>Featured Essay</span>
-            <span>Editorial</span>
-            <time datetime="2026-08-03">03.08.2026</time>
+
+            <span id="featured-story-category">Editorial</span>
+
+            <time id="featured-story-date" datetime=""></time>
           </div>
 
           <article class="featured-story__article">
-            <div class="featured-story__number" aria-hidden="true">01</div>
+            <div class="featured-story__number" aria-hidden="true">
+              Editor's Note
+            </div>
 
             <div class="featured-story__content">
               <p class="article-kicker">From the editors</p>
-              <h2>Why a Digital Museum Must Remain Open to New Evidence</h2>
-              <p>
-                A historical archive is not completed once it is published. Its
-                value grows through careful correction, new testimony,
-                transparent sourcing and the participation of readers who hold
-                documents, photographs or memories that have not yet entered the
-                public record.
-              </p>
-              <a class="article-link" href="./blog/open-archive.html">
+
+              <h2 id="featured-story-title"></h2>
+
+              <p id="featured-story-deck"></p>
+
+              <a class="article-link" id="featured-story-link" href="#">
                 Read the article
                 <span aria-hidden="true">→</span>
               </a>
@@ -146,27 +159,27 @@
                 type="button"
                 data-filter="all"
               >
-                All <span>06</span>
+                All <span>00</span>
               </button>
               <button
                 class="filter-button"
                 type="button"
                 data-filter="research"
               >
-                Research <span>02</span>
+                Research <span>00</span>
               </button>
               <button class="filter-button" type="button" data-filter="archive">
-                Archive <span>02</span>
+                Archive <span>00</span>
               </button>
               <button
                 class="filter-button"
                 type="button"
                 data-filter="editorial"
               >
-                Editorial <span>01</span>
+                Editorial <span>00</span>
               </button>
               <button class="filter-button" type="button" data-filter="updates">
-                Updates <span>01</span>
+                Updates <span>00</span>
               </button>
             </div>
 
@@ -387,27 +400,11 @@
           aria-labelledby="archive-index-title"
         >
           <div class="archive-index__heading">
-            <p class="section-label">Journal index</p>
-            <h2 id="archive-index-title">Browse by Year</h2>
+            <p class="section-label">Most Read Articles</p>
+            <h2 id="archive-index-title">Top 3</h2>
           </div>
 
-          <div class="archive-index__years">
-            <a href="./blog/archive-2026.html">
-              <span>2026</span>
-              <span>06 entries</span>
-              <span aria-hidden="true">→</span>
-            </a>
-            <a href="./blog/archive-2025.html">
-              <span>2025</span>
-              <span>Archive opening soon</span>
-              <span aria-hidden="true">→</span>
-            </a>
-            <a href="./blog/archive-all.html">
-              <span>All years</span>
-              <span>Complete journal index</span>
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
+          <div class="archive-index__years" id="most-read-posts"></div>
         </section>
 
         <section class="collaboration-callout reveal-on-scroll">

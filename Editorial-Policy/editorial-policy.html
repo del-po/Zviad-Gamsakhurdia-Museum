@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Editorial standards governing evidence, attribution, interpretation, corrections, contributed materials and historical uncertainty in the Zviad Gamsakhurdia Digital Museum."
+    />
+
+    <title>Editorial Policy | Zviad Gamsakhurdia Digital Museum</title>
+
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#editorial-policy-content">Skip to content</a>
+
+    <div class="editorial-policy-page">
+      <div data-header></div>
+
+      <main id="editorial-policy-content">
+        <section class="editorial-policy-hero">
+          <div class="editorial-policy-hero__copy">
+            <p class="section-label">Museum Standards / Editorial Policy</p>
+
+            <h1>Documents Before Conclusions.</h1>
+
+            <p>
+              The Digital Museum aims to distinguish documented fact from
+              testimony, interpretation and unresolved historical questions
+              while making the evidentiary basis of its publications visible to
+              readers.
+            </p>
+          </div>
+
+          <div
+            class="editorial-policy-hero__investigation"
+            data-evidence-board
+            aria-hidden="true"
+          >
+            <div class="evidence-board">
+              <div class="evidence-board__header">
+                <span>Evidence review</span>
+
+                <div>
+                  <i></i>
+                  <b>Verification active</b>
+                </div>
+              </div>
+
+              <svg
+                class="evidence-board__connections"
+                viewBox="0 0 1000 1000"
+                preserveAspectRatio="none"
+              >
+                <!-- photograph → central evidence -->
+                <path
+                  class="evidence-link evidence-link--one"
+                  pathLength="1"
+                  d="M210 250 C310 300 370 350 500 430"
+                ></path>
+
+                <!-- date → central evidence -->
+                <path
+                  class="evidence-link evidence-link--two"
+                  pathLength="1"
+                  d="M790 220 C690 290 620 350 500 430"
+                ></path>
+
+                <!-- testimony → corroboration -->
+                <path
+                  class="evidence-link evidence-link--three"
+                  pathLength="1"
+                  d="M220 570 C335 580 410 620 500 680"
+                ></path>
+
+                <!-- document → corroboration -->
+                <path
+                  class="evidence-link evidence-link--four"
+                  pathLength="1"
+                  d="M790 545 C675 565 600 620 500 680"
+                ></path>
+
+                <!-- main connection -->
+                <path
+                  class="evidence-link evidence-link--five"
+                  pathLength="1"
+                  d="M500 430 L500 680"
+                ></path>
+
+                <!-- unresolved claim -->
+                <path
+                  class="evidence-link evidence-link--uncertain"
+                  d="M500 430 C590 380 665 360 755 370"
+                ></path>
+
+                <circle
+                  class="evidence-node evidence-node--one"
+                  cx="210"
+                  cy="250"
+                  r="7"
+                ></circle>
+                <circle
+                  class="evidence-node evidence-node--two"
+                  cx="790"
+                  cy="220"
+                  r="7"
+                ></circle>
+                <circle
+                  class="evidence-node evidence-node--three"
+                  cx="500"
+                  cy="430"
+                  r="9"
+                ></circle>
+                <circle
+                  class="evidence-node evidence-node--four"
+                  cx="220"
+                  cy="570"
+                  r="7"
+                ></circle>
+                <circle
+                  class="evidence-node evidence-node--five"
+                  cx="790"
+                  cy="545"
+                  r="7"
+                ></circle>
+                <circle
+                  class="evidence-node evidence-node--six"
+                  cx="500"
+                  cy="680"
+                  r="10"
+                ></circle>
+
+                <circle
+                  class="evidence-node evidence-node--uncertain"
+                  cx="755"
+                  cy="370"
+                  r="7"
+                ></circle>
+              </svg>
+
+              <!-- PHOTO -->
+
+              <div class="evidence-card evidence-card--photo">
+                <div class="evidence-card__meta">
+                  <span>Source A</span>
+                  <b>Archive photograph</b>
+                </div>
+
+                <div class="evidence-photo">
+                  <span></span>
+                  <span></span>
+
+                  <div class="evidence-photo__subject"></div>
+
+                  <small>IMG / 0041</small>
+                </div>
+              </div>
+
+              <!-- DATE -->
+
+              <div class="evidence-card evidence-card--date">
+                <small>Chronology</small>
+
+                <strong>09</strong>
+
+                <span>APR / 1989</span>
+
+                <b>DATE VERIFIED</b>
+              </div>
+
+              <!-- CENTRAL RECORD -->
+
+              <div class="evidence-card evidence-card--center">
+                <small>Cross-reference</small>
+
+                <strong>03</strong>
+
+                <div class="evidence-card__status">
+                  <i></i>
+                  <span>Independent sources</span>
+                </div>
+              </div>
+
+              <!-- UNVERIFIED -->
+
+              <div class="evidence-card evidence-card--uncertain">
+                <span>?</span>
+
+                <div>
+                  <small>Claim</small>
+                  <strong>UNVERIFIED</strong>
+                </div>
+              </div>
+
+              <!-- TESTIMONY -->
+
+              <div class="evidence-card evidence-card--testimony">
+                <div class="evidence-card__meta">
+                  <span>Source B</span>
+                  <b>Attributed testimony</b>
+                </div>
+
+                <blockquote>“...”</blockquote>
+
+                <div class="evidence-text-lines">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+
+              <!-- DOCUMENT -->
+
+              <div class="evidence-card evidence-card--document">
+                <div class="evidence-card__meta">
+                  <span>Source C</span>
+                  <b>Contemporary record</b>
+                </div>
+
+                <div class="evidence-document">
+                  <strong>ARCHIVE COPY</strong>
+
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+
+                  <i>VERIFIED</i>
+                </div>
+              </div>
+
+              <!-- TIMELINE -->
+
+              <div class="evidence-timeline">
+                <small>Chronology</small>
+
+                <div class="evidence-timeline__line">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+
+                <div class="evidence-timeline__dates">
+                  <b>1978</b>
+                  <b>1981</b>
+                  <b>1989</b>
+                  <b>1991</b>
+                </div>
+              </div>
+
+              <!-- RESULT -->
+
+              <div class="evidence-verdict">
+                <small>Evidence status</small>
+
+                <strong>CORROBORATED</strong>
+
+                <span>
+                  <i></i>
+                  MULTIPLE SOURCES AGREE
+                </span>
+              </div>
+
+              <span
+                class="evidence-board__coordinate evidence-board__coordinate--one"
+              >
+                X / 041
+              </span>
+
+              <span
+                class="evidence-board__coordinate evidence-board__coordinate--two"
+              >
+                REF / 03
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="editorial-policy-introduction">
+          <div class="editorial-policy-introduction__label">
+            <p class="section-label">Purpose</p>
+          </div>
+
+          <div class="editorial-policy-introduction__copy">
+            <h2>
+              A historical record should remain open, traceable and correctable.
+            </h2>
+
+            <p>
+              The museum presents biographical, political, literary and archival
+              material concerning Zviad Gamsakhurdia and the historical period
+              in which he lived. Because many subjects remain contested,
+              incomplete or dependent upon personal recollection, the museum
+              applies editorial standards intended to make distinctions between
+              different kinds of evidence clear.
+            </p>
+          </div>
+        </section>
+
+        <section class="editorial-policy-rules">
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">01</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Evidence</p>
+              <h2>Documented Facts</h2>
+
+              <p>
+                Factual claims should, whenever possible, be supported by
+                identifiable documents, contemporary records, publications,
+                photographs, recordings or other traceable sources.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">02</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Attribution</p>
+              <h2>Memory Is a Source, Not a Substitute for Evidence</h2>
+
+              <p>
+                Personal recollections, interviews and family testimony may
+                provide important historical information, but they should remain
+                clearly attributed to the person providing the account.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">03</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Interpretation</p>
+              <h2>Fact and Interpretation Must Remain Distinct</h2>
+
+              <p>
+                Editorial interpretation, scholarly analysis and political
+                judgment should not be presented as though they were themselves
+                primary historical facts.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">04</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Disagreement</p>
+              <h2>Contested History Should Be Identified as Contested</h2>
+
+              <p>
+                Where credible sources disagree, the museum should identify the
+                disagreement, attribute competing accounts and avoid concealing
+                uncertainty behind a single definitive formulation.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">05</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Corrections</p>
+              <h2>The Record Must Remain Correctable</h2>
+
+              <p>
+                New documents, better sourcing or demonstrated errors may
+                require previously published material to be corrected, clarified
+                or expanded.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">06</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Contributions</p>
+              <h2>Submitted Materials Require Provenance</h2>
+
+              <p>
+                Documents, photographs, recordings and other contributed
+                materials should be accompanied, whenever possible, by
+                information explaining their origin, ownership, date, people
+                represented and circumstances of preservation.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">07</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Private Material</p>
+              <h2>Publication Requires Responsibility and Consent</h2>
+
+              <p>
+                Private correspondence, family materials and information
+                concerning living persons should be handled with appropriate
+                consideration for consent, privacy, ownership and publication
+                rights.
+              </p>
+            </div>
+          </article>
+
+          <article class="editorial-policy-rule">
+            <span class="editorial-policy-rule__number">08</span>
+
+            <div class="editorial-policy-rule__copy">
+              <p class="section-label">Transparency</p>
+              <h2>Readers Should Be Able to Follow the Record</h2>
+
+              <p>
+                Wherever practical, the museum should identify sources,
+                provenance, dates, authorship and verification status so that
+                readers can understand how a historical claim was constructed.
+              </p>
+            </div>
+          </article>
+        </section>
+
+        <div data-collaboration></div>
+      </main>
+
+      <div data-footer></div>
+    </div>
+
+    <script src="/Header-Footer/header.js"></script>
+    <script src="/Header-Footer/footer.js"></script>
+    <script src="/Collaboration/collaboration.js"></script>
+    <script src="/Editorial-Policy/editorial-policy.js"></script>
+  </body>
+</html>

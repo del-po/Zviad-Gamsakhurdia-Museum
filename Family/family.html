@@ -15,45 +15,7 @@
     <a class="skip-link" href="#family-content">Skip to content</a>
 
     <div class="family-page">
-      <header>
-        <a
-          class="header-logo"
-          href="/index.html"
-          aria-label="Zviad Gamsakhurdia Digital Museum home"
-        >
-          <video
-            class="logo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            aria-hidden="true"
-          >
-            <source src="/Images/logo.mp4" type="video/mp4" />
-          </video>
-        </a>
-
-        <button
-          class="header-burger-menu"
-          type="button"
-          aria-label="Open navigation menu"
-          aria-expanded="false"
-          aria-controls="header-menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-        <nav id="header-menu" class="header-menu" aria-label="Main navigation">
-          <a href="/Family/family.html">Family</a>
-          <a href="/Politics/dissent-and-politics.html">Politics</a>
-          <a href="/Works/works.html">Works</a>
-          <a href="/Blog/blog.html">Blog</a>
-          <a href="/Archive/archive.html">Archive</a>
-        </nav>
-      </header>
+      <div data-header></div>
 
       <main id="family-content">
         <section class="family-hero">
@@ -934,69 +896,17 @@
           </div>
         </section>
 
-        <aside class="family-editorial-note reveal-on-scroll">
-          <span>Editorial principle</span>
-          <p>
-            Private family history should be presented through documented facts,
-            attributed recollections and materials shared with consent. The
-            museum should distinguish verified chronology from memory,
-            interpretation and later political controversy.
-          </p>
-        </aside>
+        <div data-editorial-policy-notice></div>
 
-        <section class="family-collaboration reveal-on-scroll">
-          <a
-            class="family-collaboration__mark"
-            href="../contact.html"
-            aria-label="Contact the museum"
-          >
-            <span aria-hidden="true">+</span>
-          </a>
-          <div class="family-collaboration__copy">
-            <p class="section-label">Let’s collaborate</p>
-            <h2>Help complete the human story.</h2>
-            <p>
-              Readers, relatives, classmates and researchers are invited to
-              share photographs, school memories, correspondence and other
-              materials that can deepen or correct this record. Submissions
-              should include provenance and permission information whenever
-              possible.
-            </p>
-          </div>
-          <a class="family-collaboration__link" href="../contact.html">
-            <span>Contact the museum</span>
-            <b>↗</b>
-          </a>
-        </section>
+        <div data-collaboration></div>
       </main>
 
-      <footer class="archive-footer">
-        <div class="archive-footer__copyright">
-          <span>Zviad Gamsakhurdia Digital Museum</span>
-          <a
-            href="https://www.ailaw.llc"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            © 2026 AI Law LLC
-          </a>
-        </div>
-
-        <nav class="archive-footer__pages" aria-label="Secondary navigation">
-          <a href="../about.html">About</a>
-          <a href="../contact.html">Contact</a>
-          <a href="../editorial-policy.html">Editorial Policy</a>
-          <a href="../privacy-policy.html">Privacy Policy</a>
-          <a href="../accessibility.html">Accessibility</a>
-        </nav>
-
-        <nav class="archive-footer__social" aria-label="Social media">
-          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </nav>
-      </footer>
+      <div data-footer></div>
     </div>
-    <script src="/Header-Footer/header-burger.js"></script>
+    <script src="/Header-Footer/header.js"></script>
+    <script src="/Header-Footer/footer.js"></script>
     <script src="./family.js"></script>
+    <script src="/Collaboration/collaboration.js"></script>
+    <script src="/Editorial-Policy/editorial-policy-notice.js"></script>
   </body>
 </html>

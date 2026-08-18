@@ -11,7 +11,19 @@
   const searchInput = document.getElementById("article-search");
   const noResults = document.getElementById("no-results");
   const postsGrid = document.getElementById("posts-grid");
+
+  const featuredStory = document.getElementById("featured-story");
+  const featuredStoryCategory = document.getElementById(
+    "featured-story-category",
+  );
+  const featuredStoryDate = document.getElementById("featured-story-date");
+  const featuredStoryTitle = document.getElementById("featured-story-title");
+  const featuredStoryDeck = document.getElementById("featured-story-deck");
+  const featuredStoryLink = document.getElementById("featured-story-link");
+
   const revealElements = [...document.querySelectorAll(".reveal-on-scroll")];
+
+  const mostReadPosts = document.getElementById("most-read-posts");
 
   let activeFilter = "all";
   let searchTerm = "";
@@ -59,12 +71,51 @@
     });
   }
 
+  function renderEditorsNote(post) {
+    if (!featuredStory) return;
+
+    if (!post) {
+      featuredStory.hidden = true;
+      return;
+    }
+
+    if (featuredStoryCategory) {
+      featuredStoryCategory.textContent = post.category || "Editorial";
+    }
+
+    if (featuredStoryDate) {
+      featuredStoryDate.dateTime = post.date || "";
+      featuredStoryDate.textContent = formatDate(post.date);
+    }
+
+    if (featuredStoryTitle) {
+      featuredStoryTitle.textContent = post.title || "";
+    }
+
+    if (featuredStoryDeck) {
+      featuredStoryDeck.textContent = post.deck || "";
+    }
+
+    if (featuredStoryLink) {
+      featuredStoryLink.href = `./blog-post.html?post=${encodeURIComponent(post.slug)}`;
+    }
+
+    featuredStory.hidden = false;
+  }
+
   function createPostCard(post) {
     const article = document.createElement("article");
     article.className = "post-card reveal-on-scroll";
     article.dataset.category = normalizeCategory(post.category);
 
-    const searchableText = [post.title, post.author, post.category, post.date]
+    const searchableText = [
+      post.title,
+      post.author,
+      post.category,
+      post.date,
+      post.deck,
+      post.searchText,
+    ]
       .filter(Boolean)
       .join(" ");
 
@@ -249,6 +300,52 @@
     });
   }
 
+  async function loadMostReadPosts() {
+    if (!mostReadPosts) return;
+
+    try {
+      const response = await fetch(`${BLOG_API_URL}?action=getMostRead`, {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const posts = await response.json();
+
+      if (!Array.isArray(posts)) {
+        throw new Error("Invalid most-read response");
+      }
+
+      mostReadPosts.replaceChildren();
+
+      posts.forEach((post) => {
+        const link = document.createElement("a");
+
+        link.href = `./blog-post.html?post=${encodeURIComponent(post.slug)}`;
+
+        const title = document.createElement("span");
+        title.textContent = post.title || "Untitled";
+
+        const author = document.createElement("span");
+        author.textContent = post.author ? `By ${post.author}` : "";
+
+        const arrow = document.createElement("span");
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "→";
+
+        link.appendChild(title);
+        link.appendChild(author);
+        link.appendChild(arrow);
+
+        mostReadPosts.appendChild(link);
+      });
+    } catch (error) {
+      console.error("Unable to load most-read posts:", error);
+    }
+  }
+
   async function loadPosts() {
     if (!postsGrid) return;
 
@@ -269,8 +366,16 @@
         throw new Error("Invalid posts response");
       }
 
-      posts = data;
+      const editorsNote = data.find((post) => {
+        return (
+          post.type === "editors-note" ||
+          normalizeText(post.slug) === "editors-note"
+        );
+      });
 
+      posts = data.filter((post) => post !== editorsNote);
+
+      renderEditorsNote(editorsNote);
       renderPosts();
       updateFilterCounts();
     } catch (error) {
@@ -322,4 +427,5 @@
 
   updateHeader();
   loadPosts();
+  loadMostReadPosts();
 })();
