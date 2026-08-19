@@ -7,7 +7,7 @@
 .home-page {
   margin: 0;
 
-  overflow: hidden;
+  overflow-x: hidden;
 
   background: #ffffff;
   color: var(--ink);
@@ -630,42 +630,280 @@
      ======================================================= */
 
   .home-cover__bottom {
-    position: absolute;
+    position: relative;
 
-    right: clamp(22px, 3.4vw, 58px);
-    bottom: clamp(22px, 3vh, 38px);
-    left: clamp(22px, 3.4vw, 58px);
+    display: grid;
+    grid-template-columns:
+      minmax(120px, 0.18fr)
+      minmax(0, 0.57fr)
+      minmax(240px, 0.25fr);
+    align-items: stretch;
 
-    z-index: 15;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
 
-    display: flex;
+    background: white;
+  }
 
-    align-items: flex-end;
-    justify-content: space-between;
+  /* =======================================================
+     AI LAW / LEFT COLUMN
+     ======================================================= */
 
-    gap: 40px;
+  .home-cover__copyright {
+    position: relative;
 
-    p {
-      max-width: 470px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px;
 
-      margin: 0;
+    min-width: 0;
+    padding: clamp(26px, 3vw, 46px);
 
-      color: rgba(23, 23, 23, 0.58);
+    border-right: 1px solid var(--line);
 
-      font-size: clamp(12px, 0.66vw, 16px);
+    color: var(--ink);
+    text-decoration: none;
 
-      line-height: 1.75;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+
+      position: absolute;
+      inset: auto 0 0;
+
+      z-index: 0;
+
+      height: 0;
+
+      background: var(--yellow);
+
+      transition: height 240ms ease;
     }
 
-    span {
-      color: rgba(23, 23, 23, 0.43);
+    > * {
+      position: relative;
+      z-index: 1;
+    }
 
-      font-size: 12px;
+    &:hover,
+    &:focus-visible {
+      &::before {
+        height: 100%;
+      }
+
+      .home-cover__copyright-arrow {
+        transform: translate(5px, -5px);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: -4px;
+    }
+  }
+
+  .home-cover__copyright-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 0;
+
+    small {
+      color: rgba(23, 23, 23, 0.42);
+
+      font-size: 7px;
       font-weight: 700;
-
       letter-spacing: 0.14em;
-
       text-transform: uppercase;
+    }
+
+    strong {
+      font-family: $font-heading;
+      font-size: clamp(14px, 1.15vw, 20px);
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+  }
+
+  .home-cover__copyright-arrow {
+    align-self: end;
+
+    font-size: 20px;
+
+    transition: transform 220ms ease;
+  }
+
+  /* =======================================================
+     CLOSING NOTE / MIDDLE COLUMN
+     ======================================================= */
+
+  .home-cover__bottom-statement {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 34px;
+
+    min-height: 180px;
+    padding: clamp(26px, 3.5vw, 54px);
+
+    border-right: 1px solid var(--line);
+
+    .home-cover__bottom-label {
+      color: rgba(23, 23, 23, 0.42);
+
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    p {
+      max-width: 760px;
+      margin: 0;
+
+      color: var(--ink);
+
+      font-size: clamp(14px, 1vw, 18px);
+      line-height: 1.65;
+    }
+  }
+
+  /* =======================================================
+     TBILISI / RIGHT COLUMN
+     ======================================================= */
+
+  .home-cover__location {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-width: 0;
+    padding: clamp(26px, 3vw, 46px);
+
+    .home-cover__location-dot {
+      position: relative;
+
+      width: 9px;
+      height: 9px;
+
+      flex: 0 0 auto;
+
+      border-radius: 50%;
+      background: var(--yellow);
+
+      animation: home-location-pulse 1.8s ease-out infinite;
+
+      &::after {
+        content: "";
+
+        position: absolute;
+        inset: -5px;
+
+        border: 1.5px solid rgba(23, 23, 23, 0.62);
+        border-radius: 50%;
+
+        animation: home-location-ring 1.8s ease-out infinite;
+      }
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    small {
+      color: rgba(23, 23, 23, 0.4);
+
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    strong {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+
+  @keyframes home-location-pulse {
+    0%,
+    100% {
+      opacity: 0.72;
+      transform: scale(0.9);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+
+  @keyframes home-location-ring {
+    0% {
+      opacity: 0.82;
+      transform: scale(0.45);
+    }
+
+    75%,
+    100% {
+      opacity: 0;
+      transform: scale(2);
+    }
+  }
+
+  /* =======================================================
+     BOTTOM — RESPONSIVE
+     Matches Collaboration panel breakpoints
+     ======================================================= */
+
+  @media (max-width: 1180px) {
+    .home-cover__bottom {
+      grid-template-columns: 120px 1fr;
+    }
+
+    .home-cover__copyright {
+      border-right: 1px solid var(--line);
+    }
+
+    .home-cover__bottom-statement {
+      border-right: 0;
+    }
+
+    .home-cover__location {
+      grid-column: 1 / -1;
+
+      min-height: 120px;
+
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .home-cover__bottom {
+      grid-template-columns: 1fr;
+    }
+
+    .home-cover__copyright,
+    .home-cover__bottom-statement {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .home-cover__location {
+      grid-column: auto;
+
+      min-height: 0;
+
+      border-top: 0;
     }
   }
 
@@ -1046,30 +1284,6 @@
     }
 
     /* ---------------------------
-       bottom
-       --------------------------- */
-
-    .home-cover__bottom {
-      right: 16px;
-      bottom: 20px;
-      left: 16px;
-
-      align-items: flex-start;
-
-      p {
-        max-width: 75%;
-
-        font-size: 6px;
-      }
-
-      span {
-        font-size: 5px;
-
-        text-align: right;
-      }
-    }
-
-    /* ---------------------------
        menu
        --------------------------- */
 
@@ -1108,11 +1322,10 @@
      ======================================================= */
 
   @media (prefers-reduced-motion: reduce) {
-    .home-cover__brand-mark::after {
-      animation: none !important;
-    }
-
-    .home-cover__years i::after {
+    .home-cover__brand-mark::after,
+    .home-cover__years i::after,
+    .home-cover__location-dot,
+    .home-cover__location-dot::after {
       animation: none !important;
     }
 

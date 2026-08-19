@@ -1,25 +1,6 @@
-const header = document.getElementById("site-header");
-const menuButton = document.querySelector(".menu-button");
-const mainNavigation = document.getElementById("main-navigation");
 const familyPage = document.querySelector(".family-page");
 const familyLinks = [...document.querySelectorAll("[data-family-link]")];
 const revealElements = [...document.querySelectorAll(".reveal-on-scroll")];
-
-function updateHeader() {
-  header?.classList.toggle("is-scrolled", window.scrollY > 18);
-}
-
-function setMenu(open) {
-  if (!menuButton || !mainNavigation) return;
-
-  menuButton.setAttribute("aria-expanded", String(open));
-  mainNavigation.classList.toggle("is-open", open);
-  document.body.classList.toggle("menu-open", open);
-}
-
-function closeMenu() {
-  setMenu(false);
-}
 
 function updatePageProgress() {
   if (!familyPage) return;
@@ -86,15 +67,6 @@ function setupRevealObserver() {
   });
 }
 
-menuButton?.addEventListener("click", () => {
-  const isOpen = menuButton.getAttribute("aria-expanded") === "true";
-  setMenu(!isOpen);
-});
-
-mainNavigation?.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", closeMenu);
-});
-
 familyLinks.forEach((link) => {
   link.addEventListener("click", () => {
     const chapterId = link.dataset.familyLink;
@@ -102,25 +74,12 @@ familyLinks.forEach((link) => {
   });
 });
 
-window.addEventListener(
-  "scroll",
-  () => {
-    updateHeader();
-    updatePageProgress();
-  },
-  { passive: true },
-);
-
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 860) closeMenu();
-  updatePageProgress();
+window.addEventListener("scroll", updatePageProgress, {
+  passive: true,
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeMenu();
-});
+window.addEventListener("resize", updatePageProgress);
 
-updateHeader();
 updatePageProgress();
 setupRevealObserver();
 
