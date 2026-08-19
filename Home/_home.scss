@@ -1,0 +1,1127 @@
+@use "../fonts" as *;
+
+/* =========================================================
+   HOME — STANDALONE COVER
+   ========================================================= */
+
+.home-page {
+  margin: 0;
+
+  overflow: hidden;
+
+  background: #ffffff;
+  color: var(--ink);
+
+  .home-cover {
+    /*
+      Updated dynamically by JavaScript.
+
+      These represent the exact center coordinates
+      of the draggable photograph.
+    */
+    --home-side: clamp(24px, 5vw, 90px);
+    --coordinate-x: 50%;
+    --coordinate-y: 50%;
+
+    position: relative;
+
+    width: 100%;
+    min-height: 100svh;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    isolation: isolate;
+  }
+
+  /* =======================================================
+     GRID CANVAS
+     ======================================================= */
+
+  .home-cover::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -3;
+
+    pointer-events: none;
+
+    background-image:
+      linear-gradient(to right, rgba(23, 23, 23, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(23, 23, 23, 0.055) 1px, transparent 1px);
+
+    background-size: 72px 72px;
+
+    -webkit-mask-image: radial-gradient(
+      circle at center,
+      black,
+      transparent 84%
+    );
+
+    mask-image: radial-gradient(circle at center, black, transparent 84%);
+  }
+
+  /* =======================================================
+     TOP
+     ======================================================= */
+
+  .home-cover__top {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    left: 0;
+
+    z-index: 80;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 84px;
+
+    padding: 0 clamp(22px, 3.4vw, 58px);
+  }
+
+  .home-cover__brand {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    color: var(--ink);
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+
+    small {
+      display: block;
+
+      margin-top: 2px;
+
+      color: rgba(23, 23, 23, 0.45);
+
+      font: inherit;
+    }
+  }
+
+  /* =======================================================
+     GLOWING YELLOW MARK
+     ======================================================= */
+
+  .home-cover__brand-mark {
+    position: relative;
+
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    background: var(--yellow);
+
+    &::after {
+      content: "";
+
+      position: absolute;
+      inset: -4px;
+
+      border: 1px solid var(--yellow);
+
+      animation: home-brand-pulse 1.8s ease-out infinite;
+    }
+  }
+
+  @keyframes home-brand-pulse {
+    0% {
+      opacity: 0.8;
+      transform: scale(0.65);
+    }
+
+    75%,
+    100% {
+      opacity: 0;
+      transform: scale(1.75);
+    }
+  }
+
+  /* =======================================================
+     MENU BUTTON
+     ======================================================= */
+
+  .home-cover__menu-button,
+  .home-menu__close {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 12px 0;
+
+    border: 0;
+
+    background: transparent;
+    color: inherit;
+
+    cursor: pointer;
+
+    font-family: "JetBrains Mono", monospace;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+
+    i {
+      position: relative;
+
+      display: block;
+
+      width: 27px;
+      height: 10px;
+
+      &::before,
+      &::after {
+        content: "";
+
+        position: absolute;
+
+        right: 0;
+
+        width: 100%;
+        height: 1px;
+
+        background: currentColor;
+
+        transition:
+          width 220ms ease,
+          transform 220ms ease;
+      }
+
+      &::before {
+        top: 2px;
+      }
+
+      &::after {
+        bottom: 2px;
+
+        width: 65%;
+      }
+    }
+
+    &:hover i::after,
+    &:focus-visible i::after {
+      width: 100%;
+    }
+  }
+
+  /* =======================================================
+     MOVING COORDINATE SYSTEM
+     ======================================================= */
+
+  .home-cover__coordinates {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    overflow: hidden;
+
+    pointer-events: none;
+  }
+
+  .home-cover__coordinate-line {
+    position: absolute;
+
+    display: block;
+
+    pointer-events: none;
+  }
+
+  /*
+    Horizontal dotted coordinate line.
+
+    Its Y position is controlled by JavaScript.
+  */
+
+  .home-cover__coordinate-line--horizontal {
+    top: var(--coordinate-y);
+
+    right: 0;
+    left: 0;
+
+    height: 1px;
+
+    transform: translateY(-50%);
+
+    background: repeating-linear-gradient(
+      to right,
+      rgba(23, 23, 23, 0.65) 0,
+      rgba(23, 23, 23, 0.65) 2px,
+      transparent 2px,
+      transparent 5px
+    );
+  }
+
+  /*
+    Vertical dotted coordinate line.
+
+    Its X position is controlled by JavaScript.
+  */
+
+  .home-cover__coordinate-line--vertical {
+    top: 0;
+    bottom: 0;
+
+    left: var(--coordinate-x);
+
+    width: 1px;
+
+    transform: translateX(-50%);
+
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(23, 23, 23, 0.65) 0,
+      rgba(23, 23, 23, 0.65) 2px,
+      transparent 2px,
+      transparent 5px
+    );
+  }
+
+  /* =======================================================
+     CENTRAL EDITORIAL FEATURE
+     ======================================================= */
+
+  .home-cover__feature {
+    position: absolute;
+
+    top: 47%;
+    left: var(--home-side);
+    right: var(--home-side);
+
+    z-index: 5;
+
+    width: auto;
+
+    transform: translateY(-50%);
+  }
+
+  .home-cover__eyebrow {
+    position: relative;
+
+    z-index: 30;
+
+    margin: 0 0 clamp(24px, 3vh, 38px);
+
+    color: rgba(23, 23, 23, 0.52);
+
+    font-size: clamp(12px, 0.62vw, 16px);
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+  }
+
+  .home-cover__composition {
+    position: relative;
+
+    min-height: clamp(360px, 48vh, 530px);
+
+    isolation: isolate;
+  }
+
+  /* =======================================================
+     LARGE EDITORIAL TITLE
+     ======================================================= */
+
+  .home-cover__title {
+    position: absolute;
+
+    top: 52%;
+    left: 0;
+
+    z-index: 25;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 0;
+
+    font-family: $font-heading;
+
+    line-height: 0.78;
+
+    text-transform: uppercase;
+
+    pointer-events: none;
+
+    transform: translateY(-50%);
+  }
+
+  .home-cover__title-first {
+    display: block;
+
+    color: var(--ink);
+
+    font-size: clamp(88px, 10vw, 190px);
+
+    letter-spacing: -0.07em;
+  }
+
+  .home-cover__title-last {
+    display: block;
+
+    margin-left: clamp(45px, 5vw, 100px);
+
+    color: transparent;
+
+    font-size: clamp(68px, 7.8vw, 150px);
+
+    letter-spacing: -0.065em;
+
+    -webkit-text-stroke: 1.5px var(--ink);
+  }
+
+  /* =======================================================
+     DRAGGABLE PORTRAIT
+     ======================================================= */
+
+  .home-cover__draggable-portrait {
+    --drag-x: 0px;
+    --drag-y: 0px;
+    --drag-rotation: -1.5deg;
+
+    position: absolute;
+
+    top: 4%;
+    left: 66%;
+
+    z-index: 15;
+
+    width: clamp(180px, 14vw, 255px);
+
+    margin: 0;
+
+    cursor: grab;
+
+    touch-action: none;
+
+    user-select: none;
+
+    transform: translate3d(var(--drag-x), var(--drag-y), 0)
+      rotate(var(--drag-rotation));
+
+    transform-origin: center center;
+
+    will-change: transform;
+
+    &.is-dragging {
+      z-index: 20;
+
+      cursor: grabbing;
+
+      .home-cover__portrait-image {
+        box-shadow:
+          0 22px 46px rgba(23, 23, 23, 0.14),
+          0 0 0 1px rgba(23, 23, 23, 0.2);
+
+        transform: scale(1.015);
+      }
+
+      figcaption strong {
+        color: #b89f00;
+      }
+    }
+  }
+
+  .home-cover__portrait-image {
+    position: relative;
+
+    overflow: hidden;
+
+    aspect-ratio: 1.22 / 1;
+
+    background: #efefec;
+
+    box-shadow: 0 0 0 1px rgba(23, 23, 23, 0.15);
+
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+
+    img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+      object-position: center 18%;
+
+      filter: grayscale(1) contrast(1.08);
+
+      pointer-events: none;
+
+      user-select: none;
+
+      -webkit-user-drag: none;
+    }
+  }
+
+  /* =======================================================
+     SUBTLE IMAGE SCAN
+     ======================================================= */
+
+  .home-cover__portrait-scan {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 42%;
+
+    width: 1px;
+
+    background: rgba(255, 255, 255, 0.48);
+
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+
+    pointer-events: none;
+  }
+
+  /* =======================================================
+     YELLOW PORTRAIT CORNER
+     ======================================================= */
+
+  .home-cover__portrait-corner {
+    position: absolute;
+
+    top: -8px;
+    right: -8px;
+
+    width: 18px;
+    height: 18px;
+
+    border-top: 2px solid var(--yellow);
+    border-right: 2px solid var(--yellow);
+
+    pointer-events: none;
+  }
+
+  .home-cover__draggable-portrait figcaption {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    margin-top: 8px;
+
+    color: rgba(23, 23, 23, 0.48);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1.45;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+
+    pointer-events: none;
+
+    strong {
+      color: var(--ink);
+
+      font: inherit;
+
+      white-space: nowrap;
+
+      transition: color 180ms ease;
+    }
+  }
+
+  /* =======================================================
+     YEARS
+     ======================================================= */
+
+  .home-cover__years {
+    position: absolute;
+
+    top: 50%;
+    left: var(--home-side);
+
+    z-index: 12;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    transform: translateY(170px);
+
+    color: rgba(23, 23, 23, 0.6);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    i {
+      position: relative;
+
+      display: block;
+
+      width: clamp(45px, 5vw, 90px);
+      height: 1px;
+
+      overflow: hidden;
+
+      background: rgba(23, 23, 23, 0.32);
+
+      &::after {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 28%;
+        height: 1px;
+
+        background: var(--yellow);
+
+        animation: home-years-line 2.4s ease-in-out infinite alternate;
+      }
+    }
+  }
+
+  @keyframes home-years-line {
+    from {
+      left: 0;
+    }
+
+    to {
+      left: 72%;
+    }
+  }
+
+  /* =======================================================
+     BOTTOM
+     ======================================================= */
+
+  .home-cover__bottom {
+    position: absolute;
+
+    right: clamp(22px, 3.4vw, 58px);
+    bottom: clamp(22px, 3vh, 38px);
+    left: clamp(22px, 3.4vw, 58px);
+
+    z-index: 15;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 40px;
+
+    p {
+      max-width: 470px;
+
+      margin: 0;
+
+      color: rgba(23, 23, 23, 0.58);
+
+      font-size: clamp(12px, 0.66vw, 16px);
+
+      line-height: 1.75;
+    }
+
+    span {
+      color: rgba(23, 23, 23, 0.43);
+
+      font-size: 12px;
+      font-weight: 700;
+
+      letter-spacing: 0.14em;
+
+      text-transform: uppercase;
+    }
+  }
+
+  /* =======================================================
+     FULLSCREEN MENU
+     ======================================================= */
+
+  .home-menu {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: grid;
+
+    grid-template-rows:
+      auto
+      1fr
+      auto;
+
+    padding: 0 clamp(22px, 4vw, 68px);
+
+    background: var(--ink);
+    color: white;
+
+    visibility: hidden;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: translateY(-100%);
+
+    transition:
+      transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 350ms ease,
+      visibility 0s 650ms;
+
+    &.is-open {
+      visibility: visible;
+
+      opacity: 1;
+
+      pointer-events: auto;
+
+      transform: translateY(0);
+
+      transition:
+        transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 350ms ease,
+        visibility 0s;
+    }
+  }
+
+  .home-menu__top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 90px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+  }
+
+  .home-menu__close {
+    color: white;
+
+    i {
+      width: 23px;
+      height: 23px;
+
+      &::before,
+      &::after {
+        top: 50%;
+        bottom: auto;
+
+        width: 100%;
+      }
+
+      &::before {
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  /* =======================================================
+     MENU NAVIGATION
+     ======================================================= */
+
+  .home-menu__navigation {
+    align-self: center;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.28);
+
+    a {
+      display: grid;
+
+      grid-template-columns:
+        70px
+        1fr
+        auto;
+
+      align-items: center;
+
+      min-height: clamp(76px, 10vh, 120px);
+
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+      color: white;
+
+      text-decoration: none;
+
+      transition:
+        padding-left 250ms ease,
+        background-color 250ms ease,
+        color 250ms ease;
+
+      > span {
+        color: rgba(255, 255, 255, 0.34);
+
+        font-size: 8px;
+        font-weight: 700;
+
+        letter-spacing: 0.14em;
+      }
+
+      strong {
+        font-family: "Archivo Black", sans-serif;
+
+        font-size: clamp(34px, 4.2vw, 75px);
+        font-weight: 400;
+
+        line-height: 1;
+
+        letter-spacing: -0.055em;
+
+        text-transform: uppercase;
+      }
+
+      > i {
+        color: var(--yellow);
+
+        font-style: normal;
+
+        font-size: 20px;
+
+        transition: transform 220ms ease;
+      }
+
+      &:hover,
+      &:focus-visible {
+        padding-left: 18px;
+
+        background: var(--yellow);
+        color: var(--ink);
+
+        > span,
+        > i {
+          color: var(--ink);
+        }
+
+        > i {
+          transform: translate(5px, -5px);
+        }
+      }
+    }
+  }
+
+  .home-menu__footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 70px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+  }
+
+  /* =======================================================
+     TABLET
+     ======================================================= */
+
+  @media (max-width: 950px) {
+    .home-cover__feature {
+      top: 45%;
+
+      width: calc(100% - 48px);
+    }
+
+    .home-cover__composition {
+      min-height: 540px;
+    }
+
+    .home-cover__title {
+      top: 58%;
+
+      flex-direction: column;
+
+      align-items: flex-start;
+
+      gap: 0;
+
+      white-space: normal;
+    }
+
+    .home-cover__title-first {
+      font-size: clamp(80px, 15vw, 130px);
+    }
+
+    .home-cover__title-last {
+      font-size: clamp(55px, 10vw, 90px);
+    }
+
+    .home-cover__draggable-portrait {
+      top: 7%;
+      left: 62%;
+
+      width: min(26vw, 235px);
+    }
+
+    .home-cover__years {
+      top: auto;
+      bottom: 24%;
+
+      transform: none;
+    }
+  }
+
+  /* =======================================================
+     MOBILE
+     ======================================================= */
+
+  @media (max-width: 650px) {
+    .home-cover {
+      min-height: 100svh;
+    }
+
+    .home-cover__top {
+      min-height: 68px;
+
+      padding: 0 16px;
+    }
+
+    .home-cover__brand {
+      font-size: 6px;
+    }
+
+    .home-cover__brand-mark {
+      width: 7px;
+      height: 7px;
+    }
+
+    .home-cover__menu-button {
+      font-size: 7px;
+    }
+
+    /* ---------------------------
+       central feature
+       --------------------------- */
+
+    .home-cover__feature {
+      top: 43%;
+      left: 16px;
+
+      width: calc(100% - 32px);
+
+      transform: translateY(-50%);
+    }
+
+    .home-cover__eyebrow {
+      margin-bottom: 22px;
+
+      font-size: 6px;
+      line-height: 1.5;
+    }
+
+    .home-cover__composition {
+      min-height: 440px;
+    }
+
+    .home-cover__title {
+      top: 61%;
+
+      flex-direction: column;
+
+      align-items: flex-start;
+
+      gap: 0;
+
+      line-height: 0.82;
+
+      white-space: normal;
+    }
+
+    .home-cover__title-first {
+      font-size: clamp(66px, 22vw, 96px);
+    }
+
+    .home-cover__title-last {
+      font-size: clamp(42px, 13.5vw, 65px);
+
+      line-height: 0.84;
+    }
+
+    .home-cover__draggable-portrait {
+      top: 5%;
+      left: 55%;
+
+      width: min(39vw, 170px);
+    }
+
+    .home-cover__draggable-portrait figcaption {
+      display: grid;
+
+      gap: 3px;
+
+      font-size: 5px;
+    }
+
+    /* ---------------------------
+       coordinates slightly softer
+       on small screens
+       --------------------------- */
+
+    .home-cover__coordinate-line--horizontal {
+      background: repeating-linear-gradient(
+        to right,
+        rgba(23, 23, 23, 0.24) 0,
+        rgba(23, 23, 23, 0.24) 2px,
+        transparent 2px,
+        transparent 5px
+      );
+    }
+
+    .home-cover__coordinate-line--vertical {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(23, 23, 23, 0.24) 0,
+        rgba(23, 23, 23, 0.24) 2px,
+        transparent 2px,
+        transparent 5px
+      );
+    }
+
+    /* ---------------------------
+       years
+       --------------------------- */
+
+    .home-cover__years {
+      top: auto;
+      bottom: 112px;
+      left: 16px;
+
+      font-size: 6px;
+    }
+
+    /* ---------------------------
+       bottom
+       --------------------------- */
+
+    .home-cover__bottom {
+      right: 16px;
+      bottom: 20px;
+      left: 16px;
+
+      align-items: flex-start;
+
+      p {
+        max-width: 75%;
+
+        font-size: 6px;
+      }
+
+      span {
+        font-size: 5px;
+
+        text-align: right;
+      }
+    }
+
+    /* ---------------------------
+       menu
+       --------------------------- */
+
+    .home-menu {
+      padding: 0 18px;
+    }
+
+    .home-menu__top {
+      min-height: 68px;
+
+      font-size: 6px;
+    }
+
+    .home-menu__navigation a {
+      grid-template-columns:
+        38px
+        1fr
+        auto;
+
+      min-height: 88px;
+
+      strong {
+        font-size: clamp(31px, 10vw, 46px);
+      }
+    }
+
+    .home-menu__footer {
+      min-height: 55px;
+
+      font-size: 5px;
+    }
+  }
+
+  /* =======================================================
+     REDUCED MOTION
+     ======================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-cover__brand-mark::after {
+      animation: none !important;
+    }
+
+    .home-cover__years i::after {
+      animation: none !important;
+    }
+
+    .home-menu,
+    .home-menu__navigation a,
+    .home-cover__menu-button i::before,
+    .home-cover__menu-button i::after,
+    .home-cover__portrait-image {
+      transition: none !important;
+    }
+  }
+}

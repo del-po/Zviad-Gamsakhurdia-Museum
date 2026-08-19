@@ -1,39 +1,126 @@
-<header>
-  <a
-    class="header-logo"
-    href="/Home/index.html"
-    aria-label="Zviad Gamsakhurdia Digital Museum home"
-  >
-    <video
-      class="logo"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      aria-hidden="true"
+<header class="museum-header">
+  <!-- TOP INFORMATION RAIL -->
+
+  <div class="museum-header__register">
+    <div class="museum-header__register-left">
+      <span>Zviad Gamsakhurdia Digital Museum</span>
+    </div>
+
+    <div class="museum-header__register-center">
+      <span>1939</span>
+      <i></i>
+      <span>1993</span>
+    </div>
+
+    <div class="museum-header__register-right">
+      <span>First President of Georgia</span>
+    </div>
+  </div>
+
+  <!-- MAIN HEADER -->
+
+  <div class="museum-header__main">
+    <!-- LOGO MODULE -->
+
+    <a
+      class="museum-header__logo"
+      href="/index.html"
+      aria-label="Zviad Gamsakhurdia Digital Museum home"
     >
-      <source src="/Images/logo.mp4" type="video/mp4" />
-    </video>
-  </a>
+      <span
+        class="museum-header__logo-corner museum-header__logo-corner--tl"
+        aria-hidden="true"
+      ></span>
 
-  <button
-    class="header-burger-menu"
-    type="button"
-    aria-label="Open navigation menu"
-    aria-expanded="false"
-    aria-controls="header-menu"
-  >
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+      <span
+        class="museum-header__logo-corner museum-header__logo-corner--br"
+        aria-hidden="true"
+      ></span>
 
-  <nav id="header-menu" class="header-menu" aria-label="Main navigation">
-    <a href="/Family/family.html">Family</a>
-    <a href="/Politics/politics.html">Politics</a>
-    <a href="/Works/works.html">Works</a>
-    <a href="/Blog/blog.html">Blog</a>
-    <a href="/Archive/archive.html">Archive</a>
-  </nav>
+      <video
+        class="museum-header__logo-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src="/Images/zviad-cross-logo.mp4" type="video/mp4" />
+      </video>
+    </a>
+
+    <!-- NAVIGATION -->
+
+    <nav id="header-menu" class="header-menu" aria-label="Main navigation">
+      <a href="/Family/family.html">
+        <span class="header-menu__number">01</span>
+        <strong>Family</strong>
+        <span class="header-menu__corner"></span>
+      </a>
+
+      <a href="/Politics/dissent-and-politics.html">
+        <span class="header-menu__number">02</span>
+        <strong>Politics</strong>
+        <span class="header-menu__corner"></span>
+      </a>
+
+      <a href="/Works/works.html">
+        <span class="header-menu__number">03</span>
+        <strong>Works</strong>
+        <span class="header-menu__corner"></span>
+      </a>
+
+      <a href="/Blog/blog.html">
+        <span class="header-menu__number">04</span>
+        <strong>Blog</strong>
+        <span class="header-menu__corner"></span>
+      </a>
+
+      <a href="/Archive/archive.html">
+        <span class="header-menu__number">05</span>
+        <strong>Archive</strong>
+        <span class="header-menu__corner"></span>
+      </a>
+    </nav>
+
+    <!-- LIVE PANEL -->
+
+    <div class="museum-header__live">
+      <div class="museum-header__live-top">
+        <span class="museum-header__pulse"></span>
+        <span>Live / Tbilisi</span>
+      </div>
+
+      <time class="museum-header__clock" id="museum-header-clock" datetime="">
+        00:00:00
+      </time>
+
+      <div class="museum-header__live-bottom">
+        <span id="museum-header-date"> -- / -- / ---- </span>
+
+        <span>GMT+4</span>
+      </div>
+
+      <div class="museum-header__scanner" aria-hidden="true">
+        <span></span>
+      </div>
+
+      <span class="museum-header__live-corner" aria-hidden="true"></span>
+    </div>
+
+    <!-- MOBILE BURGER -->
+
+    <button
+      class="header-burger-menu"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="header-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </header>

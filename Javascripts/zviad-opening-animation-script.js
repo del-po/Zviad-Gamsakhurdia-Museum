@@ -1,36 +1,157 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-/*
-  ZVIAD GAMSAKHURDIA DIGITAL MUSEUM
-  Opening scene: Crucifixion / constellation sculpture
-
-  The sculpture is procedural: no external 3D model is required.
-  Thousands of points and dynamic line segments assemble into a
-  crucifixion figure, hold as a luminous monument, then scatter into
-  space as the visitor scrolls toward the museum card.
-*/
+/* =========================================================
+   ZVIAD GAMSAKHURDIA DIGITAL MUSEUM
+   CONTINUOUS HOME EXPERIENCE
+   ========================================================= */
 
 const canvas = document.getElementById("scene");
-const card = document.getElementById("reveal-card");
-const footer =
-  document.getElementById("archive-footer") ||
-  document.getElementById("home-footer") ||
-  document.querySelector(".archive-footer");
 const root = document.documentElement;
 
+const scrollTrack = document.getElementById("home-scroll");
+const scrollNumber = document.getElementById("home-scroll-number");
+
+const introPanel = document.querySelector('[data-home-panel="intro"]');
+
+const cards = {
+  family: document.querySelector('[data-home-panel="family"]'),
+  politics: document.querySelector('[data-home-panel="politics"]'),
+  works: document.querySelector('[data-home-panel="works"]'),
+  blog: document.querySelector('[data-home-panel="blog"]'),
+  archive: document.querySelector('[data-home-panel="archive"]'),
+};
+
+const jumpButtons = [...document.querySelectorAll("[data-home-jump]")];
+
+const footer = document.getElementById("home-footer");
+
 if (!canvas) {
-  throw new Error('Opening animation requires <canvas id="scene">.');
+  throw new Error('Homepage requires <canvas id="scene">.');
 }
 
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)",
 ).matches;
 
-const isSmallScreen = window.matchMedia("(max-width: 760px)").matches;
+const isSmallScreen = window.innerWidth <= 760;
 
-/* ---------------------------------
-   RENDERER / CAMERA
---------------------------------- */
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function clamp(value, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function smoothStep(value) {
+  const t = clamp(value);
+
+  return t * t * (3 - 2 * t);
+}
+
+function smootherStep(value) {
+  const t = clamp(value);
+
+  return t * t * t * (t * (t * 6 - 15) + 10);
+}
+
+function mapRange(value, inputStart, inputEnd, outputStart = 0, outputEnd = 1) {
+  const t = clamp(
+    (value - inputStart) / Math.max(0.000001, inputEnd - inputStart),
+  );
+
+  return lerp(outputStart, outputEnd, t);
+}
+
+function createRng(seed) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function randomRange(rng, min, max) {
+  return min + rng() * (max - min);
+}
+
+function rotate2D(x, y, angle) {
+  const c = Math.cos(angle);
+  const s = Math.sin(angle);
+
+  return {
+    x: x * c - y * s,
+    y: x * s + y * c,
+  };
+}
+
+/* =========================================================
+   MASTER TIMELINE
+   ========================================================= */
+
+/*
+   These are the visual centres of the six worlds.
+
+   The transitions between them are continuous.
+*/
+
+const TIMELINE = [
+  {
+    key: "intro",
+    at: 0,
+  },
+
+  {
+    key: "family",
+    at: 0.17,
+  },
+
+  {
+    key: "politics",
+    at: 0.35,
+  },
+
+  {
+    key: "works",
+    at: 0.53,
+  },
+
+  {
+    key: "blog",
+    at: 0.71,
+  },
+
+  {
+    key: "archive",
+    at: 0.89,
+  },
+
+  {
+    key: "archive",
+    at: 1,
+  },
+];
+
+const CARD_CENTERS = {
+  family: 0.17,
+  politics: 0.35,
+  works: 0.53,
+  blog: 0.71,
+  archive: 0.89,
+};
+
+/* =========================================================
+   THREE.JS RENDERER
+   ========================================================= */
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -39,1089 +160,655 @@ const renderer = new THREE.WebGLRenderer({
   powerPreference: "high-performance",
 });
 
-renderer.setPixelRatio(
-  Math.min(window.devicePixelRatio, isSmallScreen ? 1.2 : 1.55),
-);
-renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
+
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.16;
+
+renderer.toneMappingExposure = 1.05;
+
 renderer.setClearColor(0xffffff, 0);
+
+/* =========================================================
+   SCENE / CAMERA
+   ========================================================= */
 
 const scene = new THREE.Scene();
 
-scene.fog = new THREE.FogExp2(0xf7f7f4, isSmallScreen ? 0.024 : 0.019);
+scene.fog = new THREE.FogExp2(0xf8f8f5, isSmallScreen ? 0.033 : 0.024);
 
 const camera = new THREE.PerspectiveCamera(
-  isSmallScreen ? 52 : 43,
+  isSmallScreen ? 50 : 43,
   window.innerWidth / window.innerHeight,
   0.1,
-  120,
+  100,
 );
 
-camera.position.set(0, 0.15, isSmallScreen ? 19.5 : 18.2);
+camera.position.set(0, 0, isSmallScreen ? 12.5 : 11.5);
 
 const world = new THREE.Group();
 
 scene.add(world);
 
-const sculptureGroup = new THREE.Group();
+/* =========================================================
+   GLOBAL PARTICLE SYSTEM
+   ========================================================= */
 
-world.add(sculptureGroup);
+/*
+   SAME particles exist throughout the entire experience.
 
-/* ---------------------------------
-   HELPERS
---------------------------------- */
+   Their target coordinates change for:
 
-function clamp(value, minimum = 0, maximum = 1) {
-  return Math.min(maximum, Math.max(minimum, value));
+   INTRO
+   FAMILY
+   POLITICS
+   WORKS
+   BLOG
+   ARCHIVE
+
+   Therefore one world literally morphs into the next.
+*/
+
+const PARTICLE_COUNT = isSmallScreen ? 720 : 1250;
+
+const targetSets = {};
+
+const phases = new Float32Array(PARTICLE_COUNT);
+
+const sizes = new Float32Array(PARTICLE_COUNT);
+
+const goldValues = new Float32Array(PARTICLE_COUNT);
+
+const transitionOffsets = new Float32Array(PARTICLE_COUNT * 3);
+
+const positionBuffer = new Float32Array(PARTICLE_COUNT * 3);
+
+const rngGeneral = createRng(19390331);
+
+for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+  phases[i] = rngGeneral() * Math.PI * 2;
+
+  sizes[i] = randomRange(rngGeneral, 0.75, 2.4);
+
+  goldValues[i] = rngGeneral();
+
+  transitionOffsets[i * 3] = randomRange(rngGeneral, -0.75, 0.75);
+
+  transitionOffsets[i * 3 + 1] = randomRange(rngGeneral, -0.75, 0.75);
+
+  transitionOffsets[i * 3 + 2] = randomRange(rngGeneral, -1.1, 1.1);
 }
 
-function mapRange(value, inputStart, inputEnd, outputStart = 0, outputEnd = 1) {
-  const progress = clamp((value - inputStart) / (inputEnd - inputStart));
+/* =========================================================
+   TARGET 00 — INTRO
+   ABSTRACT ORBITAL SYSTEM
+   ========================================================= */
 
-  return outputStart + (outputEnd - outputStart) * progress;
-}
+function createIntroTargets() {
+  const rng = createRng(1001);
 
-function smoothStep(value) {
-  const clamped = clamp(value);
+  const targets = new Float32Array(PARTICLE_COUNT * 3);
 
-  return clamped * clamped * (3 - 2 * clamped);
-}
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
 
-function smootherStep(value) {
-  const clamped = clamp(value);
+    const mode = i % 5;
 
-  return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
-}
+    let x = 0;
+    let y = 0;
+    let z = 0;
 
-function randomDirection() {
-  const vector = new THREE.Vector3(
-    Math.random() - 0.5,
-    Math.random() - 0.5,
-    Math.random() - 0.5,
-  );
+    if (mode <= 2) {
+      /*
+        Nested orbital rings.
+      */
 
-  if (vector.lengthSq() < 0.0001) {
-    vector.set(1, 0, 0);
-  }
+      const ring = mode;
 
-  return vector.normalize();
-}
+      const radius = 1.65 + ring * 1.15 + randomRange(rng, -0.18, 0.18);
 
-function randomBetween(minimum, maximum) {
-  return minimum + Math.random() * (maximum - minimum);
-}
+      const angle = randomRange(rng, 0, Math.PI * 2);
 
-function rotateAroundCenter(point, center, euler) {
-  return point.clone().sub(center).applyEuler(euler).add(center);
-}
+      let rx = Math.cos(angle) * radius;
 
-function createSoftGlowTexture() {
-  const size = 256;
+      let ry = Math.sin(angle) * radius * 0.62;
 
-  const glowCanvas = document.createElement("canvas");
+      const rotation = ring === 0 ? -0.4 : ring === 1 ? 0.3 : -0.12;
 
-  glowCanvas.width = size;
-  glowCanvas.height = size;
+      const rotated = rotate2D(rx, ry, rotation);
 
-  const context = glowCanvas.getContext("2d");
+      x = rotated.x;
+      y = rotated.y;
 
-  const center = size / 2;
+      z = Math.sin(angle * 2) * 0.55 + randomRange(rng, -0.12, 0.12);
+    } else {
+      /*
+        Loose central constellation.
+      */
 
-  const gradient = context.createRadialGradient(
-    center,
-    center,
-    0,
+      const radius = Math.pow(rng(), 0.55) * 3.7;
 
-    center,
-    center,
-    center,
-  );
+      const angle = rng() * Math.PI * 2;
 
-  gradient.addColorStop(0, "rgba(255, 251, 232, 1)");
+      x = Math.cos(angle) * radius;
 
-  gradient.addColorStop(0.09, "rgba(255, 226, 170, 0.94)");
+      y = Math.sin(angle) * radius * 0.68;
 
-  gradient.addColorStop(0.28, "rgba(223, 165, 94, 0.45)");
-
-  gradient.addColorStop(0.62, "rgba(137, 88, 42, 0.12)");
-
-  gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-
-  context.fillStyle = gradient;
-
-  context.fillRect(0, 0, size, size);
-
-  return new THREE.CanvasTexture(glowCanvas);
-}
-
-/* ---------------------------------
-   BACKGROUND STAR FIELD
---------------------------------- */
-
-function createStarField() {
-  const count = isSmallScreen ? 650 : 1250;
-
-  const positions = new Float32Array(count * 3);
-
-  const colors = new Float32Array(count * 3);
-
-  const sizes = new Float32Array(count);
-
-  const phases = new Float32Array(count);
-
-  const starColors = [
-    new THREE.Color(0x171717),
-    new THREE.Color(0x6f6f6f),
-    new THREE.Color(0xc6a437),
-    new THREE.Color(0xd9d9d9),
-  ];
-
-  for (let i = 0; i < count; i += 1) {
-    const radius = randomBetween(20, 54);
-
-    const direction = randomDirection();
-
-    positions[i * 3] = direction.x * radius * 1.38;
-
-    positions[i * 3 + 1] = direction.y * radius * 0.88;
-
-    positions[i * 3 + 2] = -8 + direction.z * radius;
-
-    const color =
-      starColors[Math.floor(Math.random() * starColors.length)].clone();
-
-    color.multiplyScalar(randomBetween(0.55, 1));
-
-    colors[i * 3] = color.r;
-
-    colors[i * 3 + 1] = color.g;
-
-    colors[i * 3 + 2] = color.b;
-
-    sizes[i] = randomBetween(0.7, 2.8);
-
-    phases[i] = Math.random() * Math.PI * 2;
-  }
-
-  const geometry = new THREE.BufferGeometry();
-
-  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-  geometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
-
-  geometry.setAttribute("aPhase", new THREE.BufferAttribute(phases, 1));
-
-  const material = new THREE.ShaderMaterial({
-    transparent: true,
-
-    depthWrite: false,
-
-    blending: THREE.NormalBlending,
-
-    uniforms: {
-      uTime: {
-        value: 0,
-      },
-
-      uOpacity: {
-        value: 0.48,
-      },
-    },
-
-    vertexShader: `
-        attribute vec3 color;
-        attribute float aSize;
-        attribute float aPhase;
-
-        uniform float uTime;
-
-        varying vec3 vColor;
-        varying float vAlpha;
-
-        void main() {
-          vColor = color;
-
-          vAlpha =
-            0.58 +
-            0.42 *
-            sin(
-              uTime * 0.75 +
-              aPhase
-            );
-
-          vec4 mvPosition =
-            modelViewMatrix *
-            vec4(
-              position,
-              1.0
-            );
-
-          gl_Position =
-            projectionMatrix *
-            mvPosition;
-
-          gl_PointSize =
-            aSize *
-            (
-              110.0 /
-              max(
-                1.0,
-                -mvPosition.z
-              )
-            );
-        }
-      `,
-
-    fragmentShader: `
-        uniform float uOpacity;
-
-        varying vec3 vColor;
-        varying float vAlpha;
-
-        void main() {
-          vec2 uv =
-            gl_PointCoord -
-            0.5;
-
-          float d =
-            length(uv);
-
-          if (
-            d > 0.5
-          ) {
-            discard;
-          }
-
-          float core =
-            1.0 -
-            smoothstep(
-              0.0,
-              0.10,
-              d
-            );
-
-          float halo =
-            1.0 -
-            smoothstep(
-              0.08,
-              0.5,
-              d
-            );
-
-          float alpha =
-            (
-              core +
-              halo * 0.42
-            ) *
-            vAlpha *
-            uOpacity;
-
-          gl_FragColor =
-            vec4(
-              vColor,
-              alpha
-            );
-        }
-      `,
-  });
-
-  const points = new THREE.Points(geometry, material);
-
-  points.rotation.x = -0.08;
-
-  return {
-    points,
-    material,
-  };
-}
-
-const starField = createStarField();
-
-world.add(starField.points);
-
-/* ---------------------------------
-   CRUCIFIXION SCULPTURE DATA
---------------------------------- */
-
-const nodeTargets = [];
-const nodeStarts = [];
-const nodeScatterTargets = [];
-const nodeScatterAxes = [];
-const nodeScatterDelays = [];
-const nodePhases = [];
-const nodeSizes = [];
-const nodeColors = [];
-
-const regionIndices = new Map();
-
-const BODY_GOLD = new THREE.Color(0x171717);
-
-const BODY_WHITE = new THREE.Color(0xf0c94b);
-
-const CROSS_GOLD = new THREE.Color(0x2b2b2b);
-
-const CROSS_DARK = new THREE.Color(0x171717);
-
-const CLOTH_COLOR = new THREE.Color(0xd7b84f);
-
-function registerNode(position, region, options = {}) {
-  const target = position.clone();
-
-  const startDirection = randomDirection();
-
-  const startDistance = randomBetween(5.5, 15.5);
-
-  const start = target
-    .clone()
-    .addScaledVector(startDirection, startDistance)
-    .add(
-      new THREE.Vector3(
-        randomBetween(-2.2, 2.2),
-
-        randomBetween(-1.8, 1.8),
-
-        randomBetween(-4.5, 4.5),
-      ),
-    );
-
-  const radialDirection = target.clone().sub(new THREE.Vector3(0, 0.2, 0));
-
-  if (radialDirection.lengthSq() < 0.08) {
-    radialDirection.copy(randomDirection());
-  }
-
-  radialDirection.normalize();
-
-  const scatterDirection = radialDirection
-    .multiplyScalar(0.68)
-    .addScaledVector(randomDirection(), 0.9)
-    .normalize();
-
-  const scatterDistance = randomBetween(9, 22);
-
-  const scatterTarget = target
-    .clone()
-    .addScaledVector(scatterDirection, scatterDistance)
-    .add(
-      new THREE.Vector3(
-        randomBetween(-2.8, 2.8),
-
-        randomBetween(-2.2, 2.2),
-
-        randomBetween(-7, 4),
-      ),
-    );
-
-  const colorBase = (options.color || BODY_GOLD).clone();
-
-  colorBase.offsetHSL(
-    randomBetween(-0.015, 0.015),
-
-    randomBetween(-0.06, 0.05),
-
-    randomBetween(-0.08, 0.11),
-  );
-
-  const index = nodeTargets.length;
-
-  nodeTargets.push(target);
-
-  nodeStarts.push(start);
-
-  nodeScatterTargets.push(scatterTarget);
-
-  nodeScatterAxes.push(randomDirection());
-
-  nodeScatterDelays.push(
-    clamp(
-      (options.delayBias || 0) + Math.random() * (options.delaySpread || 0.34),
-
-      0,
-      0.72,
-    ),
-  );
-
-  nodePhases.push(Math.random() * Math.PI * 2);
-
-  nodeSizes.push(options.size || randomBetween(1.2, 3.4));
-
-  nodeColors.push(colorBase);
-
-  if (!regionIndices.has(region)) {
-    regionIndices.set(region, []);
-  }
-
-  regionIndices.get(region).push(index);
-
-  return index;
-}
-
-function sampleEllipsoid({
-  center,
-  radii,
-  count,
-  region,
-  color,
-  rotation = new THREE.Euler(),
-  sizeRange = [1.2, 3.4],
-  delayBias = 0,
-}) {
-  for (let i = 0; i < count; i += 1) {
-    const normal = randomDirection();
-
-    const shell = randomBetween(0.82, 1.02);
-
-    let point = new THREE.Vector3(
-      normal.x * radii.x * shell,
-
-      normal.y * radii.y * shell,
-
-      normal.z * radii.z * shell,
-    ).add(center);
-
-    point = rotateAroundCenter(point, center, rotation);
-
-    registerNode(point, region, {
-      color,
-
-      size: randomBetween(sizeRange[0], sizeRange[1]),
-
-      delayBias,
-    });
-  }
-}
-
-function sampleCylinderBetween({
-  start,
-  end,
-  radius,
-  count,
-  region,
-  color,
-  taper = 0,
-  sizeRange = [1.1, 3.1],
-  delayBias = 0,
-}) {
-  const axis = end.clone().sub(start);
-
-  const length = axis.length();
-
-  const direction = axis.clone().normalize();
-
-  const reference =
-    Math.abs(direction.y) < 0.9
-      ? new THREE.Vector3(0, 1, 0)
-      : new THREE.Vector3(1, 0, 0);
-
-  const basisA = new THREE.Vector3()
-    .crossVectors(direction, reference)
-    .normalize();
-
-  const basisB = new THREE.Vector3()
-    .crossVectors(direction, basisA)
-    .normalize();
-
-  for (let i = 0; i < count; i += 1) {
-    const t = Math.random();
-
-    const angle = Math.random() * Math.PI * 2;
-
-    const localRadius = radius * (1 - taper * t) * randomBetween(0.78, 1.05);
-
-    const point = start
-      .clone()
-      .addScaledVector(direction, t * length)
-      .addScaledVector(basisA, Math.cos(angle) * localRadius)
-      .addScaledVector(basisB, Math.sin(angle) * localRadius);
-
-    registerNode(point, region, {
-      color,
-
-      size: randomBetween(sizeRange[0], sizeRange[1]),
-
-      delayBias,
-    });
-  }
-}
-
-function sampleCuboidSurface({
-  center,
-  size,
-  count,
-  region,
-  color,
-  delayBias = 0,
-}) {
-  const half = size.clone().multiplyScalar(0.5);
-
-  for (let i = 0; i < count; i += 1) {
-    const face = Math.floor(Math.random() * 6);
-
-    const x = randomBetween(-half.x, half.x);
-
-    const y = randomBetween(-half.y, half.y);
-
-    const z = randomBetween(-half.z, half.z);
-
-    const point = new THREE.Vector3(x, y, z);
-
-    if (face === 0) {
-      point.x = half.x;
+      z = randomRange(rng, -1.5, 1.5);
     }
 
-    if (face === 1) {
-      point.x = -half.x;
-    }
-
-    if (face === 2) {
-      point.y = half.y;
-    }
-
-    if (face === 3) {
-      point.y = -half.y;
-    }
-
-    if (face === 4) {
-      point.z = half.z;
-    }
-
-    if (face === 5) {
-      point.z = -half.z;
-    }
-
-    point.add(center);
-
-    registerNode(point, region, {
-      color,
-
-      size: randomBetween(1.0, 2.7),
-
-      delayBias,
-
-      delaySpread: 0.42,
-    });
+    targets[index] = x;
+    targets[index + 1] = y;
+    targets[index + 2] = z;
   }
+
+  return targets;
 }
 
-function sampleTorso(count) {
-  const centerY = 1.0;
+/* =========================================================
+   TARGET 01 — FAMILY
+   TREE / GENEALOGY / ROOT SYSTEM
+   ========================================================= */
 
-  for (let i = 0; i < count; i += 1) {
-    const t = Math.random();
+function createFamilyTargets() {
+  const rng = createRng(2002);
 
-    const y = THREE.MathUtils.lerp(-0.35, 2.35, t);
+  const targets = new Float32Array(PARTICLE_COUNT * 3);
 
-    const shoulderFactor = smoothStep(mapRange(t, 0.42, 1));
+  const offsetX = isSmallScreen ? 0 : 2.15;
 
-    const waistFactor = 1 - 0.18 * Math.exp(-Math.pow((t - 0.28) * 4.2, 2));
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
 
-    const width =
-      THREE.MathUtils.lerp(0.72, 1.22, shoulderFactor) * waistFactor;
+    const p = i / PARTICLE_COUNT;
 
-    const depth = THREE.MathUtils.lerp(0.38, 0.54, shoulderFactor);
+    let x;
+    let y;
+    let z;
 
-    const angle = Math.random() * Math.PI * 2;
+    /*
+      TRUNK
+    */
 
-    const shell = randomBetween(0.82, 1.03);
+    if (p < 0.19) {
+      const t = p / 0.19;
 
-    const point = new THREE.Vector3(
-      Math.cos(angle) * width * shell - 0.06,
+      x = Math.sin(t * 8) * 0.08 + offsetX;
 
-      y,
+      y = lerp(-3.5, 1.15, t);
 
-      Math.sin(angle) * depth * shell + 0.32,
-    );
+      z = randomRange(rng, -0.12, 0.12);
+    } else if (p < 0.38) {
 
-    point.x += Math.sin((y - centerY) * 1.4) * 0.06;
+    /*
+      LEFT BRANCH
+    */
+      const t = (p - 0.19) / 0.19;
 
-    registerNode(point, "torso", {
-      color: Math.random() > 0.22 ? BODY_GOLD : BODY_WHITE,
+      x = offsetX - t * 3.45 + Math.sin(t * 6) * 0.12;
 
-      size: randomBetween(1.25, 3.7),
+      y = 0.5 + t * 2.6;
 
-      delayBias: 0.08,
-    });
+      z = randomRange(rng, -0.22, 0.22);
+    } else if (p < 0.57) {
+
+    /*
+      RIGHT BRANCH
+    */
+      const t = (p - 0.38) / 0.19;
+
+      x = offsetX + t * 3.45 + Math.sin(t * 7) * 0.12;
+
+      y = 0.5 + t * 2.7;
+
+      z = randomRange(rng, -0.22, 0.22);
+    } else if (p < 0.76) {
+
+    /*
+      ROOTS
+    */
+      const t = (p - 0.57) / 0.19;
+
+      const direction = i % 2 === 0 ? -1 : 1;
+
+      x = offsetX + direction * t * 2.75;
+
+      y = -2.9 - t * 1.1 + Math.sin(t * Math.PI) * 0.65;
+
+      z = randomRange(rng, -0.35, 0.35);
+    } else {
+
+    /*
+      FAMILY NODES
+    */
+      const nodeIndex = i % 3;
+
+      const centres = [
+        [offsetX - 3.35, 3.05],
+
+        [offsetX, 2.35],
+
+        [offsetX + 3.35, 3.15],
+      ];
+
+      const center = centres[nodeIndex];
+
+      const angle = randomRange(rng, 0, Math.PI * 2);
+
+      const radius = randomRange(rng, 0.18, 0.65);
+
+      x = center[0] + Math.cos(angle) * radius;
+
+      y = center[1] + Math.sin(angle) * radius;
+
+      z = randomRange(rng, -0.32, 0.32);
+    }
+
+    targets[index] = x;
+    targets[index + 1] = y;
+    targets[index + 2] = z;
   }
+
+  return targets;
 }
 
-function sampleCloth(count) {
-  for (let i = 0; i < count; i += 1) {
-    const angle = Math.random() * Math.PI * 2;
+/* =========================================================
+   TARGET 02 — POLITICS
+   STATE / TIMELINE / PRESSURE
+   ========================================================= */
 
-    const y = randomBetween(-0.72, 0.05);
+function createPoliticsTargets() {
+  const rng = createRng(3003);
 
-    const width = 0.86 + (0.1 - y) * 0.18;
+  const targets = new Float32Array(PARTICLE_COUNT * 3);
 
-    const depth = 0.48;
+  const offsetX = isSmallScreen ? 0 : -2;
 
-    const point = new THREE.Vector3(
-      Math.cos(angle) * width * randomBetween(0.82, 1.02),
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
 
-      y,
+    const p = i / PARTICLE_COUNT;
 
-      Math.sin(angle) * depth * randomBetween(0.8, 1.02) + 0.31,
-    );
+    let x;
+    let y;
+    let z;
 
-    point.x += Math.sin((y + 0.7) * 7) * 0.08;
+    /*
+      Historical timeline.
+    */
 
-    registerNode(point, "cloth", {
-      color: CLOTH_COLOR,
+    if (p < 0.35) {
+      const t = p / 0.35;
 
-      size: randomBetween(1.0, 2.8),
+      x = offsetX + lerp(-4, 4, t);
 
-      delayBias: 0.12,
-    });
+      y = -2.25 + randomRange(rng, -0.08, 0.08);
+
+      z = randomRange(rng, -0.18, 0.18);
+    } else if (p < 0.57) {
+
+    /*
+      Vertical event markers.
+    */
+      const marker = i % 6;
+
+      const markerX = offsetX - 3.8 + marker * 1.52;
+
+      const t = rng();
+
+      x = markerX + randomRange(rng, -0.05, 0.05);
+
+      y = lerp(-2.25, 1.45 + marker * 0.12, t);
+
+      z = randomRange(rng, -0.12, 0.12);
+    } else if (p < 0.82) {
+
+    /*
+      Central state diamond.
+    */
+      const side = i % 4;
+
+      const t = rng();
+
+      const radius = 2.25;
+
+      const corners = [
+        [0, radius],
+
+        [radius, 0],
+
+        [0, -radius],
+
+        [-radius, 0],
+      ];
+
+      const a = corners[side];
+
+      const b = corners[(side + 1) % 4];
+
+      x = offsetX + lerp(a[0], b[0], t);
+
+      y = 0.7 + lerp(a[1], b[1], t);
+
+      z = randomRange(rng, -0.28, 0.28);
+    } else {
+
+    /*
+      Radiating political pressure.
+    */
+      const angle = randomRange(rng, 0, Math.PI * 2);
+
+      const radius = randomRange(rng, 0.5, 4.1);
+
+      x = offsetX + Math.cos(angle) * radius;
+
+      y = 0.65 + Math.sin(angle) * radius * 0.62;
+
+      z = randomRange(rng, -1, 1);
+    }
+
+    targets[index] = x;
+    targets[index + 1] = y;
+    targets[index + 2] = z;
   }
+
+  return targets;
 }
 
-function sampleCrown(count) {
-  const center = new THREE.Vector3(-0.16, 3.36, 0.35);
+/* =========================================================
+   TARGET 03 — WORKS
+   PAGES / BOOKS / TEXT
+   ========================================================= */
 
-  for (let i = 0; i < count; i += 1) {
-    const angle = (i / count) * Math.PI * 2 + randomBetween(-0.05, 0.05);
+function createWorksTargets() {
+  const rng = createRng(4004);
 
-    const radius = randomBetween(0.53, 0.72);
+  const targets = new Float32Array(PARTICLE_COUNT * 3);
 
-    const point = new THREE.Vector3(
-      center.x + Math.cos(angle) * radius,
+  const offsetX = isSmallScreen ? 0 : 2;
 
-      center.y + Math.sin(angle) * radius * 0.48,
+  const pageCount = 4;
 
-      center.z + Math.sin(angle * 2.0) * 0.14,
-    );
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
 
-    registerNode(point, "crown", {
-      color: BODY_WHITE,
+    const page = i % pageCount;
 
-      size: randomBetween(1.0, 2.3),
+    const localIndex = Math.floor(i / pageCount);
 
-      delayBias: 0,
+    const edge = localIndex % 4;
 
-      delaySpread: 0.18,
-    });
+    const t = rng();
+
+    const width = 3.8;
+
+    const height = 5.1;
+
+    let localX;
+    let localY;
+
+    if (edge === 0) {
+      localX = lerp(-width / 2, width / 2, t);
+
+      localY = height / 2;
+    } else if (edge === 1) {
+      localX = width / 2;
+
+      localY = lerp(height / 2, -height / 2, t);
+    } else if (edge === 2) {
+      localX = lerp(width / 2, -width / 2, t);
+
+      localY = -height / 2;
+    } else {
+      localX = -width / 2;
+
+      localY = lerp(-height / 2, height / 2, t);
+    }
+
+    /*
+      Each page is slightly displaced
+      and rotated in 3D.
+    */
+
+    const pageShift = page - (pageCount - 1) / 2;
+
+    const rotation = pageShift * 0.055;
+
+    const rotated = rotate2D(localX, localY, rotation);
+
+    targets[index] = offsetX + rotated.x + pageShift * 0.25;
+
+    targets[index + 1] = rotated.y + pageShift * 0.07;
+
+    targets[index + 2] = pageShift * -0.48 + randomRange(rng, -0.04, 0.04);
   }
+
+  return targets;
 }
 
-function buildCrucifixion() {
-  const scaleFactor = isSmallScreen ? 0.72 : 1;
+/* =========================================================
+   TARGET 04 — BLOG
+   LIVING NETWORK / ORBITS
+   ========================================================= */
 
-  const scaled = (value) => Math.max(12, Math.round(value * scaleFactor));
+function createBlogTargets() {
+  const rng = createRng(5005);
 
-  /*
-    CROSS
-  */
+  const targets = new Float32Array(PARTICLE_COUNT * 3);
 
-  sampleCuboidSurface({
-    center: new THREE.Vector3(0, 0.18, -0.34),
+  const offsetX = isSmallScreen ? 0 : -2;
 
-    size: new THREE.Vector3(0.68, 10.8, 0.42),
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
 
-    count: scaled(680),
+    const ring = i % 5;
 
-    region: "cross-vertical",
+    const radius = 1 + ring * 0.82 + randomRange(rng, -0.12, 0.12);
 
-    color: CROSS_GOLD,
+    const angle = randomRange(rng, 0, Math.PI * 2);
 
-    delayBias: 0.22,
-  });
+    const squash = 0.46 + ring * 0.06;
 
-  sampleCuboidSurface({
-    center: new THREE.Vector3(0, 2.62, -0.34),
+    let x = Math.cos(angle) * radius;
 
-    size: new THREE.Vector3(8.65, 0.68, 0.42),
+    let y = Math.sin(angle) * radius * squash;
 
-    count: scaled(560),
+    const rotation = ring % 2 === 0 ? -0.35 : 0.28;
 
-    region: "cross-horizontal",
+    const rotated = rotate2D(x, y, rotation);
 
-    color: CROSS_DARK,
+    x = offsetX + rotated.x;
 
-    delayBias: 0.24,
-  });
+    y = rotated.y;
 
-  /*
-    HEAD
-  */
+    const z =
+      Math.sin(angle * (1 + ring * 0.5)) * 0.8 + randomRange(rng, -0.18, 0.18);
 
-  sampleEllipsoid({
-    center: new THREE.Vector3(-0.16, 3.34, 0.36),
+    targets[index] = x;
+    targets[index + 1] = y;
+    targets[index + 2] = z;
+  }
 
-    radii: new THREE.Vector3(0.57, 0.72, 0.5),
-
-    count: scaled(270),
-
-    region: "head",
-
-    color: BODY_WHITE,
-
-    rotation: new THREE.Euler(0.02, 0.08, -0.28),
-
-    sizeRange: [1.25, 3.4],
-
-    delayBias: 0,
-  });
-
-  sampleCrown(scaled(120));
-
-  /*
-    NECK
-  */
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(-0.12, 2.78, 0.35),
-
-    end: new THREE.Vector3(-0.06, 2.35, 0.34),
-
-    radius: 0.28,
-
-    count: scaled(80),
-
-    region: "neck",
-
-    color: BODY_GOLD,
-
-    taper: 0.05,
-  });
-
-  /*
-    TORSO
-  */
-
-  sampleTorso(scaled(620));
-
-  /*
-    LEFT ARM
-  */
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(-0.92, 2.24, 0.34),
-
-    end: new THREE.Vector3(-2.18, 2.46, 0.24),
-
-    radius: 0.29,
-
-    count: scaled(190),
-
-    region: "left-arm",
-
-    color: BODY_GOLD,
-
-    taper: 0.14,
-
-    delayBias: 0.02,
-  });
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(-2.18, 2.46, 0.24),
-
-    end: new THREE.Vector3(-3.82, 2.62, 0.12),
-
-    radius: 0.23,
-
-    count: scaled(210),
-
-    region: "left-arm",
-
-    color: BODY_GOLD,
-
-    taper: 0.3,
-
-    delayBias: 0,
-  });
-
-  /*
-    RIGHT ARM
-  */
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(0.88, 2.23, 0.34),
-
-    end: new THREE.Vector3(2.15, 2.43, 0.25),
-
-    radius: 0.29,
-
-    count: scaled(190),
-
-    region: "right-arm",
-
-    color: BODY_GOLD,
-
-    taper: 0.14,
-
-    delayBias: 0,
-  });
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(2.15, 2.43, 0.25),
-
-    end: new THREE.Vector3(3.82, 2.61, 0.11),
-
-    radius: 0.23,
-
-    count: scaled(210),
-
-    region: "right-arm",
-
-    color: BODY_GOLD,
-
-    taper: 0.3,
-
-    delayBias: 0,
-  });
-
-  /*
-    HANDS
-  */
-
-  sampleEllipsoid({
-    center: new THREE.Vector3(-3.86, 2.61, 0.12),
-
-    radii: new THREE.Vector3(0.28, 0.19, 0.12),
-
-    count: scaled(56),
-
-    region: "left-hand",
-
-    color: BODY_WHITE,
-
-    sizeRange: [1.0, 2.5],
-  });
-
-  sampleEllipsoid({
-    center: new THREE.Vector3(3.86, 2.61, 0.12),
-
-    radii: new THREE.Vector3(0.28, 0.19, 0.12),
-
-    count: scaled(56),
-
-    region: "right-hand",
-
-    color: BODY_WHITE,
-
-    sizeRange: [1.0, 2.5],
-  });
-
-  /*
-    CLOTH
-  */
-
-  sampleCloth(scaled(230));
-
-  /*
-    LEFT LEG
-  */
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(-0.34, -0.42, 0.31),
-
-    end: new THREE.Vector3(-0.25, -1.85, 0.25),
-
-    radius: 0.34,
-
-    count: scaled(210),
-
-    region: "left-leg",
-
-    color: BODY_GOLD,
-
-    taper: 0.12,
-
-    delayBias: 0.08,
-  });
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(-0.25, -1.85, 0.25),
-
-    end: new THREE.Vector3(-0.05, -3.55, 0.13),
-
-    radius: 0.27,
-
-    count: scaled(215),
-
-    region: "left-leg",
-
-    color: BODY_GOLD,
-
-    taper: 0.28,
-
-    delayBias: 0.06,
-  });
-
-  /*
-    RIGHT LEG
-  */
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(0.34, -0.42, 0.28),
-
-    end: new THREE.Vector3(0.22, -1.86, 0.18),
-
-    radius: 0.34,
-
-    count: scaled(210),
-
-    region: "right-leg",
-
-    color: BODY_GOLD,
-
-    taper: 0.12,
-
-    delayBias: 0.08,
-  });
-
-  sampleCylinderBetween({
-    start: new THREE.Vector3(0.22, -1.86, 0.18),
-
-    end: new THREE.Vector3(0.03, -3.58, 0.08),
-
-    radius: 0.27,
-
-    count: scaled(215),
-
-    region: "right-leg",
-
-    color: BODY_GOLD,
-
-    taper: 0.28,
-
-    delayBias: 0.06,
-  });
-
-  /*
-    FEET
-  */
-
-  sampleEllipsoid({
-    center: new THREE.Vector3(0, -3.68, 0.08),
-
-    radii: new THREE.Vector3(0.3, 0.46, 0.18),
-
-    count: scaled(90),
-
-    region: "feet",
-
-    color: BODY_WHITE,
-
-    rotation: new THREE.Euler(0.22, 0, 0),
-
-    sizeRange: [1.0, 2.5],
-
-    delayBias: 0.03,
-  });
+  return targets;
 }
 
-buildCrucifixion();
+/* =========================================================
+   TARGET 05 — ARCHIVE
+   STRUCTURED RECORD MATRIX
+   ========================================================= */
 
-/* ---------------------------------
-   POINT CLOUD MATERIAL
---------------------------------- */
+function createArchiveTargets() {
+  const rng = createRng(6006);
 
-const nodeCount = nodeTargets.length;
+  const targets = new Float32Array(PARTICLE_COUNT * 3);
 
-const nodePositionArray = new Float32Array(nodeCount * 3);
+  const columns = isSmallScreen ? 7 : 11;
 
-const nodeColorArray = new Float32Array(nodeCount * 3);
+  const rows = isSmallScreen ? 8 : 7;
 
-const nodeSizeArray = new Float32Array(nodeCount);
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
 
-const nodePhaseArray = new Float32Array(nodeCount);
+    const cell = i % (columns * rows);
 
-for (let i = 0; i < nodeCount; i += 1) {
-  const start = nodeStarts[i];
+    const column = cell % columns;
 
-  const color = nodeColors[i];
+    const row = Math.floor(cell / columns);
 
-  nodePositionArray[i * 3] = start.x;
+    const layer = Math.floor(i / (columns * rows)) % 4;
 
-  nodePositionArray[i * 3 + 1] = start.y;
+    const spacingX = isSmallScreen ? 0.82 : 0.74;
 
-  nodePositionArray[i * 3 + 2] = start.z;
+    const spacingY = 0.72;
 
-  nodeColorArray[i * 3] = color.r;
+    const baseX = (column - (columns - 1) / 2) * spacingX;
 
-  nodeColorArray[i * 3 + 1] = color.g;
+    const baseY = ((rows - 1) / 2 - row) * spacingY;
 
-  nodeColorArray[i * 3 + 2] = color.b;
+    /*
+      Little record / catalogue cell.
+    */
 
-  nodeSizeArray[i] = nodeSizes[i];
+    const withinCell = i % 4;
 
-  nodePhaseArray[i] = nodePhases[i];
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (withinCell === 0) {
+      offsetX = randomRange(rng, -0.25, 0.25);
+
+      offsetY = -0.18;
+    } else if (withinCell === 1) {
+      offsetX = -0.28;
+
+      offsetY = randomRange(rng, -0.2, 0.2);
+    } else if (withinCell === 2) {
+      offsetX = 0.28;
+
+      offsetY = randomRange(rng, -0.2, 0.2);
+    } else {
+      offsetX = randomRange(rng, -0.25, 0.25);
+
+      offsetY = 0.18;
+    }
+
+    targets[index] = baseX + offsetX;
+
+    targets[index + 1] = baseY + offsetY;
+
+    targets[index + 2] = -layer * 0.32 + randomRange(rng, -0.04, 0.04);
+  }
+
+  return targets;
 }
 
-const nodeGeometry = new THREE.BufferGeometry();
+/* =========================================================
+   BUILD ALL TARGET WORLDS
+   ========================================================= */
 
-nodeGeometry.setAttribute(
+targetSets.intro = createIntroTargets();
+
+targetSets.family = createFamilyTargets();
+
+targetSets.politics = createPoliticsTargets();
+
+targetSets.works = createWorksTargets();
+
+targetSets.blog = createBlogTargets();
+
+targetSets.archive = createArchiveTargets();
+
+/* =========================================================
+   PARTICLE GEOMETRY
+   ========================================================= */
+
+positionBuffer.set(targetSets.intro);
+
+const particleGeometry = new THREE.BufferGeometry();
+
+particleGeometry.setAttribute(
   "position",
-
-  new THREE.BufferAttribute(nodePositionArray, 3).setUsage(
-    THREE.DynamicDrawUsage,
-  ),
+  new THREE.BufferAttribute(positionBuffer, 3).setUsage(THREE.DynamicDrawUsage),
 );
 
-nodeGeometry.setAttribute(
-  "color",
+particleGeometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
 
-  new THREE.BufferAttribute(nodeColorArray, 3),
+particleGeometry.setAttribute(
+  "aGold",
+  new THREE.BufferAttribute(goldValues, 1),
 );
 
-nodeGeometry.setAttribute(
-  "aSize",
+particleGeometry.setAttribute("aPhase", new THREE.BufferAttribute(phases, 1));
 
-  new THREE.BufferAttribute(nodeSizeArray, 1),
-);
+/* =========================================================
+   PARTICLE SHADER
+   ========================================================= */
 
-nodeGeometry.setAttribute(
-  "aPhase",
-
-  new THREE.BufferAttribute(nodePhaseArray, 1),
-);
-
-const nodeMaterial = new THREE.ShaderMaterial({
+const particleMaterial = new THREE.ShaderMaterial({
   transparent: true,
 
   depthWrite: false,
 
-  blending: THREE.AdditiveBlending,
+  blending: THREE.NormalBlending,
 
   uniforms: {
     uTime: {
       value: 0,
     },
 
+    uTransition: {
+      value: 0,
+    },
+
     uOpacity: {
-      value: 1,
+      value: 0.92,
     },
   },
 
   vertexShader: `
-      attribute vec3 color;
       attribute float aSize;
+      attribute float aGold;
       attribute float aPhase;
 
       uniform float uTime;
+      uniform float uTransition;
 
-      varying vec3 vColor;
-      varying float vGlow;
+      varying float vGold;
+      varying float vAlpha;
 
       void main() {
-        vColor = color;
+        vec3 p = position;
 
-        vGlow =
-          0.82 +
-          0.18 *
+        float ambient =
+          0.012 +
+          uTransition *
+          0.028;
+
+        p.x +=
           sin(
-            uTime * 1.45 +
+            uTime * 0.38 +
             aPhase
-          );
+          ) *
+          ambient;
+
+        p.y +=
+          cos(
+            uTime * 0.31 +
+            aPhase * 1.23
+          ) *
+          ambient;
+
+        p.z +=
+          sin(
+            uTime * 0.25 +
+            aPhase * 0.73
+          ) *
+          ambient *
+          1.4;
 
         vec4 mvPosition =
           modelViewMatrix *
           vec4(
-            position,
+            p,
             1.0
           );
 
@@ -1131,13 +818,22 @@ const nodeMaterial = new THREE.ShaderMaterial({
 
         gl_PointSize =
           aSize *
-          vGlow *
           (
-            150.0 /
+            70.0 /
             max(
               1.0,
               -mvPosition.z
             )
+          );
+
+        vGold = aGold;
+
+        vAlpha =
+          0.82 +
+          0.18 *
+          sin(
+            uTime * 0.7 +
+            aPhase
           );
       }
     `,
@@ -1145,633 +841,1039 @@ const nodeMaterial = new THREE.ShaderMaterial({
   fragmentShader: `
       uniform float uOpacity;
 
-      varying vec3 vColor;
-      varying float vGlow;
+      varying float vGold;
+      varying float vAlpha;
 
       void main() {
-        vec2 point =
+        vec2 p =
           gl_PointCoord -
-          vec2(0.5);
+          0.5;
 
-        float d =
-          length(point);
+        float distanceFromCenter =
+          length(p);
 
         if (
-          d > 0.5
+          distanceFromCenter >
+          0.5
         ) {
           discard;
         }
 
-        float core =
+        float alpha =
           1.0 -
           smoothstep(
-            0.015,
-            0.105,
-            d
-          );
-
-        float halo =
-          1.0 -
-          smoothstep(
-            0.08,
+            0.1,
             0.5,
-            d
+            distanceFromCenter
           );
 
-        float rayX =
-          1.0 -
-          smoothstep(
-            0.0,
-            0.025,
-            abs(point.y)
+        vec3 dark =
+          vec3(
+            0.09,
+            0.09,
+            0.09
           );
 
-        float rayY =
-          1.0 -
-          smoothstep(
-            0.0,
-            0.025,
-            abs(point.x)
+        vec3 grey =
+          vec3(
+            0.38,
+            0.38,
+            0.36
           );
 
-        float rays =
-          (
-            rayX +
-            rayY
-          ) *
-          (
-            1.0 -
+        vec3 gold =
+          vec3(
+            0.86,
+            0.65,
+            0.12
+          );
+
+        vec3 color =
+          mix(
+            dark,
+            grey,
             smoothstep(
-              0.06,
-              0.44,
-              d
+              0.15,
+              0.65,
+              vGold
             )
           );
 
-        float alpha =
-          (
-            core +
-            halo * 0.44 +
-            rays * 0.10
-          ) *
-          uOpacity *
-          vGlow;
+        color =
+          mix(
+            color,
+            gold,
+            smoothstep(
+              0.82,
+              1.0,
+              vGold
+            )
+          );
 
         gl_FragColor =
           vec4(
-            vColor,
-            alpha
+            color,
+            alpha *
+            vAlpha *
+            uOpacity
           );
       }
     `,
 });
 
-const sculpturePoints = new THREE.Points(nodeGeometry, nodeMaterial);
+const particles = new THREE.Points(particleGeometry, particleMaterial);
 
-sculpturePoints.renderOrder = 4;
+particles.frustumCulled = false;
 
-sculptureGroup.add(sculpturePoints);
+world.add(particles);
 
-/* ---------------------------------
-   DYNAMIC CONSTELLATION LINES
---------------------------------- */
+/* =========================================================
+   BACKGROUND DUST
+   ========================================================= */
 
-const linePairs = [];
+function createBackgroundDust() {
+  const rng = createRng(7777);
 
-function buildRegionConnections(
-  indices,
-  maxConnectionsPerNode = 1,
-  distanceLimit = 0.82,
-) {
-  if (indices.length < 2) {
-    return;
+  const count = isSmallScreen ? 320 : 700;
+
+  const positions = new Float32Array(count * 3);
+
+  for (let i = 0; i < count; i += 1) {
+    positions[i * 3] = randomRange(rng, -15, 15);
+
+    positions[i * 3 + 1] = randomRange(rng, -9, 9);
+
+    positions[i * 3 + 2] = randomRange(rng, -20, -4);
   }
 
-  for (let localIndex = 0; localIndex < indices.length; localIndex += 1) {
-    const sourceIndex = indices[localIndex];
+  const geometry = new THREE.BufferGeometry();
 
-    const source = nodeTargets[sourceIndex];
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
-    for (
-      let connection = 0;
-      connection < maxConnectionsPerNode;
-      connection += 1
-    ) {
-      let bestIndex = -1;
+  const material = new THREE.PointsMaterial({
+    color: 0x777777,
 
-      let bestDistance = distanceLimit;
+    size: isSmallScreen ? 0.017 : 0.023,
 
-      const attempts = Math.min(
-        22,
+    transparent: true,
 
-        Math.max(
-          8,
+    opacity: 0.23,
 
-          Math.floor(indices.length * 0.08),
-        ),
-      );
+    depthWrite: false,
+  });
 
-      for (let attempt = 0; attempt < attempts; attempt += 1) {
-        const candidateIndex =
-          indices[Math.floor(Math.random() * indices.length)];
+  const points = new THREE.Points(geometry, material);
 
-        if (candidateIndex === sourceIndex) {
-          continue;
-        }
+  world.add(points);
 
-        const distance = source.distanceTo(nodeTargets[candidateIndex]);
-
-        if (distance < bestDistance) {
-          bestDistance = distance;
-
-          bestIndex = candidateIndex;
-        }
-      }
-
-      if (bestIndex >= 0) {
-        linePairs.push([sourceIndex, bestIndex]);
-      }
-    }
-  }
+  return {
+    points,
+    material,
+  };
 }
 
-regionIndices.forEach((indices, regionName) => {
-  const isCross = regionName.startsWith("cross");
+const backgroundDust = createBackgroundDust();
 
-  const isLargeRegion = indices.length > 320;
+/* =========================================================
+   STRUCTURAL LINE HELPERS
+   ========================================================= */
 
-  buildRegionConnections(
-    indices,
+function createLineSegments(segmentPoints, color = 0x171717) {
+  const positions = [];
 
-    isCross || isLargeRegion ? 1 : 2,
+  segmentPoints.forEach((segment) => {
+    positions.push(...segment[0], ...segment[1]);
+  });
 
-    isCross ? 1.05 : 0.76,
+  const geometry = new THREE.BufferGeometry();
+
+  geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(positions, 3),
   );
-});
 
-const linePositionArray = new Float32Array(linePairs.length * 6);
+  const material = new THREE.LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+  });
 
-const lineGeometry = new THREE.BufferGeometry();
+  const lines = new THREE.LineSegments(geometry, material);
 
-lineGeometry.setAttribute(
-  "position",
+  return lines;
+}
 
-  new THREE.BufferAttribute(linePositionArray, 3).setUsage(
-    THREE.DynamicDrawUsage,
+function createCircle(
+  radius,
+  { x = 0, y = 0, z = 0, squash = 1, rotation = 0, color = 0x171717 } = {},
+) {
+  const points = [];
+
+  const count = 120;
+
+  for (let i = 0; i <= count; i += 1) {
+    const angle = (i / count) * Math.PI * 2;
+
+    const px = Math.cos(angle) * radius;
+
+    const py = Math.sin(angle) * radius * squash;
+
+    const rotated = rotate2D(px, py, rotation);
+
+    points.push(new THREE.Vector3(x + rotated.x, y + rotated.y, z));
+  }
+
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+  const material = new THREE.LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+  });
+
+  return new THREE.Line(geometry, material);
+}
+
+function setGroupOpacity(group, opacity) {
+  group.traverse((object) => {
+    if (object.material && "opacity" in object.material) {
+      object.material.opacity = opacity;
+
+      object.material.transparent = true;
+    }
+  });
+
+  group.visible = opacity > 0.002;
+}
+
+/* =========================================================
+   INTRO STRUCTURE
+   ========================================================= */
+
+const introStructure = new THREE.Group();
+
+introStructure.add(
+  createCircle(1.65, {
+    squash: 0.62,
+    rotation: -0.4,
+  }),
+);
+
+introStructure.add(
+  createCircle(2.8, {
+    squash: 0.6,
+    rotation: 0.3,
+    color: 0x8f782e,
+  }),
+);
+
+introStructure.add(
+  createCircle(4, {
+    squash: 0.58,
+    rotation: -0.12,
+  }),
+);
+
+world.add(introStructure);
+
+/* =========================================================
+   FAMILY STRUCTURE
+   ========================================================= */
+
+const familyStructure = new THREE.Group();
+
+const familyOffset = isSmallScreen ? 0 : 2.15;
+
+familyStructure.add(
+  createLineSegments(
+    [
+      [
+        [familyOffset, -3.6, 0],
+        [familyOffset, 1.2, 0],
+      ],
+
+      [
+        [familyOffset, 0.5, 0],
+        [familyOffset - 3.35, 3.05, 0],
+      ],
+
+      [
+        [familyOffset, 0.5, 0],
+        [familyOffset + 3.35, 3.15, 0],
+      ],
+
+      [
+        [familyOffset, -2.8, 0],
+        [familyOffset - 2.8, -3.85, 0],
+      ],
+
+      [
+        [familyOffset, -2.8, 0],
+        [familyOffset + 2.8, -3.85, 0],
+      ],
+    ],
+    0x171717,
   ),
 );
 
-const lineMaterial = new THREE.LineBasicMaterial({
-  color: 0x171717,
+familyStructure.add(
+  createCircle(0.68, {
+    x: familyOffset - 3.35,
 
-  transparent: true,
+    y: 3.05,
 
-  opacity: 0,
-
-  depthWrite: false,
-
-  blending: THREE.NormalBlending,
-});
-
-const constellationLines = new THREE.LineSegments(lineGeometry, lineMaterial);
-
-constellationLines.renderOrder = 3;
-
-sculptureGroup.add(constellationLines);
-
-/* ---------------------------------
-   AURA / HALO
---------------------------------- */
-
-const glowTexture = createSoftGlowTexture();
-
-const bodyAura = new THREE.Sprite(
-  new THREE.SpriteMaterial({
-    map: glowTexture,
-
-    color: 0xf1c93f,
-
-    transparent: true,
-
-    opacity: 0,
-
-    depthWrite: false,
-
-    blending: THREE.AdditiveBlending,
+    color: 0xb18b20,
   }),
 );
 
-bodyAura.position.set(0, 0.55, -0.9);
+familyStructure.add(
+  createCircle(0.68, {
+    x: familyOffset,
 
-bodyAura.scale.set(12.5, 15.5, 1);
-
-bodyAura.renderOrder = 1;
-
-sculptureGroup.add(bodyAura);
-
-const headHalo = new THREE.Sprite(
-  new THREE.SpriteMaterial({
-    map: glowTexture,
-
-    color: 0xfedd00,
-
-    transparent: true,
-
-    opacity: 0,
-
-    depthWrite: false,
-
-    blending: THREE.AdditiveBlending,
+    y: 2.35,
   }),
 );
 
-headHalo.position.set(-0.18, 3.35, 0.05);
+familyStructure.add(
+  createCircle(0.68, {
+    x: familyOffset + 3.35,
 
-headHalo.scale.set(3.15, 3.15, 1);
+    y: 3.15,
 
-headHalo.renderOrder = 2;
+    color: 0xb18b20,
+  }),
+);
 
-sculptureGroup.add(headHalo);
+world.add(familyStructure);
 
-/* ---------------------------------
-   SCROLL STATE
---------------------------------- */
+/* =========================================================
+   POLITICS STRUCTURE
+   ========================================================= */
 
-let targetScrollProgress = 0;
+const politicsStructure = new THREE.Group();
 
-let smoothScrollProgress = 0;
+const politicsOffset = isSmallScreen ? 0 : -2;
 
-let lastTime = performance.now();
+const politicalSegments = [
+  [
+    [politicsOffset - 4, -2.25, 0],
 
-const loadTime = performance.now();
+    [politicsOffset + 4, -2.25, 0],
+  ],
+];
 
-function updateScrollProgress() {
-  const maximumScroll = Math.max(
-    1,
+for (let i = 0; i < 6; i += 1) {
+  const x = politicsOffset - 3.8 + i * 1.52;
 
-    document.documentElement.scrollHeight - window.innerHeight,
+  politicalSegments.push([
+    [x, -2.25, 0],
+
+    [x, 1.35 + i * 0.12, 0],
+  ]);
+}
+
+politicalSegments.push(
+  [
+    [politicsOffset, 2.95, 0],
+
+    [politicsOffset + 2.25, 0.7, 0],
+  ],
+
+  [
+    [politicsOffset + 2.25, 0.7, 0],
+
+    [politicsOffset, -1.55, 0],
+  ],
+
+  [
+    [politicsOffset, -1.55, 0],
+
+    [politicsOffset - 2.25, 0.7, 0],
+  ],
+
+  [
+    [politicsOffset - 2.25, 0.7, 0],
+
+    [politicsOffset, 2.95, 0],
+  ],
+);
+
+politicsStructure.add(createLineSegments(politicalSegments));
+
+world.add(politicsStructure);
+
+/* =========================================================
+   WORKS STRUCTURE
+   ========================================================= */
+
+const worksStructure = new THREE.Group();
+
+const worksOffset = isSmallScreen ? 0 : 2;
+
+for (let page = 0; page < 4; page += 1) {
+  const shift = page - 1.5;
+
+  const x = worksOffset + shift * 0.25;
+
+  const y = shift * 0.07;
+
+  const z = shift * -0.48;
+
+  const width = 3.8;
+  const height = 5.1;
+
+  const pageLines = createLineSegments(
+    [
+      [
+        [x - width / 2, y + height / 2, z],
+
+        [x + width / 2, y + height / 2, z],
+      ],
+
+      [
+        [x + width / 2, y + height / 2, z],
+
+        [x + width / 2, y - height / 2, z],
+      ],
+
+      [
+        [x + width / 2, y - height / 2, z],
+
+        [x - width / 2, y - height / 2, z],
+      ],
+
+      [
+        [x - width / 2, y - height / 2, z],
+
+        [x - width / 2, y + height / 2, z],
+      ],
+    ],
+
+    page % 2 === 0 ? 0x171717 : 0x9a7c27,
   );
 
-  targetScrollProgress = clamp(window.scrollY / maximumScroll);
+  worksStructure.add(pageLines);
 }
 
-/* ---------------------------------
-   INTERFACE
---------------------------------- */
+world.add(worksStructure);
 
-function updateInterface(progress) {
-  const intro = 1 - smoothStep(mapRange(progress, 0.025, 0.22));
+/* =========================================================
+   BLOG STRUCTURE
+   ========================================================= */
 
-  const cardProgress = smootherStep(mapRange(progress, 0.58, 0.74));
+const blogStructure = new THREE.Group();
 
-  const footerProgress = smootherStep(mapRange(progress, 0.78, 0.94));
+const blogOffset = isSmallScreen ? 0 : -2;
 
-  root.style.setProperty("--intro-progress", intro.toFixed(4));
+for (let ring = 0; ring < 5; ring += 1) {
+  blogStructure.add(
+    createCircle(
+      1 + ring * 0.82,
 
-  root.style.setProperty("--card-progress", cardProgress.toFixed(4));
+      {
+        x: blogOffset,
 
-  root.style.setProperty("--footer-progress", footerProgress.toFixed(4));
+        squash: 0.46 + ring * 0.06,
 
-  root.style.setProperty("--cosmic-progress", progress.toFixed(4));
+        rotation: ring % 2 === 0 ? -0.35 : 0.28,
 
-  card?.classList.toggle("is-interactive", cardProgress > 0.92);
-
-  footer?.classList.toggle("is-interactive", footerProgress > 0.92);
+        color: ring === 2 ? 0xaa8728 : 0x171717,
+      },
+    ),
+  );
 }
 
-/* ---------------------------------
-   SCULPTURE UPDATE
---------------------------------- */
+world.add(blogStructure);
 
-const currentNodePositions = Array.from(
-  {
-    length: nodeCount,
-  },
+/* =========================================================
+   ARCHIVE STRUCTURE
+   ========================================================= */
 
-  () => new THREE.Vector3(),
-);
+const archiveStructure = new THREE.Group();
 
-const tempPosition = new THREE.Vector3();
+const archiveColumns = isSmallScreen ? 7 : 11;
 
-const tempAssembly = new THREE.Vector3();
+const archiveRows = isSmallScreen ? 8 : 7;
 
-const tempScatter = new THREE.Vector3();
+const archiveSegments = [];
 
-const tempTangent = new THREE.Vector3();
+for (let c = 0; c <= archiveColumns; c += 1) {
+  const x = (c - archiveColumns / 2) * (isSmallScreen ? 0.82 : 0.74);
 
-const upVector = new THREE.Vector3(0, 1, 0);
+  archiveSegments.push([
+    [x, -archiveRows * 0.36, 0],
 
-function updateSculpture(progress, elapsedSeconds) {
-  const sinceLoad =
-    Math.max(
-      0,
+    [x, archiveRows * 0.36, 0],
+  ]);
+}
 
-      performance.now() - loadTime,
-    ) / 1000;
+for (let r = 0; r <= archiveRows; r += 1) {
+  const y = (r - archiveRows / 2) * 0.72;
 
-  const assembly = prefersReducedMotion
-    ? 1
-    : smootherStep(clamp((sinceLoad - 0.12) / 2.65));
+  archiveSegments.push([
+    [-archiveColumns * (isSmallScreen ? 0.41 : 0.37), y, 0],
 
-  /*
-    The sculpture begins dissolving
-    after the visitor starts scrolling.
-  */
+    [archiveColumns * (isSmallScreen ? 0.41 : 0.37), y, 0],
+  ]);
+}
 
-  const scatterGlobal = mapRange(progress, 0.02, 0.665);
+archiveStructure.add(createLineSegments(archiveSegments));
 
-  const sculptureFade = 1 - smootherStep(mapRange(progress, 0.62, 0.82));
+world.add(archiveStructure);
 
-  const lineFade = 1 - smootherStep(mapRange(progress, 0.52, 0.76));
+/* =========================================================
+   STRUCTURE REGISTRY
+   ========================================================= */
 
-  const cardProgress = smootherStep(mapRange(progress, 0.58, 0.74));
+const structures = {
+  intro: introStructure,
 
-  const positionAttribute = nodeGeometry.getAttribute("position");
+  family: familyStructure,
 
-  for (let i = 0; i < nodeCount; i += 1) {
-    const target = nodeTargets[i];
+  politics: politicsStructure,
 
-    const start = nodeStarts[i];
+  works: worksStructure,
 
-    const scatterTarget = nodeScatterTargets[i];
+  blog: blogStructure,
 
-    const delay = nodeScatterDelays[i];
+  archive: archiveStructure,
+};
 
-    const phase = nodePhases[i];
+/* =========================================================
+   SCROLL STATE
+   ========================================================= */
 
-    const localScatter = clamp(
-      (scatterGlobal - delay * 0.08) / Math.max(0.92, 1 - delay * 0.08),
-    );
+let targetProgress = 0;
 
-    tempAssembly.lerpVectors(start, target, assembly);
+let renderedProgress = 0;
 
-    tempScatter.copy(scatterTarget);
+let previousFrame = performance.now();
 
-    /*
-      Curling movement keeps the
-      particles feeling suspended
-      in space instead of simply
-      exploding outward.
-    */
+/* =========================================================
+   SCROLL CALCULATION
+   ========================================================= */
 
-    tempTangent
-      .crossVectors(nodeScatterAxes[i], upVector)
-      .normalize()
-      .multiplyScalar(
-        Math.sin(localScatter * Math.PI) *
-          (0.45 + delay * 1.35) *
-          Math.sin(elapsedSeconds * 0.72 + phase),
+function getMaximumScroll() {
+  return Math.max(
+    1,
+    document.documentElement.scrollHeight - window.innerHeight,
+  );
+}
+
+function updateTargetProgress() {
+  targetProgress = clamp(window.scrollY / getMaximumScroll());
+}
+
+updateTargetProgress();
+
+renderedProgress = targetProgress;
+
+/* =========================================================
+   FIND CURRENT MORPH SEGMENT
+   ========================================================= */
+
+function getTimelineSegment(progress) {
+  for (let i = 0; i < TIMELINE.length - 1; i += 1) {
+    const current = TIMELINE[i];
+
+    const next = TIMELINE[i + 1];
+
+    if (progress >= current.at && progress <= next.at) {
+      const local = clamp(
+        (progress - current.at) / Math.max(0.000001, next.at - current.at),
       );
 
-    tempPosition
-      .lerpVectors(tempAssembly, tempScatter, localScatter)
-      .add(tempTangent);
+      return {
+        from: current.key,
+
+        to: next.key,
+
+        raw: local,
+
+        eased: smootherStep(local),
+      };
+    }
+  }
+
+  return {
+    from: "archive",
+    to: "archive",
+    raw: 1,
+    eased: 1,
+  };
+}
+
+/* =========================================================
+   PARTICLE MORPH
+   ========================================================= */
+
+function updateParticles(progress, elapsed) {
+  const segment = getTimelineSegment(progress);
+
+  const from = targetSets[segment.from];
+
+  const to = targetSets[segment.to];
+
+  const t = segment.eased;
+
+  /*
+    Arc reaches maximum halfway
+    between two worlds.
+
+    This prevents the morph from looking
+    like simple straight-line interpolation.
+  */
+
+  const arc = Math.sin(segment.raw * Math.PI);
+
+  const positionAttribute = particleGeometry.getAttribute("position");
+
+  for (let i = 0; i < PARTICLE_COUNT; i += 1) {
+    const index = i * 3;
+
+    let x = lerp(from[index], to[index], t);
+
+    let y = lerp(from[index + 1], to[index + 1], t);
+
+    let z = lerp(from[index + 2], to[index + 2], t);
 
     /*
-      Tiny breathing movement while
-      the sculpture is fully assembled.
+      Curved transition movement.
     */
 
-    if (localScatter < 0.06 && assembly > 0.92) {
-      tempPosition.x += Math.sin(elapsedSeconds * 0.52 + phase) * 0.008;
+    const wave = Math.sin(phases[i] + segment.raw * Math.PI * 2);
 
-      tempPosition.y += Math.cos(elapsedSeconds * 0.43 + phase) * 0.009;
-    }
+    x += transitionOffsets[index] * arc * 0.65;
 
-    currentNodePositions[i].copy(tempPosition);
+    y += transitionOffsets[index + 1] * arc * 0.65;
 
-    positionAttribute.setXYZ(i, tempPosition.x, tempPosition.y, tempPosition.z);
+    z += transitionOffsets[index + 2] * arc * 0.8 + wave * arc * 0.18;
+
+    positionAttribute.setXYZ(i, x, y, z);
   }
 
   positionAttribute.needsUpdate = true;
 
-  const lineAttribute = lineGeometry.getAttribute("position");
+  particleMaterial.uniforms.uTime.value = elapsed;
 
-  for (let i = 0; i < linePairs.length; i += 1) {
-    const [firstIndex, secondIndex] = linePairs[i];
+  particleMaterial.uniforms.uTransition.value = arc;
+}
 
-    const first = currentNodePositions[firstIndex];
+/* =========================================================
+   STAGE WEIGHT
+   ========================================================= */
 
-    const second = currentNodePositions[secondIndex];
+function stageWeight(progress, center, width = 0.105) {
+  const distance = Math.abs(progress - center);
 
-    const offset = i * 2;
+  return 1 - smoothStep(clamp(distance / width));
+}
 
-    lineAttribute.setXYZ(offset, first.x, first.y, first.z);
+/* =========================================================
+   STRUCTURES
+   ========================================================= */
 
-    lineAttribute.setXYZ(offset + 1, second.x, second.y, second.z);
+function updateStructures(progress, elapsed) {
+  const weights = {
+    intro: stageWeight(progress, 0, 0.14),
+
+    family: stageWeight(progress, 0.17, 0.115),
+
+    politics: stageWeight(progress, 0.35, 0.115),
+
+    works: stageWeight(progress, 0.53, 0.115),
+
+    blog: stageWeight(progress, 0.71, 0.115),
+
+    archive: stageWeight(progress, 0.89, 0.14),
+  };
+
+  Object.entries(structures).forEach(([key, group]) => {
+    const weight = weights[key];
+
+    setGroupOpacity(group, weight * (key === "archive" ? 0.12 : 0.18));
+
+    const scale = 0.94 + weight * 0.06;
+
+    group.scale.setScalar(scale);
+  });
+
+  /*
+    Individual worlds remain subtly alive.
+  */
+
+  introStructure.rotation.z = elapsed * 0.025;
+
+  introStructure.rotation.y = Math.sin(elapsed * 0.13) * 0.05;
+
+  familyStructure.rotation.z = Math.sin(elapsed * 0.22) * 0.006;
+
+  politicsStructure.rotation.y = Math.sin(elapsed * 0.16) * 0.025;
+
+  worksStructure.rotation.y = Math.sin(elapsed * 0.18) * 0.04;
+
+  blogStructure.rotation.z = elapsed * 0.018;
+
+  blogStructure.rotation.y = Math.sin(elapsed * 0.1) * 0.07;
+
+  archiveStructure.rotation.x = Math.sin(elapsed * 0.11) * 0.018;
+}
+
+/* =========================================================
+   HTML CARD VISIBILITY
+   ========================================================= */
+
+function cardWeight(progress, center) {
+  const distance = Math.abs(progress - center);
+
+  /*
+    Stable reading zone.
+  */
+
+  if (distance <= 0.043) {
+    return 1;
   }
 
-  lineAttribute.needsUpdate = true;
-
-  nodeMaterial.uniforms.uTime.value = elapsedSeconds;
-
-  nodeMaterial.uniforms.uOpacity.value = Math.max(0.001, sculptureFade);
-
-  lineMaterial.opacity =
-    assembly *
-    lineFade *
-    (0.28 + 0.34 * (1 - scatterGlobal)) *
-    (0.94 + Math.sin(elapsedSeconds * 0.8) * 0.06);
-
-  bodyAura.material.opacity =
-    assembly *
-    sculptureFade *
-    (0.075 + Math.sin(elapsedSeconds * 0.52) * 0.012);
-
-  headHalo.material.opacity =
-    assembly * sculptureFade * (0.16 + Math.sin(elapsedSeconds * 0.9) * 0.022);
-
   /*
-    Initially the sculpture sits
-    somewhat to the right so the
-    quotation can occupy the left.
+    Fade through transition.
   */
 
-  const introShift = smootherStep(mapRange(progress, 0.04, 0.3));
+  if (distance <= 0.083) {
+    return 1 - smoothStep(mapRange(distance, 0.043, 0.083));
+  }
 
-  sculptureGroup.position.x = THREE.MathUtils.lerp(
-    isSmallScreen ? 0.45 : 3.15,
+  return 0;
+}
 
-    isSmallScreen ? 0 : 0.3,
+function updateCards(progress) {
+  Object.entries(cards).forEach(([key, card]) => {
+    if (!card) {
+      return;
+    }
 
-    introShift,
-  );
+    const weight = cardWeight(progress, CARD_CENTERS[key]);
 
-  sculptureGroup.position.y = isSmallScreen ? 0.45 : 0.1;
+    const enteringY = 26 * (1 - weight);
 
-  const baseScale = isSmallScreen ? 0.86 : 1.0;
+    const scale = 0.975 + weight * 0.025;
 
-  const scatterScale = 1 - scatterGlobal * 0.055;
+    card.style.opacity = weight.toFixed(4);
 
-  sculptureGroup.scale.setScalar(baseScale * scatterScale);
+    card.style.transform = `translate3d(0, ${enteringY}px, 0) scale(${scale})`;
 
-  sculptureGroup.rotation.y =
-    -0.12 + Math.sin(elapsedSeconds * 0.15) * 0.025 + scatterGlobal * 0.2;
+    card.style.pointerEvents = weight > 0.8 ? "auto" : "none";
 
-  sculptureGroup.rotation.x =
-    Math.sin(elapsedSeconds * 0.11) * 0.012 - scatterGlobal * 0.045;
+    card.style.visibility = weight > 0.01 ? "visible" : "hidden";
 
-  sculptureGroup.rotation.z = -0.018 + Math.sin(elapsedSeconds * 0.09) * 0.008;
+    const active = weight > 0.72;
 
+    card.classList.toggle("is-active", active);
+
+    card.setAttribute("aria-hidden", active ? "false" : "true");
+  });
+}
+
+/* =========================================================
+   INTRO PANEL
+   ========================================================= */
+
+function updateIntro(progress) {
+  if (!introPanel) {
+    return;
+  }
+
+  const weight = 1 - smoothStep(mapRange(progress, 0.025, 0.105));
+
+  introPanel.style.opacity = weight.toFixed(4);
+
+  introPanel.style.transform = `translate3d(0, ${-24 * (1 - weight)}px, 0)`;
+
+  introPanel.style.pointerEvents = weight > 0.5 ? "auto" : "none";
+
+  introPanel.style.visibility = weight > 0.01 ? "visible" : "hidden";
+}
+
+/* =========================================================
+   ACTIVE CHAPTER INDEX
+   ========================================================= */
+
+function getNearestChapter(progress) {
+  if (progress < 0.08) {
+    return {
+      key: "intro",
+      number: "00",
+    };
+  }
+
+  const chapters = [
+    {
+      key: "family",
+      at: 0.17,
+      number: "01",
+    },
+
+    {
+      key: "politics",
+      at: 0.35,
+      number: "02",
+    },
+
+    {
+      key: "works",
+      at: 0.53,
+      number: "03",
+    },
+
+    {
+      key: "blog",
+      at: 0.71,
+      number: "04",
+    },
+
+    {
+      key: "archive",
+      at: 0.89,
+      number: "05",
+    },
+  ];
+
+  let nearest = chapters[0];
+
+  let bestDistance = Infinity;
+
+  chapters.forEach((chapter) => {
+    const distance = Math.abs(progress - chapter.at);
+
+    if (distance < bestDistance) {
+      nearest = chapter;
+
+      bestDistance = distance;
+    }
+  });
+
+  return nearest;
+}
+
+function updateExperienceIndex(progress) {
+  const active = getNearestChapter(progress);
+
+  if (scrollNumber) {
+    scrollNumber.textContent = active.number;
+  }
+
+  jumpButtons.forEach((button) => {
+    const key = button.dataset.homeJump;
+
+    button.classList.toggle("is-active", key === active.key);
+  });
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+function updateFooter(progress) {
+  if (!footer) {
+    return;
+  }
+
+  const weight = smoothStep(mapRange(progress, 0.925, 0.985));
+
+  footer.style.opacity = weight.toFixed(4);
+
+  footer.style.transform = `translate3d(0, ${30 * (1 - weight)}px, 0)`;
+
+  footer.style.pointerEvents = weight > 0.9 ? "auto" : "none";
+
+  footer.classList.toggle("is-interactive", weight > 0.9);
+}
+
+/* =========================================================
+   CAMERA
+   ========================================================= */
+
+function updateCamera(progress, elapsed) {
   /*
-    Restrained camera motion.
-    The sculpture should feel
-    monumental rather than like
-    a game object.
+    Tiny forward/back movement creates
+    depth through the entire experience.
   */
 
-  camera.position.z = THREE.MathUtils.lerp(
-    isSmallScreen ? 19.5 : 18.2,
+  const breathing = Math.sin(elapsed * 0.13) * 0.035;
 
-    isSmallScreen ? 18.4 : 16.9,
+  camera.position.z =
+    (isSmallScreen ? 12.5 : 11.5) + breathing - progress * 0.4;
 
-    scatterGlobal,
-  );
+  camera.position.x = Math.sin(elapsed * 0.085) * 0.035;
 
-  camera.position.x =
-    Math.sin(elapsedSeconds * 0.11) * 0.055 * (1 - cardProgress);
+  camera.position.y = Math.cos(elapsed * 0.07) * 0.025;
 
-  camera.position.y =
-    0.15 + Math.sin(elapsedSeconds * 0.085) * 0.04 * (1 - cardProgress);
-
-  camera.lookAt(
-    0,
-
-    isSmallScreen ? 0.4 : 0.15,
-
-    0,
-  );
-
-  starField.material.uniforms.uOpacity.value =
-    0.34 + scatterGlobal * 0.34 - cardProgress * 0.08;
+  camera.lookAt(0, 0, 0);
 }
 
-/* ---------------------------------
-   MAIN SCENE
---------------------------------- */
+/* =========================================================
+   WORLD MOVEMENT
+   ========================================================= */
 
-function updateScene(progress, elapsedSeconds) {
-  updateSculpture(progress, elapsedSeconds);
+function updateWorld(progress, elapsed) {
+  /*
+    The entire universe remains subtly alive.
+  */
 
-  starField.material.uniforms.uTime.value = elapsedSeconds;
+  world.rotation.y = Math.sin(elapsed * 0.045) * 0.008;
 
-  starField.points.rotation.y = elapsedSeconds * 0.006 + progress * 0.075;
+  world.rotation.x = Math.cos(elapsed * 0.038) * 0.004;
 
-  starField.points.rotation.z = Math.sin(elapsedSeconds * 0.035) * 0.012;
+  backgroundDust.points.rotation.y = elapsed * 0.0025;
 
-  world.rotation.y = Math.sin(elapsedSeconds * 0.035) * 0.004;
+  /*
+    Archive becomes slightly denser / calmer.
+  */
+
+  backgroundDust.material.opacity = lerp(
+    0.18,
+    0.3,
+    smoothStep(mapRange(progress, 0.72, 0.95)),
+  );
 }
 
-/* ---------------------------------
+/* =========================================================
+   CSS VARIABLES
+   ========================================================= */
+
+function updateCssVariables(progress) {
+  root.style.setProperty("--home-progress", progress.toFixed(5));
+
+  root.style.setProperty(
+    "--home-progress-percent",
+    `${(progress * 100).toFixed(2)}%`,
+  );
+}
+
+/* =========================================================
+   COMPLETE FRAME UPDATE
+   ========================================================= */
+
+function updateExperience(progress, elapsed) {
+  updateParticles(progress, elapsed);
+
+  updateStructures(progress, elapsed);
+
+  updateCamera(progress, elapsed);
+
+  updateWorld(progress, elapsed);
+
+  updateIntro(progress);
+
+  updateCards(progress);
+
+  updateExperienceIndex(progress);
+
+  updateFooter(progress);
+
+  updateCssVariables(progress);
+}
+
+/* =========================================================
    ANIMATION LOOP
---------------------------------- */
+   ========================================================= */
 
 function animate(now) {
-  const deltaSeconds = Math.min(
-    0.05,
+  const delta = Math.min(0.05, (now - previousFrame) / 1000);
 
-    (now - lastTime) / 1000,
-  );
+  previousFrame = now;
 
-  lastTime = now;
+  /*
+    Very responsive scroll scrubbing.
 
-  smoothScrollProgress = targetScrollProgress;
+    Almost direct connection to the wheel,
+    with only enough damping to remove jitter.
+  */
 
-  const elapsedSeconds = now / 1000;
+  const response = prefersReducedMotion ? 1 : 1 - Math.exp(-42 * delta);
 
-  updateScene(smoothScrollProgress, elapsedSeconds);
+  renderedProgress = lerp(renderedProgress, targetProgress, response);
 
-  updateInterface(smoothScrollProgress);
+  if (Math.abs(renderedProgress - targetProgress) < 0.00004) {
+    renderedProgress = targetProgress;
+  }
+
+  const elapsed = now / 1000;
+
+  updateExperience(renderedProgress, elapsed);
 
   renderer.render(scene, camera);
 
   requestAnimationFrame(animate);
 }
 
-/* ---------------------------------
+/* =========================================================
    RESIZE
---------------------------------- */
+   ========================================================= */
 
-function handleResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-
-  camera.updateProjectionMatrix();
-
+function resize() {
   renderer.setPixelRatio(
-    Math.min(
-      window.devicePixelRatio,
-
-      window.innerWidth <= 760 ? 1.2 : 1.55,
-    ),
+    Math.min(window.devicePixelRatio, window.innerWidth <= 760 ? 1.15 : 1.5),
   );
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  updateScrollProgress();
+  camera.aspect = window.innerWidth / window.innerHeight;
+
+  camera.updateProjectionMatrix();
+
+  updateTargetProgress();
 }
 
-window.addEventListener("scroll", updateScrollProgress, {
+resize();
+
+/* =========================================================
+   SCROLL
+   ========================================================= */
+
+window.addEventListener("scroll", updateTargetProgress, {
   passive: true,
 });
 
-window.addEventListener("resize", handleResize);
+window.addEventListener("resize", resize);
 
-updateScrollProgress();
+/* =========================================================
+   CHAPTER JUMP BUTTONS
+   ========================================================= */
 
-requestAnimationFrame(animate);
+const jumpTargets = {
+  family: document.getElementById("scroll-family"),
 
-/* ---------------------------------
-   "SCROLL TO ENTER" BUTTON
---------------------------------- */
+  politics: document.getElementById("scroll-politics"),
 
-const archiveLink = document.querySelector(".scroll-to-archive");
+  works: document.getElementById("scroll-works"),
 
-const archiveTarget = document.getElementById("archive-entry");
+  blog: document.getElementById("scroll-blog"),
 
-if (archiveLink && archiveTarget) {
-  archiveLink.addEventListener("click", (event) => {
-    event.preventDefault();
+  archive: document.getElementById("scroll-archive"),
+};
 
-    if (prefersReducedMotion) {
-      archiveTarget.scrollIntoView({
-        behavior: "auto",
-      });
+jumpButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const key = button.dataset.homeJump;
 
+    const target = jumpTargets[key];
+
+    if (!target) {
       return;
     }
 
-    const startPosition = window.scrollY;
+    target.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
 
-    const targetPosition =
-      archiveTarget.getBoundingClientRect().top + window.scrollY;
-
-    const distance = targetPosition - startPosition;
-
-    const duration = 3000;
-
-    const startTime = performance.now();
-
-    function scrollAnimation(currentTime) {
-      const elapsedTime = currentTime - startTime;
-
-      const progress = Math.min(elapsedTime / duration, 1);
-
-      const easedProgress =
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      window.scrollTo(
-        0,
-
-        startPosition + distance * easedProgress,
-      );
-
-      if (progress < 1) {
-        requestAnimationFrame(scrollAnimation);
-      }
-    }
-
-    requestAnimationFrame(scrollAnimation);
+      block: "center",
+    });
   });
-}
+});
+
+/* =========================================================
+   START
+   ========================================================= */
+
+requestAnimationFrame(animate);

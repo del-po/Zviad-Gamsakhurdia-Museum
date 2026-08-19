@@ -1,165 +1,787 @@
 @use "../fonts" as *;
 
-header {
+/* =========================================================
+   MUSEUM HEADER
+
+   BLACK      #171717
+   LIGHT GREY #ececec
+   YELLOW     #fedd00
+   WHITE      #ffffff
+   ========================================================= */
+
+.museum-header {
   position: relative;
   z-index: 1000;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-
   width: 100%;
-  height: 150px;
-  padding: 18px clamp(18px, 3vw, 52px);
+  min-width: 320px;
 
-  border-bottom: 1px solid rgba(23, 23, 23, 0.2);
-  background-color: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
+  color: #171717;
 
-  > .header-logo {
-    display: inline-flex;
+  font-family: $font-body;
+
+  /* =====================================================
+     TOP REGISTER
+     ===================================================== */
+
+  .museum-header__register {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    flex-shrink: 0;
-    overflow: visible;
 
-    color: inherit;
-    text-decoration: none;
-    line-height: 0;
+    height: 42px;
 
-    .logo {
+    padding: 0 clamp(24px, 3.5vw, 64px);
+
+    background: #171717;
+    color: #ececec;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .museum-header__register-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: rgba(255, 255, 255, 0.72);;
+  }
+
+  .museum-header__register-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: rgba(255, 255, 255, 0.72);;
+
+    i {
       display: block;
 
-      width: auto;
-      height: clamp(70px, 6vw, 100px);
+      width: 30px;
+      height: 1px;
 
-      object-fit: contain;
-      overflow: visible;
-      pointer-events: none;
+      background: #fedd00;
     }
   }
 
-  > .header-burger-menu {
-    display: none;
+  .museum-header__register-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 22px;
+
+    color: rgba(255, 255, 255, 0.72);;
   }
 
-  > .header-menu {
-    display: flex;
-    align-items: center;
-    gap: clamp(14px, 2.6vw, 42px);
+  /* =====================================================
+     MAIN HEADER
+     ===================================================== */
+
+  .museum-header__main {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+      clamp(205px, 15vw, 270px)
+      minmax(560px, 1fr)
+      clamp(225px, 15vw, 280px);
+
+    height: 142px;
+
+    border-bottom: 1px solid #171717;
+
+    background: #ffffff;
+  }
+
+  /* =====================================================
+     LOGO MODULE
+     ===================================================== */
+
+  .museum-header__logo {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border-right: 1px solid rgba(23, 23, 23, 0.22);
+
+    background: #ffffff;
+
+    color: #171717;
+
+    text-decoration: none;
+
+    /* subtle internal crosshair */
+
+    &::before {
+      content: "";
+
+      position: absolute;
+
+      top: 50%;
+      right: 18px;
+      left: 18px;
+
+      height: 1px;
+
+      background: rgba(23, 23, 23, 0.055);
+
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+
+      position: absolute;
+
+      top: 16px;
+      bottom: 16px;
+      left: 50%;
+
+      width: 1px;
+
+      background: rgba(23, 23, 23, 0.055);
+
+      pointer-events: none;
+    }
+
+    &:hover {
+      .museum-header__logo-video {
+        transform: scale(1.045);
+      }
+
+      .museum-header__logo-corner--br {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+
+  /* =====================================================
+     LOGO VIDEO
+     ===================================================== */
+
+  .museum-header__logo-video {
+    position: relative;
+    z-index: 2;
+
+    display: block;
+
+    width: 108px;
+    height: 108px;
+
+    object-fit: contain;
+
+    background: #ffffff;
+
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* =====================================================
+     LOGO CORNERS
+     ===================================================== */
+
+  .museum-header__logo-corner {
+    position: absolute;
+    z-index: 4;
+
+    width: 15px;
+    height: 15px;
+
+    pointer-events: none;
+
+    transition:
+      width 200ms ease,
+      height 200ms ease;
+  }
+
+  .museum-header__logo-corner--tl {
+    top: 12px;
+    left: 12px;
+
+    border-top: 1px solid #171717;
+
+    border-left: 1px solid #171717;
+  }
+
+  .museum-header__logo-corner--br {
+    right: 12px;
+    bottom: 12px;
+
+    border-right: 1px solid #fedd00;
+
+    border-bottom: 1px solid #fedd00;
+  }
+
+  /* =====================================================
+     NAVIGATION
+     ===================================================== */
+
+  .header-menu {
+    display: grid;
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    min-width: 0;
+    height: 100%;
+
+    background: #ffffff;
 
     a {
       position: relative;
 
-      padding: 8px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
+      min-width: 0;
+
+      padding: 23px clamp(13px, 1.3vw, 24px) 20px;
+
+      overflow: hidden;
+
+      border-right: 1px solid rgba(23, 23, 23, 0.18);
+
+      background: #ffffff;
       color: #171717;
+
       text-decoration: none;
 
-      font-family: $font-typewriter;
-      font-size: clamp(11px, 2vw, 18px);
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      transition:
+        background-color 190ms ease,
+        color 190ms ease;
+
+      /* top registration tick */
+
+      &::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 50%;
+
+        width: 1px;
+        height: 14px;
+
+        background: rgba(23, 23, 23, 0.25);
+      }
+
+      /* yellow base */
 
       &::after {
         content: "";
 
         position: absolute;
-        right: 100%;
-        bottom: 2px;
+
+        right: 0;
+        bottom: 0;
         left: 0;
 
-        height: 1px;
+        height: 5px;
 
-        background-color: #171717;
+        background: #fedd00;
 
-        transition:
-          right 240ms ease,
-          background-color 240ms ease;
+        transform: translateY(100%);
+
+        transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
       }
 
-      &:hover::after,
-      &:focus-visible::after {
-        right: 0;
+      strong {
+        font-family: $font-typewriter;
+
+        font-size: clamp(13px, 0.95vw, 16px);
+
+        font-weight: 700;
+
+        line-height: 1;
+
+        letter-spacing: 0.08em;
+
+        text-transform: uppercase;
       }
 
-      &.active::after {
-        right: 0;
-        background-color: #fedd00;
+      &:hover,
+      &:focus-visible,
+      &.active {
+        background: #171717;
+        color: #ffffff;
+
+        &::after {
+          transform: translateY(0);
+        }
+
+        &::before {
+          background: #fedd00;
+        }
+
+        .header-menu__number {
+          color: #fedd00;
+        }
+
+        .header-menu__corner {
+          border-color: #fedd00;
+
+          transform: rotate(45deg);
+        }
       }
+    }
+  }
+
+  /* =====================================================
+     NAV NUMBERS
+     ===================================================== */
+
+  .header-menu__number {
+    color: rgba(23, 23, 23, 0.43);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.15em;
+
+    transition: color 180ms ease;
+  }
+
+  /* =====================================================
+     NAV CORNER MARK
+     ===================================================== */
+
+  .header-menu__corner {
+    position: absolute;
+
+    right: 14px;
+    bottom: 17px;
+
+    width: 10px;
+    height: 10px;
+
+    border-right: 1px solid rgba(23, 23, 23, 0.35);
+
+    border-bottom: 1px solid rgba(23, 23, 23, 0.35);
+
+    transition:
+      border-color 180ms ease,
+      transform 220ms ease;
+  }
+
+  /* =====================================================
+     LIVE PANEL
+     ===================================================== */
+
+  .museum-header__live {
+    position: relative;
+
+    display: grid;
+
+    grid-template-rows:
+      auto
+      1fr
+      auto;
+
+    align-items: center;
+
+    padding: 20px clamp(18px, 1.7vw, 29px);
+
+    overflow: hidden;
+
+    background: #171717;
+    color: #ffffff;
+  }
+
+  .museum-header__live::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 5px;
+
+    background: #fedd00;
+  }
+
+  .museum-header__live-top {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    color: rgba(236, 236, 236, 0.68);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+  }
+
+  /* =====================================================
+     LIVE SIGNAL
+     ===================================================== */
+
+  .museum-header__pulse {
+    position: relative;
+
+    display: block;
+
+    width: 8px;
+    height: 8px;
+
+    background: #fedd00;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+      inset: -4px;
+
+      border: 1px solid #fedd00;
+
+      animation: museum-live-pulse 1.8s ease-out infinite;
+    }
+  }
+
+  /* =====================================================
+     CLOCK
+     ===================================================== */
+
+  .museum-header__clock {
+    position: relative;
+    z-index: 2;
+
+    align-self: center;
+
+    font-family: $font-heading;
+
+    font-size: clamp(34px, 2.8vw, 50px);
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    letter-spacing: -0.035em;
+
+    white-space: nowrap;
+  }
+
+  .museum-header__live-bottom {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    color: rgba(236, 236, 236, 0.48);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+  }
+
+  /* =====================================================
+     LIVE CORNER
+     ===================================================== */
+
+  .museum-header__live-corner {
+    position: absolute;
+
+    top: 13px;
+    right: 13px;
+
+    width: 15px;
+    height: 15px;
+
+    border-top: 1px solid #fedd00;
+
+    border-right: 1px solid #fedd00;
+  }
+
+  /* =====================================================
+     SCANNER
+     ===================================================== */
+
+  .museum-header__scanner {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+    left: 5px;
+
+    height: 5px;
+
+    overflow: hidden;
+
+    background: rgba(236, 236, 236, 0.08);
+
+    span {
+      position: absolute;
+
+      top: 0;
+      bottom: 0;
+
+      width: 30%;
+
+      background: #fedd00;
+
+      animation: museum-header-scan 3.6s ease-in-out infinite;
+    }
+  }
+
+  /* =====================================================
+     BURGER
+     ===================================================== */
+
+  .header-burger-menu {
+    display: none;
+  }
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes museum-live-pulse {
+  0% {
+    opacity: 0.8;
+
+    transform: scale(0.65);
+  }
+
+  75%,
+  100% {
+    opacity: 0;
+
+    transform: scale(1.75);
+  }
+}
+
+@keyframes museum-header-scan {
+  0% {
+    left: -32%;
+  }
+
+  48%,
+  58% {
+    left: 102%;
+  }
+
+  100% {
+    left: -32%;
+  }
+}
+
+/* =========================================================
+   MEDIUM DESKTOP
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .museum-header {
+    .museum-header__main {
+      grid-template-columns:
+        190px
+        minmax(450px, 1fr)
+        190px;
+
+      height: 130px;
+    }
+
+    .museum-header__logo-video {
+      width: 94px;
+      height: 94px;
+    }
+
+    .header-menu {
+      a {
+        padding: 21px 10px 17px;
+
+        strong {
+          font-size: 11px;
+        }
+      }
+    }
+
+    .header-menu__number {
+      font-size: 8px;
+    }
+
+    .museum-header__clock {
+      font-size: 34px;
     }
   }
 }
 
-@media (max-width: 750px) {
-  header {
-    position: relative;
-    z-index: 1000;
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+@media (max-width: 900px) {
+  .museum-header {
+    .museum-header__register-right {
+      display: none;
+    }
 
-    width: 100%;
-    min-width: 320px;
-    height: 100px;
-    min-height: 80px;
-    padding: 14px 18px;
+    .museum-header__register {
+      grid-template-columns:
+        1fr
+        auto;
+    }
 
-    border-bottom: 1px solid rgba(23, 23, 23, 0.2);
-    background-color: rgba(255, 255, 255, 0.98);
+    .museum-header__main {
+      grid-template-columns:
+        160px
+        minmax(380px, 1fr)
+        155px;
 
-    > .header-logo {
-      display: inline-flex;
-      align-items: center;
+      height: 120px;
+    }
 
-      position: relative;
-      z-index: 1002;
+    .museum-header__logo-video {
+      width: 84px;
+      height: 84px;
+    }
 
-      .logo {
-        display: block;
+    .header-menu {
+      a {
+        padding: 18px 8px 16px;
 
-        width: auto;
-        height: 52px;
-        max-width: 160px;
-
-        object-fit: contain;
+        strong {
+          font-size: 10px;
+        }
       }
     }
 
-    > .header-burger-menu {
+    .museum-header__live {
+      padding: 16px 14px;
+    }
+
+    .museum-header__clock {
+      font-size: 27px;
+    }
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 750px) {
+  .museum-header {
+    .museum-header__register {
+      height: 30px;
+
+      padding: 0 14px;
+
+      font-size: 6px;
+    }
+
+    .museum-header__register-center {
+      span:last-child,
+      i {
+        display: none;
+      }
+    }
+
+    .museum-header__main {
+      display: grid;
+
+      grid-template-columns:
+        112px
+        minmax(0, 1fr)
+        74px;
+
+      height: 94px;
+    }
+
+    /* logo */
+
+    .museum-header__logo {
+      border-right: 1px solid rgba(23, 23, 23, 0.2);
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+
+    .museum-header__logo-video {
+      width: 72px;
+      height: 72px;
+    }
+
+    .museum-header__logo-corner {
+      display: none;
+    }
+
+    /* hide desktop live panel */
+
+    .museum-header__live {
+      display: none;
+    }
+
+    /* burger */
+
+    .header-burger-menu {
       position: relative;
-      z-index: 1002;
+      z-index: 1003;
+
+      grid-column: 3;
 
       display: flex;
       flex-direction: column;
+
+      align-items: center;
       justify-content: center;
+
       gap: 5px;
 
-      width: 42px;
-      height: 42px;
-      margin-left: auto;
-      padding: 8px;
+      width: 100%;
+      height: 100%;
+
+      padding: 0;
 
       border: 0;
-      background-color: transparent;
+      border-left: 1px solid rgba(23, 23, 23, 0.2);
+
+      background: #ffffff;
 
       cursor: pointer;
 
       span {
         display: block;
 
-        width: 100%;
+        width: 28px;
         height: 2px;
 
-        background-color: #171717;
+        background: #171717;
 
         transition:
           transform 220ms ease,
-          opacity 220ms ease;
+          opacity 220ms ease,
+          background-color 220ms ease;
       }
 
       &[aria-expanded="true"] {
+        background: #171717;
+
+        span {
+          background: #fedd00;
+        }
+
         span:first-child {
           transform: translateY(7px) rotate(45deg);
         }
@@ -174,49 +796,116 @@ header {
       }
     }
 
-    > .header-menu {
+    /* mobile menu */
+
+    .header-menu {
       position: fixed;
 
-      top: 80px;
+      top: 124px;
       right: 0;
       bottom: 0;
       left: 0;
-
-      z-index: 999;
+      z-index: 1001;
 
       display: none;
 
-      min-width: 320px;
+      grid-template-columns: 1fr;
 
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      gap: 0;
+      height: auto;
 
-      padding: 24px;
+      padding: 18px 18px 44px;
 
       overflow-y: auto;
 
-      border: 0;
-      background-color: rgba(255, 255, 255, 0.98);
+      background: #171717;
 
       &.open {
-        display: flex;
+        display: grid;
       }
 
       a {
-        display: block;
+        display: grid;
 
-        width: 100%;
-        padding: 18px 0;
+        grid-template-columns:
+          48px
+          1fr;
 
-        border-bottom: 1px solid rgba(23, 23, 23, 0.2);
+        align-items: center;
 
-        color: #171717;
-        font-size: clamp(24px, 8vw, 44px);
-        line-height: 1.1;
-        text-decoration: none;
+        min-height: clamp(76px, 14vh, 106px);
+
+        padding: 0 16px;
+
+        border-right: 0;
+
+        border-bottom: 1px solid rgba(236, 236, 236, 0.14);
+
+        background: #171717;
+        color: #ffffff;
+
+        &::before {
+          display: none;
+        }
+
+        &::after {
+          top: 0;
+          right: auto;
+          bottom: 0;
+          left: 0;
+
+          width: 5px;
+          height: auto;
+
+          transform: scaleY(0);
+
+          transform-origin: bottom;
+        }
+
+        &:hover,
+        &:focus-visible,
+        &.active {
+          &::after {
+            transform: scaleY(1);
+          }
+        }
+
+        strong {
+          font-family: $font-heading;
+
+          font-size: clamp(29px, 9vw, 48px);
+
+          font-weight: 400;
+
+          letter-spacing: -0.045em;
+        }
+      }
+
+      .header-menu__number {
+        color: #fedd00;
+
+        font-size: 8px;
+      }
+
+      .header-menu__corner {
+        border-color: rgba(236, 236, 236, 0.28);
       }
     }
   }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .museum-header {
+    .museum-header__pulse::after,
+    .museum-header__scanner span {
+      animation: none;
+    }
+  }
+}
+
+body.menu-open {
+  overflow: hidden;
 }
