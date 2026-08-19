@@ -78,13 +78,40 @@
     z-index: 80;
 
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
-    min-height: 84px;
+    min-height: 100px;
 
     padding: 0 clamp(22px, 3.4vw, 58px);
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-bottom: 0;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      height: 3px;
+
+      background: linear-gradient(
+        to right,
+        var(--ink) 0%,
+        var(--ink) 18%,
+        var(--yellow) 18%,
+        var(--yellow) 22%,
+        rgba(23, 23, 23, 0.16) 22%,
+        rgba(23, 23, 23, 0.16) 100%
+      );
+
+      pointer-events: none;
+    }
   }
 
   .home-cover__brand {
