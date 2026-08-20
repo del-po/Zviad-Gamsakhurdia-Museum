@@ -9,7 +9,7 @@
       content="Article from the Zviad Gamsakhurdia Digital Museum journal."
     />
     <title>Journal Entry | Zviad Gamsakhurdia Digital Museum</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
 
   <body>
@@ -20,40 +20,7 @@
     </div>
 
     <div class="blog-post-page">
-      <header class="site-header" id="site-header">
-        <a class="brand" href="../index.html" aria-label="Digital Museum home">
-          <span class="brand-mark" aria-hidden="true">ZG</span>
-          <span class="brand-copy">
-            <span>Zviad Gamsakhurdia</span>
-            <span>Digital Museum</span>
-          </span>
-        </a>
-
-        <button
-          class="menu-button"
-          type="button"
-          aria-expanded="false"
-          aria-controls="main-navigation"
-        >
-          <span>Menu</span>
-          <span class="menu-button__line" aria-hidden="true"></span>
-        </button>
-
-        <nav
-          class="main-navigation"
-          id="main-navigation"
-          aria-label="Main navigation"
-        >
-          <a href="../index.html">Home</a>
-          <a href="../Family/family.html">Life &amp; Family</a>
-          <a href="../Dissent-and-Politics/dissent-and-politics.html">
-            Dissent &amp; Politics
-          </a>
-          <a href="../Works/works.html">Works</a>
-          <a href="../archive.html">Archive</a>
-          <a class="active" href="./blog.html" aria-current="page">Blog</a>
-        </nav>
-      </header>
+      <div data-header></div>
 
       <main id="article-content">
         <section class="article-hero" aria-labelledby="article-title">
@@ -198,33 +165,10 @@
         </section>
       </main>
 
-      <footer class="archive-footer archive-footer--static">
-        <div class="archive-footer__copyright">
-          <span>Zviad Gamsakhurdia Digital Museum</span>
-          <a
-            href="https://www.ailaw.llc"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            © 2026 AI Law LLC
-          </a>
-        </div>
-
-        <nav class="archive-footer__pages" aria-label="Secondary navigation">
-          <a href="../about.html">About</a>
-          <a href="../contact.html">Contact</a>
-          <a href="../policies.html#editorial-policy">Editorial Policy</a>
-          <a href="../policies.html#privacy-policy">Privacy Policy</a>
-          <a href="../policies.html#accessibility">Accessibility</a>
-        </nav>
-
-        <nav class="archive-footer__social" aria-label="Social media">
-          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </nav>
-      </footer>
+      <div data-footer></div>
     </div>
-
+    <script src="/Header-Footer/header.js"></script>
+    <script src="/Header-Footer/footer.js"></script>
     <script src="./blog-post.js"></script>
   </body>
 </html>

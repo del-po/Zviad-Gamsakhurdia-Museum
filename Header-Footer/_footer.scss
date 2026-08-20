@@ -79,7 +79,7 @@
   .site-footer__masthead-label {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
 
     padding-bottom: 8px;
 
@@ -94,6 +94,8 @@
   }
 
   .site-footer__yellow-mark {
+    position: relative;
+
     display: block;
 
     width: 11px;
@@ -102,6 +104,23 @@
     flex-shrink: 0;
 
     background: #fedd00;
+
+    box-shadow:
+      0 0 0 rgba(254, 221, 0, 0),
+      0 0 0 rgba(254, 221, 0, 0);
+
+    animation: footer-square-flicker 2.2s ease-in-out infinite;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+      inset: -5px;
+
+      border: 1px solid #fedd00;
+
+      animation: footer-signal-pulse 1.8s ease-out infinite;
+    }
   }
 
   /* =====================================================
@@ -229,7 +248,7 @@
 
       font-family: $font-typewriter;
 
-      font-size: clamp(10px, 0.8vw, 13px);
+      font-size: clamp(12px, 0.8vw, 16px);
 
       font-weight: 500;
 
@@ -296,6 +315,8 @@
     padding: 28px;
 
     border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
 
     background: white;
 
@@ -414,6 +435,66 @@
         color: #fedd00;
       }
     }
+  }
+}
+
+@keyframes footer-signal-pulse {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.65);
+  }
+
+  75%,
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+
+@keyframes footer-square-flicker {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+    box-shadow:
+      0 0 4px rgba(254, 221, 0, 0.35),
+      0 0 10px rgba(254, 221, 0, 0.12);
+  }
+
+  20% {
+    opacity: 0.78;
+    filter: brightness(0.9);
+  }
+
+  28% {
+    opacity: 1;
+    filter: brightness(1.35);
+    box-shadow:
+      0 0 8px rgba(254, 221, 0, 0.8),
+      0 0 18px rgba(254, 221, 0, 0.45);
+  }
+
+  32% {
+    opacity: 0.88;
+    filter: brightness(1);
+  }
+
+  55% {
+    opacity: 1;
+    filter: brightness(1.5);
+    box-shadow:
+      0 0 10px rgba(254, 221, 0, 0.9),
+      0 0 24px rgba(254, 221, 0, 0.5);
+  }
+
+  62% {
+    opacity: 0.82;
+    filter: brightness(0.95);
+  }
+
+  72% {
+    opacity: 1;
+    filter: brightness(1.25);
   }
 }
 

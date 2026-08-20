@@ -120,7 +120,7 @@
             to right,
             #171717 0 62%,
             #fedd00 62% 78%,
-            #d8d8d4 78% 90%,  
+            #d8d8d4 78% 90%,
             #ecece8 90% 100%
           )
           left bottom / 100% 7px no-repeat;
@@ -473,6 +473,8 @@
 
     background: #fedd00;
 
+    animation: museum-live-flicker 2.2s ease-in-out infinite;
+
     &::after {
       content: "";
 
@@ -614,6 +616,56 @@
 
   100% {
     left: -32%;
+  }
+}
+
+@keyframes museum-live-flicker {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+
+    box-shadow:
+      0 0 4px rgba(254, 221, 0, 0.4),
+      0 0 10px rgba(254, 221, 0, 0.14);
+  }
+
+  20% {
+    opacity: 0.76;
+    filter: brightness(0.9);
+  }
+
+  28% {
+    opacity: 1;
+    filter: brightness(1.45);
+
+    box-shadow:
+      0 0 8px rgba(254, 221, 0, 0.9),
+      0 0 18px rgba(254, 221, 0, 0.5);
+  }
+
+  32% {
+    opacity: 0.86;
+    filter: brightness(1);
+  }
+
+  55% {
+    opacity: 1;
+    filter: brightness(1.6);
+
+    box-shadow:
+      0 0 10px rgba(254, 221, 0, 1),
+      0 0 24px rgba(254, 221, 0, 0.58);
+  }
+
+  62% {
+    opacity: 0.8;
+    filter: brightness(0.95);
+  }
+
+  72% {
+    opacity: 1;
+    filter: brightness(1.3);
   }
 }
 

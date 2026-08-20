@@ -5,9 +5,6 @@
     "https://script.google.com/macros/s/AKfycbxPDWn9c6D81WMC8Qjqus3ZsWEVnbSWZBlGCPYLNcjyMl2jYhUD4PZMng4tb_rrTeyX8Q/exec";
 
   const elements = {
-    header: document.getElementById("site-header"),
-    menuButton: document.querySelector(".menu-button"),
-    navigation: document.getElementById("main-navigation"),
     description: document.getElementById("page-description"),
     progressBar: document.getElementById("reading-progress-bar"),
     category: document.getElementById("article-category"),
@@ -378,11 +375,11 @@
     renderSources(post);
     renderPagination(post);
     renderRelated(post);
+    if (elements.editorialNote && elements.editorialNoteText) {
+      elements.editorialNote.hidden = !post.editorialNote;
+      elements.editorialNoteText.textContent = post.editorialNote || "";
+    }
     updateStructuredData(post);
-  }
-
-  function updateHeader() {
-    elements.header?.classList.toggle("is-scrolled", window.scrollY > 18);
   }
 
   function updateReadingProgress() {
@@ -404,18 +401,6 @@
     );
 
     elements.progressBar.style.transform = `scaleX(${progress})`;
-  }
-
-  function setMenu(open) {
-    if (!elements.menuButton || !elements.navigation) {
-      return;
-    }
-
-    elements.menuButton.setAttribute("aria-expanded", String(open));
-
-    elements.navigation.classList.toggle("is-open", open);
-
-    document.body.classList.toggle("menu-open", open);
   }
 
   async function copyCurrentLink() {
@@ -516,41 +501,15 @@
     }
   }
 
-  elements.menuButton?.addEventListener("click", () => {
-    const open = elements.menuButton.getAttribute("aria-expanded") !== "true";
-
-    setMenu(open);
-  });
-
-  elements.navigation?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => setMenu(false));
-  });
-
   elements.copyButton?.addEventListener("click", copyCurrentLink);
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      updateHeader();
-      updateReadingProgress();
-    },
-    { passive: true },
-  );
+  window.addEventListener("scroll", updateReadingProgress, {
+    passive: true,
+  });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 860) {
-      setMenu(false);
-    }
-
     updateReadingProgress();
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      setMenu(false);
-    }
-  });
-
-  updateHeader();
   loadPost();
 })();

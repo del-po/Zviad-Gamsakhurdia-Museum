@@ -4,9 +4,6 @@
   const BLOG_API_URL =
     "https://script.google.com/macros/s/AKfycbxPDWn9c6D81WMC8Qjqus3ZsWEVnbSWZBlGCPYLNcjyMl2jYhUD4PZMng4tb_rrTeyX8Q/exec";
 
-  const header = document.getElementById("site-header");
-  const menuButton = document.querySelector(".menu-button");
-  const mainNavigation = document.getElementById("main-navigation");
   const filterButtons = [...document.querySelectorAll(".filter-button")];
   const searchInput = document.getElementById("article-search");
   const noResults = document.getElementById("no-results");
@@ -28,22 +25,6 @@
   let activeFilter = "all";
   let searchTerm = "";
   let posts = [];
-
-  function updateHeader() {
-    header?.classList.toggle("is-scrolled", window.scrollY > 18);
-  }
-
-  function setMenu(open) {
-    if (!menuButton || !mainNavigation) return;
-
-    menuButton.setAttribute("aria-expanded", String(open));
-    mainNavigation.classList.toggle("is-open", open);
-    document.body.classList.toggle("menu-open", open);
-  }
-
-  function closeMenu() {
-    setMenu(false);
-  }
 
   function normalizeText(value) {
     return String(value || "")
@@ -70,6 +51,47 @@
       year: "numeric",
     });
   }
+
+  function updateVisitorCoordinates() {
+    const latitudeElement = document.getElementById("visitor-latitude");
+    const longitudeElement = document.getElementById("visitor-longitude");
+
+    if (!latitudeElement || !longitudeElement) return;
+
+    if (!("geolocation" in navigator)) {
+      latitudeElement.textContent = "LOCATION";
+      longitudeElement.textContent = "UNAVAILABLE";
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        latitudeElement.textContent = `${Math.abs(latitude).toFixed(4)}° ${
+          latitude >= 0 ? "N" : "S"
+        }`;
+
+        longitudeElement.textContent = `${Math.abs(longitude).toFixed(4)}° ${
+          longitude >= 0 ? "E" : "W"
+        }`;
+      },
+
+      () => {
+        latitudeElement.textContent = "LOCATION";
+        longitudeElement.textContent = "PRIVATE";
+      },
+
+      {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 300000,
+      },
+    );
+  }
+
+  updateVisitorCoordinates();
 
   function renderEditorsNote(post) {
     if (!featuredStory) return;
@@ -392,15 +414,6 @@
     }
   }
 
-  menuButton?.addEventListener("click", () => {
-    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
-    setMenu(!isOpen);
-  });
-
-  mainNavigation?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeMenu);
-  });
-
   filterButtons.forEach((button) => {
     button.setAttribute(
       "aria-pressed",
@@ -415,17 +428,6 @@
     updatePosts();
   });
 
-  window.addEventListener("scroll", updateHeader, {
-    passive: true,
-  });
-
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 860) {
-      closeMenu();
-    }
-  });
-
-  updateHeader();
   loadPosts();
   loadMostReadPosts();
 })();

@@ -8,52 +8,14 @@
       content="Articles, research notes, archive discoveries and project updates from the Zviad Gamsakhurdia Digital Museum."
     />
     <title>Blog | Zviad Gamsakhurdia Digital Museum</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
 
   <body>
     <a class="skip-link" href="#blog-content">Skip to content</a>
 
     <div class="blog-page">
-      <header>
-        <a
-          class="header-logo"
-          href="/index.html"
-          aria-label="Zviad Gamsakhurdia Digital Museum home"
-        >
-          <video
-            class="logo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            aria-hidden="true"
-          >
-            <source src="/Images/logo.mp4" type="video/mp4" />
-          </video>
-        </a>
-
-        <button
-          class="header-burger-menu"
-          type="button"
-          aria-label="Open navigation menu"
-          aria-expanded="false"
-          aria-controls="header-menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-        <nav id="header-menu" class="header-menu" aria-label="Main navigation">
-          <a href="/Family/family.html">Family</a>
-          <a href="/Politics/dissent-and-politics.html">Politics</a>
-          <a href="/Works/works.html">Works</a>
-          <a class="active" href="/Blog/blog.html">Blog</a>
-          <a href="/Archive/archive.html">Archive</a>
-        </nav>
-      </header>
+      <div data-header></div>
 
       <main id="blog-content">
         <section class="blog-hero" aria-labelledby="blog-title">
@@ -73,70 +35,78 @@
           </div>
 
           <div class="blog-hero__visual" aria-hidden="true">
-            <div class="hero-grid"></div>
-            <div class="hero-orbit hero-orbit--one"></div>
-            <div class="hero-orbit hero-orbit--two"></div>
-            <div class="hero-sun"></div>
-            <div class="hero-paper hero-paper--one">
-              <span>Archive</span>
-              <strong>01</strong>
-            </div>
-            <div class="hero-paper hero-paper--two">
-              <span>Research</span>
-              <strong>02</strong>
-            </div>
-            <div class="hero-paper hero-paper--three">
-              <span>Dialogue</span>
-              <strong>03</strong>
+            <div class="journal-machine">
+              <div class="journal-machine__grid"></div>
+
+              <div class="journal-machine__word">
+                <span>JOURNAL</span>
+                <span>JOURNAL</span>
+              </div>
+
+              <div class="journal-machine__rail journal-machine__rail--one">
+                <span>RESEARCH</span>
+                <span>ARCHIVE</span>
+                <span>ESSAYS</span>
+                <span>DOCUMENTS</span>
+                <span>RESEARCH</span>
+                <span>ARCHIVE</span>
+              </div>
+
+              <div class="journal-machine__rail journal-machine__rail--two">
+                <span>1939</span>
+                <span>1956</span>
+                <span>1977</span>
+                <span>1991</span>
+                <span>1993</span>
+                <span>2026</span>
+              </div>
+
+              <div class="journal-machine__frame">
+                <span
+                  class="journal-machine__corner journal-machine__corner--tl"
+                ></span>
+                <span
+                  class="journal-machine__corner journal-machine__corner--tr"
+                ></span>
+                <span
+                  class="journal-machine__corner journal-machine__corner--bl"
+                ></span>
+                <span
+                  class="journal-machine__corner journal-machine__corner--br"
+                ></span>
+
+                <div class="journal-machine__document">
+                  <span class="journal-machine__document-label">
+                    DIGITAL MUSEUM / EDITORIAL DESK
+                  </span>
+
+                  <div class="journal-machine__lines">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </div>
+
+                  <strong>
+                    STILL
+                    <br />
+                    BEING
+                    <br />
+                    WRITTEN<span class="journal-machine__cursor"></span>
+                  </strong>
+                </div>
+              </div>
+
+              <div class="journal-machine__scan"></div>
+
+              <div class="journal-machine__coordinates">
+                <span id="visitor-latitude">—</span>
+                <span id="visitor-longitude">—</span>
+              </div>
             </div>
           </div>
-
-          <div class="blog-hero__index" aria-hidden="true">
-            <span>Blog</span>
-            <span>MMXXVI</span>
-          </div>
-        </section>
-
-        <section
-          class="featured-story reveal-on-scroll"
-          id="featured-story"
-          hidden
-        >
-          <div class="featured-story__meta">
-            <span>Featured Essay</span>
-
-            <span id="featured-story-category">Editorial</span>
-
-            <time id="featured-story-date" datetime=""></time>
-          </div>
-
-          <article class="featured-story__article">
-            <div class="featured-story__number" aria-hidden="true">
-              Editor's Note
-            </div>
-
-            <div class="featured-story__content">
-              <p class="article-kicker">From the editors</p>
-
-              <h2 id="featured-story-title"></h2>
-
-              <p id="featured-story-deck"></p>
-
-              <a class="article-link" id="featured-story-link" href="#">
-                Read the article
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-
-            <div class="featured-story__graphic" aria-hidden="true">
-              <span class="graphic-line graphic-line--one"></span>
-              <span class="graphic-line graphic-line--two"></span>
-              <span class="graphic-circle"></span>
-              <span class="graphic-cross graphic-cross--vertical"></span>
-              <span class="graphic-cross graphic-cross--horizontal"></span>
-              <span class="graphic-caption">Living Archive</span>
-            </div>
-          </article>
         </section>
 
         <section class="posts-section" id="latest-posts">
@@ -407,51 +377,169 @@
           <div class="archive-index__years" id="most-read-posts"></div>
         </section>
 
-        <section class="collaboration-callout reveal-on-scroll">
-          <div class="collaboration-callout__number" aria-hidden="true">+</div>
-          <div class="collaboration-callout__content">
-            <p class="section-label">Let’s collaborate</p>
-            <h2>Help Us Extend the Historical Record.</h2>
-            <p>
-              Readers, researchers and families are invited to share documents,
-              photographs, recordings, corrections and personal recollections.
-              Every submission will be reviewed before publication.
-            </p>
+        <section
+          class="featured-story reveal-on-scroll"
+          id="featured-story"
+          hidden
+        >
+          <div class="featured-story__meta">
+            <span>Featured Essay</span>
+
+            <span id="featured-story-category">Editorial</span>
+
+            <time id="featured-story-date" datetime=""></time>
           </div>
-          <a class="collaboration-callout__link" href="./contact.html">
-            <span>Contribute material</span>
-            <span aria-hidden="true">↗</span>
-          </a>
+
+          <article class="featured-story__article">
+            <div class="featured-story__number" aria-hidden="true">
+              Editor's Note
+            </div>
+
+            <div class="featured-story__content">
+              <p class="article-kicker">From the editors</p>
+
+              <h2 id="featured-story-title"></h2>
+
+              <p id="featured-story-deck"></p>
+
+              <a class="article-link" id="featured-story-link" href="#">
+                Read the article
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+
+            <div class="featured-story__graphic" aria-hidden="true">
+              <div class="editors-poster">
+                <div class="editors-poster__notes">
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--pretop"
+                  >
+                    <span>TRACE</span>
+                    <span>FOLLOW</span>
+                    <span>FIND</span>
+                    <span>SEEK</span>
+
+                    <span>TRACE</span>
+                    <span>FOLLOW</span>
+                    <span>FIND</span>
+                    <span>SEEK</span>
+                  </div>
+
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--upper"
+                  >
+                    <span>LOOK</span>
+                    <span>NOTICE</span>
+                    <span>SEE</span>
+                    <span>WATCH</span>
+
+                    <span>LOOK</span>
+                    <span>NOTICE</span>
+                    <span>SEE</span>
+                    <span>WATCH</span>
+                  </div>
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--top"
+                  >
+                    <span>SEARCH</span>
+                    <span>DISCOVER</span>
+                    <span>QUESTION</span>
+                    <span>EXPLORE</span>
+
+                    <span>SEARCH</span>
+                    <span>DISCOVER</span>
+                    <span>QUESTION</span>
+                    <span>EXPLORE</span>
+                  </div>
+
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--zero"
+                  >
+                    <span>OPEN</span>
+                    <span>ACCESS</span>
+                    <span>ENTER</span>
+                    <span>ENGAGE</span>
+
+                    <span>OPEN</span>
+                    <span>ACCESS</span>
+                    <span>ENTER</span>
+                    <span>ENGAGE</span>
+                  </div>
+
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--one"
+                  >
+                    <span>READ</span>
+                    <span>STUDY</span>
+                    <span>LISTEN</span>
+                    <span>OBSERVE</span>
+
+                    <span>READ</span>
+                    <span>STUDY</span>
+                    <span>LISTEN</span>
+                    <span>OBSERVE</span>
+                  </div>
+
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--two"
+                  >
+                    <span>REVISE</span>
+                    <span>RETHINK</span>
+                    <span>CORRECT</span>
+                    <span>REFINE</span>
+
+                    <span>REVISE</span>
+                    <span>RETHINK</span>
+                    <span>CORRECT</span>
+                    <span>REFINE</span>
+                  </div>
+
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--three"
+                  >
+                    <span>REOPEN</span>
+                    <span>RETURN</span>
+                    <span>REVISIT</span>
+                    <span>REVIEW</span>
+
+                    <span>REOPEN</span>
+                    <span>RETURN</span>
+                    <span>REVISIT</span>
+                    <span>REVIEW</span>
+                  </div>
+
+                  <div
+                    class="editors-poster__ticker editors-poster__ticker--four"
+                  >
+                    <span>RECORD</span>
+                    <span>PRESERVE</span>
+                    <span>REMEMBER</span>
+                    <span>SHARE</span>
+
+                    <span>RECORD</span>
+                    <span>PRESERVE</span>
+                    <span>REMEMBER</span>
+                    <span>SHARE</span>
+                  </div>
+                </div>
+
+                <div class="editors-poster__rule"></div>
+
+                <div class="editors-poster__meta">
+                  <span>DIGITAL MUSEUM</span>
+                  <span>OPEN / 2026</span>
+                </div>
+              </div>
+            </div>
+          </article>
         </section>
       </main>
 
-      <footer class="archive-footer">
-        <div class="archive-footer__copyright">
-          <span>Zviad Gamsakhurdia Digital Museum</span>
-          <a
-            href="https://www.ailaw.llc"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            © 2026 AI Law LLC
-          </a>
-        </div>
-
-        <nav class="archive-footer__pages" aria-label="Secondary navigation">
-          <a href="./about.html">About</a>
-          <a href="./contact.html">Contact</a>
-          <a href="./editorial-policy.html">Editorial Policy</a>
-          <a href="./privacy-policy.html">Privacy Policy</a>
-          <a href="./accessibility.html">Accessibility</a>
-        </nav>
-
-        <nav class="archive-footer__social" aria-label="Social media">
-          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </nav>
-      </footer>
+      <div data-footer></div>
     </div>
 
+    <script src="/Header-Footer/header.js"></script>
+    <script src="/Header-Footer/footer.js"></script>
     <script src="./blog.js"></script>
   </body>
 </html>
