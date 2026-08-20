@@ -333,6 +333,27 @@
 
   function initializeCoordinates() {
     window.requestAnimationFrame(() => {
+      /*
+       * On desktop, align the exact center of the portrait
+       * with the shared 75% vertical grid line used by
+       * Collaboration / Editorial Policy.
+       */
+      if (window.innerWidth > 1180) {
+        const homeRect = home.getBoundingClientRect();
+        const imageRect = portraitImage.getBoundingClientRect();
+
+        const currentCenterX =
+          imageRect.left - homeRect.left + imageRect.width / 2;
+
+        const targetCenterX = homeRect.width * 0.75;
+
+        const difference = targetCenterX - currentCenterX;
+
+        currentX += difference;
+
+        applyTransform(currentX, currentY);
+      }
+
       updateCoordinates();
     });
   }

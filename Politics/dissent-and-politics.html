@@ -7,7 +7,7 @@
       name="description"
       content="Zviad Gamsakhurdia's dissident activity, leadership of Georgia's independence movement, presidency, overthrow and the civil-war period."
     />
-    <title>Dissent & Politics | Zviad Gamsakhurdia Digital Museum</title>
+    <title>Dissent &amp; Politics | Zviad Gamsakhurdia Digital Museum</title>
     <link rel="stylesheet" href="../styles.css" />
   </head>
 
@@ -15,45 +15,7 @@
     <a class="skip-link" href="#politics-content">Skip to content</a>
 
     <div class="politics-page">
-      <header>
-        <a
-          class="header-logo"
-          href="/index.html"
-          aria-label="Zviad Gamsakhurdia Digital Museum home"
-        >
-          <video
-            class="logo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            aria-hidden="true"
-          >
-            <source src="/Images/logo.mp4" type="video/mp4" />
-          </video>
-        </a>
-
-        <button
-          class="header-burger-menu"
-          type="button"
-          aria-label="Open navigation menu"
-          aria-expanded="false"
-          aria-controls="header-menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-        <nav id="header-menu" class="header-menu" aria-label="Main navigation">
-          <a href="/Family/family.html">Family</a>
-          <a class="active" href="/Politics/dissent-and-politics.html">Politics</a>
-          <a href="/Works/works.html">Works</a>
-          <a href="/Blog/blog.html">Blog</a>
-          <a href="/Archive/archive.html">Archive</a>
-        </nav>
-      </header>
+      <div data-header></div>
       <main id="politics-content">
         <section class="politics-hero" aria-labelledby="politics-title">
           <div class="politics-hero__copy">
@@ -79,69 +41,105 @@
           >
             <div class="politics-grid"></div>
 
-            <div class="politics-hero-archive">
-              <div class="hero-archive-case">
-                <div class="hero-archive-case__header">
-                  <span>Archive / Political Biography</span>
-                  <strong>ZG · 1956—1993</strong>
-                </div>
+            <div class="hero-signal-board">
+              <div class="hero-signal-board__header">
+                <span>POLITICAL TRAJECTORY / 1956—1993</span>
+                <strong data-hero-status>Underground political record</strong>
+              </div>
 
-                <div class="hero-document-stack">
-                  <!-- Stage 1: Soviet dissidence -->
-                  <article
-                    class="hero-document hero-document--dissent is-active is-entering"
-                    data-hero-stage="1"
-                  >
-                    <div class="hero-document__meta">
-                      <span>File 01 / Unauthorized publication</span>
-                      <strong>1956—1987</strong>
+              <div class="hero-signal-viewport">
+                <!-- =====================================================
+           01 / DISSENT
+           ===================================================== -->
+                <article
+                  class="hero-signal-stage hero-signal-stage--dissent is-active is-entering"
+                  data-hero-stage="1"
+                >
+                  <div class="hero-stage-copy">
+                    <div class="hero-stage-years">
+                      <i></i>
+                      <span>1956—1987</span>
                     </div>
 
-                    <p class="hero-document__georgian">
-                      საქართველოს თავისუფლება
-                    </p>
+                    <p class="hero-stage-georgian">დისიდენტობა / სამიზდატი</p>
 
-                    <h2>Dissident</h2>
+                    <h2>Dissent</h2>
 
-                    <div class="hero-document__lines">
+                    <div class="hero-stage-tags">
+                      <span>SAMIZDAT</span>
+                      <span>HUMAN RIGHTS</span>
+                      <span>ARREST</span>
+                    </div>
+                  </div>
+
+                  <div class="hero-stage-graphic hero-stage-graphic--dissent">
+                    <div class="signal-samizdat signal-samizdat--back"></div>
+
+                    <div class="signal-samizdat signal-samizdat--middle"></div>
+
+                    <div class="signal-samizdat signal-samizdat--front">
+                      <small>UNAUTHORIZED COPY</small>
+
+                      <strong>საქართველოს მოამბე</strong>
+
+                      <div class="signal-samizdat__lines">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                      </div>
+
+                      <span class="signal-censor signal-censor--one"></span>
+
+                      <span class="signal-censor signal-censor--two"></span>
+
+                      <b>SAMIZDAT / PRIVATE CIRCULATION</b>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- =====================================================
+           02 / MOVEMENT
+           ===================================================== -->
+                <article
+                  class="hero-signal-stage hero-signal-stage--movement"
+                  data-hero-stage="2"
+                >
+                  <div class="hero-stage-copy">
+                    <div class="hero-stage-years">
                       <i></i>
-                      <i></i>
-                      <i></i>
-                      <i></i>
-                      <i></i>
+                      <span>1987—1991</span>
                     </div>
 
-                    <span
-                      class="hero-document__censor hero-document__censor--one"
-                    ></span>
-
-                    <span
-                      class="hero-document__censor hero-document__censor--two"
-                    ></span>
-
-                    <strong class="hero-document__stamp">Resistance</strong>
-
-                    <div class="hero-document__footer">
-                      <span>Samizdat / Human rights / Arrest</span>
-                      <strong>Underground record</strong>
-                    </div>
-                  </article>
-
-                  <!-- Stage 2: National movement -->
-                  <article
-                    class="hero-document hero-document--movement"
-                    data-hero-stage="2"
-                  >
-                    <div class="hero-document__meta">
-                      <span>File 02 / Public mobilization</span>
-                      <strong>1987—1991</strong>
-                    </div>
-
-                    <p class="hero-document__georgian">ეროვნული მოძრაობა</p>
+                    <p class="hero-stage-georgian">ეროვნული მოძრაობა</p>
 
                     <h2>Movement</h2>
 
-                    <div class="hero-document__crowd">
+                    <div class="hero-stage-tags">
+                      <span>DEMONSTRATION</span>
+                      <span>ELECTION</span>
+                      <span>REFERENDUM</span>
+                    </div>
+                  </div>
+
+                  <div class="hero-stage-graphic hero-stage-graphic--movement">
+                    <div class="signal-movement-wave"></div>
+
+                    <div class="signal-crowd">
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
+                      <i></i>
                       <i></i>
                       <i></i>
                       <i></i>
@@ -156,84 +154,104 @@
                       <i></i>
                     </div>
 
-                    <div class="hero-document__referendum">
-                      <span>Yes</span>
-                      <strong>31.03.91</strong>
+                    <div class="signal-referendum">
+                      <small>31.03.91</small>
+                      <strong>YES</strong>
+                      <span>INDEPENDENCE</span>
                     </div>
 
-                    <div class="hero-document__footer">
-                      <span>Demonstration / Election / Referendum</span>
-                      <strong>National movement</strong>
+                    <div class="signal-movement-coordinate">
+                      <span>TBILISI</span>
+                      <i></i>
+                      <strong>31 / 03 / 91</strong>
                     </div>
-                  </article>
+                  </div>
+                </article>
 
-                  <!-- Stage 3: Statehood -->
-                  <article
-                    class="hero-document hero-document--statehood"
-                    data-hero-stage="3"
-                  >
-                    <div class="hero-document__meta">
-                      <span>File 03 / Restored republic</span>
-                      <strong>1991—1993</strong>
+                <!-- =====================================================
+           03 / STATEHOOD
+           ===================================================== -->
+                <article
+                  class="hero-signal-stage hero-signal-stage--statehood"
+                  data-hero-stage="3"
+                >
+                  <div class="hero-stage-copy">
+                    <div class="hero-stage-years">
+                      <i></i>
+                      <span>1991—1993</span>
                     </div>
 
-                    <p class="hero-document__georgian">
+                    <p class="hero-stage-georgian">
                       სახელმწიფოებრივი დამოუკიდებლობა
                     </p>
 
                     <h2>Statehood</h2>
 
-                    <div class="hero-document__state-record">
-                      <span>9 April 1991</span>
-                      <strong>Act of Restoration</strong>
-                      <i></i>
-                      <i></i>
-                      <i></i>
+                    <div class="hero-stage-tags">
+                      <span>INDEPENDENCE</span>
+                      <span>PRESIDENCY</span>
+                      <span>CONFLICT</span>
+                    </div>
+                  </div>
+
+                  <div class="hero-stage-graphic hero-stage-graphic--statehood">
+                    <div class="signal-state-frame">
+                      <div class="signal-state-frame__columns">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                      </div>
+
+                      <div class="signal-state-date">
+                        <strong>09</strong>
+
+                        <div>
+                          <span>APR</span>
+                          <small>1991</small>
+                        </div>
+                      </div>
+
+                      <div class="signal-state-restored">
+                        INDEPENDENCE RESTORED
+                      </div>
+
+                      <div class="signal-state-rule"></div>
                     </div>
 
-                    <div class="hero-document__seal">
-                      <small>Republic of Georgia</small>
-                      <strong>01</strong>
-                      <span>President</span>
+                    <div class="signal-state-registration">
+                      <span>REPUBLIC OF GEORGIA</span>
+                      <strong>STATE / 01</strong>
                     </div>
+                  </div>
+                </article>
 
-                    <div class="hero-document__footer">
-                      <span>Independence / Presidency / Conflict</span>
-                      <strong>State record</strong>
-                    </div>
-                  </article>
-                </div>
-
-                <span class="hero-archive-scanner">
+                <span class="hero-signal-scan">
                   <i></i>
                 </span>
-
-                <div class="hero-archive-case__footer">
-                  <span>Document sequence</span>
-                  <strong>Resistance → Movement → State</strong>
-                </div>
               </div>
             </div>
 
+            <!-- =====================================================
+       TIMELINE
+       ===================================================== -->
             <div class="hero-political-timeline">
               <span class="hero-political-timeline__line">
                 <i></i>
               </span>
 
               <div class="hero-political-marker is-active" data-hero-marker="1">
-                <span>01</span>
-                <strong>Dissident</strong>
+                <strong>Dissent</strong>
                 <small>1956—1987</small>
               </div>
 
               <div class="hero-political-marker" data-hero-marker="2">
-                <span>02</span>
                 <strong>Movement</strong>
                 <small>1987—1991</small>
               </div>
 
               <div class="hero-political-marker" data-hero-marker="3">
-                <span>03</span>
                 <strong>Statehood</strong>
                 <small>1991—1993</small>
               </div>
@@ -513,32 +531,531 @@
               <span class="april-night"></span>
 
               <div class="april-crowd">
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--man">
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--man">
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--man">
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--man">
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--man">
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
+
+                <i class="april-person april-person--woman">
+                  <span class="april-person__hair"></span>
+                  <span class="april-person__head"></span>
+                  <span class="april-person__body"></span>
+                  <span
+                    class="april-person__arm april-person__arm--left"
+                  ></span>
+                  <span
+                    class="april-person__arm april-person__arm--right"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--left"
+                  ></span>
+                  <span
+                    class="april-person__leg april-person__leg--right"
+                  ></span>
+                </i>
               </div>
 
               <div class="april-security-line">
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
+                <div class="april-apc" aria-hidden="true">
+                  <span class="april-apc__soviet-star"></span>
+                  <span class="april-apc__body"></span>
+                  <span class="april-apc__turret"></span>
+                  <span class="april-apc__barrel"></span>
+                  <span class="april-apc__track"></span>
+                  <i class="april-apc__wheel"></i>
+                  <i class="april-apc__wheel"></i>
+                  <i class="april-apc__wheel"></i>
+                  <i class="april-apc__wheel"></i>
+                </div>
+
+                <div class="april-soldier april-soldier--1">
+                  <span class="april-soldier__soviet-patch"></span>
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
+
+                <div class="april-soldier april-soldier--2">
+                  <span class="april-soldier__soviet-patch"></span>
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
+
+                <div class="april-soldier april-soldier--3">
+                  <span class="april-soldier__soviet-patch"></span>
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
+
+                <div class="april-soldier april-soldier--4">
+                  <span class="april-soldier__soviet-patch"></span>
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
+
+                <div class="april-soldier april-soldier--5">
+                  <span class="april-soldier__soviet-patch"></span>
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
+
+                <div class="april-soldier april-soldier--6">
+                  <span class="april-soldier__soviet-patch"></span>
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
+
+                <div class="april-soldier april-soldier--7">
+                  <span class="april-soldier__helmet"></span>
+                  <span class="april-soldier__head"></span>
+                  <span class="april-soldier__torso"></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--rear"
+                  ></span>
+                  <span
+                    class="april-soldier__arm april-soldier__arm--front"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--left"
+                  ></span>
+                  <span
+                    class="april-soldier__leg april-soldier__leg--right"
+                  ></span>
+                  <span class="april-soldier__rifle"></span>
+                </div>
               </div>
 
               <div class="april-memorial">
@@ -559,12 +1076,6 @@
               </div>
             </div>
 
-            <!-- Transition from tragedy to political resolve -->
-            <div class="movement-bridge">
-              <small>TRAGEDY → MEMORY → NATIONAL RESOLVE</small>
-              <span></span>
-            </div>
-
             <!-- Stage two: referendum -->
             <div class="movement-referendum">
               <div class="movement-referendum__meta">
@@ -578,41 +1089,10 @@
               </p>
 
               <div class="movement-referendum__mark">
+                <small>31 MARCH 1991</small>
                 <span>YES</span>
-                <strong>31.03.91</strong>
-              </div>
-            </div>
-
-            <!-- Stage three: restoration of independence -->
-            <div class="movement-act">
-              <div class="movement-act__meta">
-                <span>SUPREME COUNCIL</span>
-                <strong>STATE DOCUMENT</strong>
-              </div>
-
-              <small class="movement-act__eyebrow">
-                ACT OF RESTORATION OF STATE INDEPENDENCE
-              </small>
-
-              <h3>9 APRIL</h3>
-              <strong class="movement-act__year">1991</strong>
-
-              <div class="movement-act__lines">
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-              </div>
-
-              <div class="movement-act__footer">
-                <span>REPUBLIC OF GEORGIA</span>
-                <strong>RESTORED INDEPENDENCE</strong>
-              </div>
-
-              <div class="movement-act__seal">
-                <small>GEORGIA</small>
-                <strong>09</strong>
-                <span>APRIL</span>
+                <strong>RESTORE INDEPENDENCE</strong>
+                <em>REFERENDUM APPROVED</em>
               </div>
             </div>
           </div>
@@ -720,7 +1200,9 @@
           >
             <div class="presidency-scene-header">
               <span>TBILISI / RUSTAVELI AVENUE</span>
-              <strong>DECEMBER 1991 — JANUARY 1992</strong>
+              <strong>
+                PARLIAMENT OF GEORGIA UNDER SIEGE · DECEMBER 1991 — JANUARY 1992
+              </strong>
             </div>
 
             <svg
@@ -741,7 +1223,7 @@
                     d="M 34 0 L 0 0 0 34"
                     fill="none"
                     stroke="#171717"
-                    stroke-opacity="0.09"
+                    stroke-opacity="0.08"
                     stroke-width="1"
                   />
                 </pattern>
@@ -756,28 +1238,99 @@
                   <rect width="12" height="24" fill="#fedd00" />
                   <rect x="12" width="12" height="24" fill="#171717" />
                 </pattern>
+
+                <linearGradient
+                  id="presidency-skywash-fill"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98" />
+                  <stop offset="58%" stop-color="#faf9f6" stop-opacity="0.94" />
+                  <stop
+                    offset="100%"
+                    stop-color="#eeebe4"
+                    stop-opacity="0.98"
+                  />
+                </linearGradient>
+
+                <linearGradient
+                  id="presidency-stone-fill"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="0%" stop-color="#fbfbfa" />
+                  <stop offset="55%" stop-color="#efefec" />
+                  <stop offset="100%" stop-color="#d8d7d2" />
+                </linearGradient>
+
+                <linearGradient
+                  id="presidency-street-fill"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="0%" stop-color="#c8c5bf" />
+                  <stop offset="100%" stop-color="#8d8b87" />
+                </linearGradient>
               </defs>
 
+              <rect class="presidency-skywash" width="600" height="560" />
               <rect class="presidency-grid" width="600" height="560" />
+              <ellipse
+                class="presidency-haze"
+                cx="300"
+                cy="270"
+                rx="250"
+                ry="170"
+              />
 
               <g class="parliament-building-svg">
-                <rect x="62" y="226" width="476" height="194" />
-                <rect x="48" y="214" width="504" height="14" />
+                <rect
+                  class="parliament-body-svg"
+                  x="58"
+                  y="222"
+                  width="484"
+                  height="196"
+                />
+                <rect
+                  class="parliament-cornice-svg"
+                  x="46"
+                  y="210"
+                  width="508"
+                  height="14"
+                />
+                <rect
+                  class="parliament-shadow-band-svg"
+                  x="58"
+                  y="222"
+                  width="484"
+                  height="24"
+                />
 
                 <g class="parliament-windows-svg">
-                  <rect x="84" y="258" width="32" height="49" />
-                  <rect x="122" y="258" width="32" height="49" />
-                  <rect x="160" y="258" width="32" height="49" />
-                  <rect x="198" y="258" width="32" height="49" />
-                  <rect x="370" y="258" width="32" height="49" />
-                  <rect x="408" y="258" width="32" height="49" />
-                  <rect x="446" y="258" width="32" height="49" />
-                  <rect x="484" y="258" width="32" height="49" />
+                  <rect x="84" y="258" width="30" height="48" />
+                  <rect x="120" y="258" width="30" height="48" />
+                  <rect x="156" y="258" width="30" height="48" />
+                  <rect x="192" y="258" width="30" height="48" />
+                  <rect x="378" y="258" width="30" height="48" />
+                  <rect x="414" y="258" width="30" height="48" />
+                  <rect x="450" y="258" width="30" height="48" />
+                  <rect x="486" y="258" width="30" height="48" />
+
+                  <rect x="84" y="320" width="30" height="40" />
+                  <rect x="120" y="320" width="30" height="40" />
+                  <rect x="450" y="320" width="30" height="40" />
+                  <rect x="486" y="320" width="30" height="40" />
                 </g>
 
                 <g class="parliament-portico-svg">
-                  <rect x="226" y="230" width="148" height="190" />
-                  <path d="M 214 230 L 300 155 L 386 230 Z" />
+                  <rect x="224" y="230" width="152" height="190" />
+                  <path d="M 212 230 L 300 153 L 388 230 Z" />
 
                   <line x1="242" y1="252" x2="242" y2="397" />
                   <line x1="258" y1="252" x2="258" y2="397" />
@@ -789,75 +1342,520 @@
                   <line x1="354" y1="252" x2="354" y2="397" />
                 </g>
 
-                <line x1="300" y1="155" x2="300" y2="105" />
-                <path
-                  class="parliament-flag-svg"
-                  d="M 301 106 L 344 116 L 330 134 L 301 128 Z"
+                <g class="parliament-steps-svg">
+                  <line x1="216" y1="395" x2="384" y2="395" />
+                  <line x1="208" y1="403" x2="392" y2="403" />
+                  <line x1="198" y1="411" x2="402" y2="411" />
+                  <line x1="188" y1="419" x2="412" y2="419" />
+                </g>
+
+                <g class="parliament-flag-assembly-svg">
+                  <!-- OLD CENTRAL POLE + OLD GEORGIAN FLAG -->
+                  <line
+                    class="parliament-flagpole-svg parliament-flagpole-svg--old"
+                    x1="300"
+                    y1="153"
+                    x2="300"
+                    y2="104"
+                  />
+
+                  <g class="parliament-flag-old-svg">
+                    <path
+                      class="parliament-flag-old-red-svg"
+                      d="M 301 106 L 346 116 L 331 136 L 301 128 Z"
+                    />
+                    <path
+                      class="parliament-flag-old-black-svg"
+                      d="M 301 106 L 321 111 L 314 119 L 301 116 Z"
+                    />
+                    <path
+                      class="parliament-flag-old-white-svg"
+                      d="M 301 116 L 316 120 L 311 126 L 301 123 Z"
+                    />
+                    <path
+                      class="parliament-flag-outline-svg"
+                      d="M 301 106 L 346 116 L 331 136 L 301 128 Z"
+                    />
+                  </g>
+
+                  <!-- NEW THREE FLAGS -->
+                  <g class="parliament-flag-new-group-svg">
+                    <!-- Russia -->
+                    <line
+                      class="parliament-flagpole-svg parliament-flagpole-svg--left"
+                      x1="276"
+                      y1="175"
+                      x2="276"
+                      y2="112"
+                    />
+
+                    <g class="parliament-flag-russia-svg">
+                      <path
+                        class="parliament-flag-russia-white-svg"
+                        d="M 277 114 L 302 119 L 299 124 L 277 120 Z"
+                      />
+                      <path
+                        class="parliament-flag-russia-blue-svg"
+                        d="M 277 120 L 299 124 L 296 129 L 277 126 Z"
+                      />
+                      <path
+                        class="parliament-flag-russia-red-svg"
+                        d="M 277 126 L 296 129 L 292 134 L 277 132 Z"
+                      />
+                      <path
+                        class="parliament-flag-outline-svg"
+                        d="M 277 114 L 302 119 L 292 134 L 277 132 Z"
+                      />
+                    </g>
+
+                    <!-- European Union -->
+                    <line
+                      class="parliament-flagpole-svg parliament-flagpole-svg--center"
+                      x1="300"
+                      y1="153"
+                      x2="300"
+                      y2="110"
+                    />
+
+                    <g class="parliament-flag-eu-svg">
+                      <g transform="translate(0 -6)">
+                        <path
+                          class="parliament-flag-eu-field-svg"
+                          d="M 301 112 L 326 117 L 322 128 L 301 124 Z"
+                        />
+
+                        <circle
+                          class="parliament-flag-eu-star-svg"
+                          cx="307"
+                          cy="116.5"
+                          r="1"
+                        />
+                        <circle
+                          class="parliament-flag-eu-star-svg"
+                          cx="311"
+                          cy="117.3"
+                          r="1"
+                        />
+                        <circle
+                          class="parliament-flag-eu-star-svg"
+                          cx="315"
+                          cy="118.1"
+                          r="1"
+                        />
+                        <circle
+                          class="parliament-flag-eu-star-svg"
+                          cx="309"
+                          cy="120.6"
+                          r="1"
+                        />
+                        <circle
+                          class="parliament-flag-eu-star-svg"
+                          cx="313"
+                          cy="121.4"
+                          r="1"
+                        />
+                        <circle
+                          class="parliament-flag-eu-star-svg"
+                          cx="317"
+                          cy="122.2"
+                          r="1"
+                        />
+
+                        <path
+                          class="parliament-flag-outline-svg"
+                          d="M 301 112 L 326 117 L 322 128 L 301 124 Z"
+                        />
+                      </g>
+                    </g>
+
+                    <!-- United States -->
+                    <line
+                      class="parliament-flagpole-svg parliament-flagpole-svg--right"
+                      x1="324"
+                      y1="175"
+                      x2="324"
+                      y2="112"
+                    />
+
+                    <g class="parliament-flag-usa-svg">
+                      <path
+                        class="parliament-flag-usa-field-svg"
+                        d="M 325 114 L 350 119 L 346 134 L 325 130 Z"
+                      />
+
+                      <path
+                        class="parliament-flag-usa-canton-svg"
+                        d="M 325 114 L 336 116.4 L 334 123 L 325 121 Z"
+                      />
+
+                      <circle
+                        class="parliament-flag-usa-star-svg"
+                        cx="328.1"
+                        cy="117.0"
+                        r="0.8"
+                      />
+                      <circle
+                        class="parliament-flag-usa-star-svg"
+                        cx="331.2"
+                        cy="117.7"
+                        r="0.8"
+                      />
+                      <circle
+                        class="parliament-flag-usa-star-svg"
+                        cx="329.5"
+                        cy="120.0"
+                        r="0.8"
+                      />
+
+                      <line
+                        class="parliament-flag-usa-stripe-svg"
+                        x1="336"
+                        y1="119"
+                        x2="349"
+                        y2="121.6"
+                      />
+
+                      <line
+                        class="parliament-flag-usa-stripe-svg"
+                        x1="334"
+                        y1="123"
+                        x2="348"
+                        y2="125.8"
+                      />
+
+                      <line
+                        class="parliament-flag-usa-stripe-svg"
+                        x1="326"
+                        y1="125"
+                        x2="348"
+                        y2="129.6"
+                      />
+
+                      <line
+                        class="parliament-flag-usa-stripe-svg"
+                        x1="327.8"
+                        y1="129.2"
+                        x2="345"
+                        y2="132.7"
+                      />
+                      <path
+                        class="parliament-flag-outline-svg"
+                        d="M 325 114 L 350 119 L 346 134 L 325 130 Z"
+                      />
+                    </g>
+                  </g>
+                </g>
+                <circle
+                  class="parliament-impact-core-svg"
+                  cx="228"
+                  cy="386"
+                  r="10"
                 />
+
+                <g class="parliament-impact-lines-svg">
+                  <line x1="228" y1="386" x2="206" y2="374" />
+                  <line x1="228" y1="386" x2="202" y2="388" />
+                  <line x1="228" y1="386" x2="208" y2="404" />
+                  <line x1="228" y1="386" x2="238" y2="360" />
+                  <line x1="228" y1="386" x2="250" y2="370" />
+                  <line x1="228" y1="386" x2="255" y2="392" />
+                </g>
 
                 <path
                   class="parliament-damage-svg parliament-damage-svg--one"
-                  d="M 198 230 L 186 266 L 204 290 L 190 327 L 202 365"
+                  d="M 197 230 L 184 262 L 202 287 L 189 322 L 201 364"
                 />
                 <path
                   class="parliament-damage-svg parliament-damage-svg--two"
-                  d="M 391 240 L 404 275 L 388 303 L 406 337 L 396 391"
+                  d="M 391 238 L 404 274 L 388 302 L 406 338 L 395 392"
                 />
                 <path
                   class="parliament-damage-svg parliament-damage-svg--three"
-                  d="M 486 281 L 472 305 L 491 332 L 480 365"
-                />
-              </g>
-
-              <g class="presidency-emblem-svg">
-                <circle cx="105" cy="160" r="72" />
-                <circle cx="105" cy="160" r="61" />
-                <circle cx="105" cy="160" r="48" />
-                <text x="105" y="125">GEORGIA</text>
-                <g class="presidency-emblem-svg__number">
-                  <text
-                    class="presidency-emblem-svg__digit"
-                    x="101"
-                    y="178"
-                    text-anchor="middle"
-                  >
-                    1
-                  </text>
-
-                  <text
-                    class="presidency-emblem-svg__ordinal"
-                    x="123"
-                    y="151"
-                    text-anchor="start"
-                  >
-                    st
-                  </text>
-                </g>
-                <text x="105" y="205">PRESIDENT</text>
-                <path
-                  class="presidency-emblem-crack-svg"
-                  d="M 103 91 L 114 119 L 96 143 L 115 163 L 94 188 L 106 229"
+                  d="M 486 281 L 472 305 L 491 333 L 480 366"
                 />
               </g>
 
               <g class="rustaveli-street-svg">
-                <path d="M 0 421 L 600 421 L 600 560 L 0 560 Z" />
-                <path d="M 300 421 L 190 560" />
-                <path d="M 300 421 L 410 560" />
-                <path class="street-dash-svg" d="M 274 460 L 228 517" />
-                <path class="street-dash-svg" d="M 326 460 L 372 517" />
+                <path
+                  class="street-surface-svg"
+                  d="M 0 421 L 600 421 L 600 560 L 0 560 Z"
+                />
+
+                <path class="street-perspective-svg" d="M 300 421 L 188 560" />
+                <path class="street-perspective-svg" d="M 300 421 L 412 560" />
+
+                <path class="street-dash-svg" d="M 300 432 L 300 555" />
+              </g>
+
+              <!-- =====================================================
+     EVACUATION
+     ===================================================== -->
+
+              <g class="presidency-evacuation-svg">
+                <!-- People leaving the State House -->
+
+                <g
+                  class="evacuee-svg evacuee-svg--1"
+                  transform="translate(289 393)"
+                >
+                  <g class="evacuee-svg__motion">
+                    <circle cx="0" cy="-13" r="4" />
+                    <line x1="0" y1="-9" x2="0" y2="7" />
+                    <line x1="0" y1="-4" x2="-6" y2="2" />
+                    <line x1="0" y1="-4" x2="6" y2="2" />
+                    <line x1="0" y1="7" x2="-5" y2="15" />
+                    <line x1="0" y1="7" x2="5" y2="15" />
+                  </g>
+                </g>
+
+                <g
+                  class="evacuee-svg evacuee-svg--2"
+                  transform="translate(297 393)"
+                >
+                  <g class="evacuee-svg__motion">
+                    <circle cx="0" cy="-13" r="4" />
+                    <line x1="0" y1="-9" x2="0" y2="7" />
+                    <line x1="0" y1="-4" x2="-6" y2="2" />
+                    <line x1="0" y1="-4" x2="6" y2="2" />
+                    <line x1="0" y1="7" x2="-5" y2="15" />
+                    <line x1="0" y1="7" x2="5" y2="15" />
+                  </g>
+                </g>
+
+                <g
+                  class="evacuee-svg evacuee-svg--3"
+                  transform="translate(305 393)"
+                >
+                  <g class="evacuee-svg__motion">
+                    <circle cx="0" cy="-13" r="4" />
+                    <line x1="0" y1="-9" x2="0" y2="7" />
+                    <line x1="0" y1="-4" x2="-6" y2="2" />
+                    <line x1="0" y1="-4" x2="6" y2="2" />
+                    <line x1="0" y1="7" x2="-5" y2="15" />
+                    <line x1="0" y1="7" x2="5" y2="15" />
+                  </g>
+                </g>
+
+                <g
+                  class="evacuee-svg evacuee-svg--4"
+                  transform="translate(313 393)"
+                >
+                  <g class="evacuee-svg__motion">
+                    <circle cx="0" cy="-13" r="4" />
+                    <line x1="0" y1="-9" x2="0" y2="7" />
+                    <line x1="0" y1="-4" x2="-6" y2="2" />
+                    <line x1="0" y1="-4" x2="6" y2="2" />
+                    <line x1="0" y1="7" x2="-5" y2="15" />
+                    <line x1="0" y1="7" x2="5" y2="15" />
+                  </g>
+                </g>
+
+                <g
+                  class="evacuee-svg evacuee-svg--5"
+                  transform="translate(295 398)"
+                >
+                  <g class="evacuee-svg__motion">
+                    <circle cx="0" cy="-13" r="4" />
+                    <line x1="0" y1="-9" x2="0" y2="7" />
+                    <line x1="0" y1="-4" x2="-6" y2="2" />
+                    <line x1="0" y1="-4" x2="6" y2="2" />
+                    <line x1="0" y1="7" x2="-5" y2="15" />
+                    <line x1="0" y1="7" x2="5" y2="15" />
+                  </g>
+                </g>
+
+                <g
+                  class="evacuee-svg evacuee-svg--6"
+                  transform="translate(304 398)"
+                >
+                  <g class="evacuee-svg__motion">
+                    <circle cx="0" cy="-13" r="4" />
+                    <line x1="0" y1="-9" x2="0" y2="7" />
+                    <line x1="0" y1="-4" x2="-6" y2="2" />
+                    <line x1="0" y1="-4" x2="6" y2="2" />
+                    <line x1="0" y1="7" x2="-5" y2="15" />
+                    <line x1="0" y1="7" x2="5" y2="15" />
+                  </g>
+                </g>
+
+                <!-- Evacuation bus -->
+                <g class="evacuation-bus-svg">
+                  <rect
+                    class="evacuation-bus-svg__body"
+                    x="48"
+                    y="421"
+                    width="202"
+                    height="74"
+                    rx="4"
+                  />
+
+                  <path
+                    class="evacuation-bus-svg__front"
+                    d="
+      M 48 430
+      L 62 421
+      L 78 421
+      L 78 495
+      L 48 495
+      Z
+    "
+                  />
+
+                  <path
+                    class="evacuation-bus-svg__roof"
+                    d="
+      M 64 421
+      L 82 407
+      L 222 407
+      L 250 421
+      Z
+    "
+                  />
+
+                  <rect
+                    class="evacuation-bus-svg__windshield"
+                    x="57"
+                    y="430"
+                    width="17"
+                    height="24"
+                    rx="1"
+                  />
+
+                  <g class="evacuation-bus-svg__windows">
+                    <rect x="86" y="432" width="23" height="22" rx="1" />
+                    <rect x="113" y="432" width="23" height="22" rx="1" />
+                    <rect x="140" y="432" width="23" height="22" rx="1" />
+                    <rect x="167" y="432" width="23" height="22" rx="1" />
+                    <rect x="194" y="432" width="23" height="22" rx="1" />
+                  </g>
+
+                  <rect
+                    class="evacuation-bus-svg__door"
+                    x="220"
+                    y="430"
+                    width="21"
+                    height="51"
+                    rx="1"
+                  />
+
+                  <line
+                    class="evacuation-bus-svg__beltline"
+                    x1="81"
+                    y1="458"
+                    x2="244"
+                    y2="458"
+                  />
+
+                  <line
+                    class="evacuation-bus-svg__stripe"
+                    x1="57"
+                    y1="470"
+                    x2="244"
+                    y2="470"
+                  />
+
+                  <circle
+                    class="evacuation-bus-svg__wheel"
+                    cx="96"
+                    cy="498"
+                    r="17"
+                  />
+                  <circle
+                    class="evacuation-bus-svg__wheel"
+                    cx="206"
+                    cy="498"
+                    r="17"
+                  />
+
+                  <circle
+                    class="evacuation-bus-svg__hub"
+                    cx="96"
+                    cy="498"
+                    r="7"
+                  />
+                  <circle
+                    class="evacuation-bus-svg__hub"
+                    cx="206"
+                    cy="498"
+                    r="7"
+                  />
+
+                  <circle
+                    class="evacuation-bus-svg__lamp"
+                    cx="51"
+                    cy="473"
+                    r="3"
+                  />
+                  <circle
+                    class="evacuation-bus-svg__lamp"
+                    cx="246"
+                    cy="473"
+                    r="3"
+                  />
+                </g>
+
+                <!-- Presidential / escort car -->
+
+                <g class="evacuation-car-svg">
+                  <path
+                    class="evacuation-car-svg__body"
+                    d="
+        M 240 474
+        L 254 451
+        L 311 451
+        L 332 473
+        L 346 477
+        L 344 500
+        L 236 500
+        L 232 484
+        Z
+      "
+                  />
+
+                  <path
+                    class="evacuation-car-svg__glass"
+                    d="
+        M 260 454
+        L 306 454
+        L 322 472
+        L 249 472
+        Z
+      "
+                  />
+
+                  <line
+                    class="evacuation-car-svg__stripe"
+                    x1="241"
+                    y1="481"
+                    x2="340"
+                    y2="481"
+                  />
+
+                  <circle
+                    class="evacuation-car-svg__wheel"
+                    cx="260"
+                    cy="498"
+                    r="13"
+                  />
+                  <circle
+                    class="evacuation-car-svg__wheel"
+                    cx="321"
+                    cy="498"
+                    r="13"
+                  />
+                </g>
               </g>
 
               <g class="street-barricade-svg street-barricade-svg--left">
-                <rect x="32" y="431" width="132" height="28" rx="2" />
-                <line x1="50" y1="458" x2="42" y2="492" />
-                <line x1="146" y1="458" x2="154" y2="492" />
+                <rect x="30" y="431" width="136" height="28" rx="2" />
+                <line x1="48" y1="458" x2="40" y2="493" />
+                <line x1="148" y1="458" x2="156" y2="493" />
               </g>
 
               <g class="street-barricade-svg street-barricade-svg--right">
-                <rect x="436" y="429" width="132" height="28" rx="2" />
-                <line x1="454" y1="456" x2="446" y2="490" />
-                <line x1="550" y1="456" x2="558" y2="490" />
+                <rect x="434" y="429" width="136" height="28" rx="2" />
+                <line x1="452" y1="456" x2="444" y2="491" />
+                <line x1="552" y1="456" x2="560" y2="491" />
               </g>
 
               <g class="presidency-tank-svg">
@@ -887,32 +1885,76 @@
                 </g>
               </g>
 
-              <polygon
-                class="battle-flash-svg"
-                points="280,375 252,359 262,387 232,397 263,407 248,437 276,418 288,451 295,415 326,425 302,397 325,373 294,382 289,345"
+              <path
+                class="presidency-shell-trace-svg"
+                d="M 286 376 L 230 386"
               />
 
+              <polygon
+                class="battle-flash-svg"
+                points="281,375 252,359 262,387 231,397 262,407 248,437 276,418 288,451 295,415 326,425 302,397 325,373 294,382 289,345"
+              />
+
+              <circle class="battle-impact-ring-svg" cx="228" cy="386" r="14" />
+
+              <g class="battle-embers-svg">
+                <circle cx="240" cy="371" r="4" />
+                <circle cx="249" cy="381" r="3" />
+                <circle cx="243" cy="394" r="4" />
+                <circle cx="224" cy="366" r="3" />
+                <circle cx="217" cy="392" r="3" />
+                <circle cx="232" cy="402" r="2.6" />
+
+                <circle cx="253" cy="390" r="3.4" />
+                <circle cx="213" cy="378" r="2.8" />
+                <circle cx="237" cy="358" r="3.2" />
+                <circle cx="258" cy="401" r="2.7" />
+                <circle cx="205" cy="400" r="3.5" />
+                <circle cx="246" cy="411" r="2.9" />
+
+                <circle cx="228" cy="355" r="2.5" />
+                <circle cx="261" cy="373" r="3.1" />
+                <circle cx="199" cy="385" r="2.7" />
+                <circle cx="218" cy="412" r="3.3" />
+                <circle cx="255" cy="417" r="2.4" />
+                <circle cx="235" cy="384" r="3.6" />
+
+                <circle cx="208" cy="363" r="2.6" />
+                <circle cx="268" cy="389" r="3" />
+                <circle cx="226" cy="420" r="2.8" />
+                <circle cx="248" cy="363" r="3.2" />
+                <circle cx="195" cy="397" r="2.5" />
+                <circle cx="263" cy="409" r="3.4" />
+
+                <circle cx="216" cy="350" r="2.7" />
+                <circle cx="273" cy="399" r="2.9" />
+                <circle cx="201" cy="413" r="3.1" />
+                <circle cx="241" cy="424" r="2.6" />
+                <circle cx="259" cy="356" r="3.3" />
+                <circle cx="230" cy="389" r="2.8" />
+              </g>
+
               <g class="battle-smoke-svg battle-smoke-svg--left">
-                <circle cx="188" cy="361" r="39" />
-                <circle cx="216" cy="324" r="48" />
+                <circle cx="188" cy="362" r="39" />
+                <circle cx="216" cy="325" r="48" />
                 <circle cx="184" cy="278" r="54" />
-                <circle cx="222" cy="235" r="43" />
+                <circle cx="222" cy="236" r="43" />
               </g>
 
               <g class="battle-smoke-svg battle-smoke-svg--right">
-                <circle cx="452" cy="363" r="43" />
-                <circle cx="484" cy="322" r="52" />
-                <circle cx="454" cy="273" r="57" />
-                <circle cx="492" cy="228" r="44" />
+                <circle cx="452" cy="364" r="43" />
+                <circle cx="484" cy="323" r="52" />
+                <circle cx="454" cy="274" r="57" />
+                <circle cx="492" cy="229" r="44" />
               </g>
             </svg>
 
             <div class="presidency-conflict-record">
-              <span>PRESIDENCY</span>
+              <span>ARMED SIEGE</span>
               <small>→</small>
-              <strong>ARMED OVERTHROW</strong>
+              <strong>GOVERNMENT EVACUATION</strong>
               <small>→</small>
-              <b>CIVIL WAR</b>
+              <b>COUP D’ÉTAT</b>
             </div>
           </div>
 
@@ -968,17 +2010,6 @@
             </article>
           </div>
 
-          <aside class="editorial-note reveal-on-scroll">
-            <span>Editorial principle</span>
-            <p>
-              The presidency, overthrow and civil-war period remains politically
-              contested. This museum should distinguish established dates and
-              documents from interpretation, identify the source of every claim,
-              and place conflicting testimony beside the relevant primary
-              record.
-            </p>
-          </aside>
-
           <a
             class="period-archive-link reveal-on-scroll"
             href="../archive.html"
@@ -989,7 +2020,14 @@
         </section>
 
         <section class="political-archive reveal-on-scroll">
-          <div class="political-archive__index" aria-hidden="true">A—P</div>
+          <div
+            class="history-period__rail political-archive__rail"
+            aria-hidden="true"
+          >
+            <span>04</span>
+            <strong>1956—1993</strong>
+            <i></i>
+          </div>
 
           <div class="political-archive__copy">
             <p class="section-label">Political archive</p>
@@ -1018,33 +2056,11 @@
         </section>
       </main>
 
-      <footer class="archive-footer">
-        <div class="archive-footer__copyright">
-          <span>Zviad Gamsakhurdia Digital Museum</span>
-          <a
-            href="https://www.ailaw.llc"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            © 2026 AI Law LLC
-          </a>
-        </div>
-
-        <nav class="archive-footer__pages" aria-label="Secondary navigation">
-          <a href="../about.html">About</a>
-          <a href="../contact.html">Contact</a>
-          <a href="../editorial-policy.html">Editorial Policy</a>
-          <a href="../privacy-policy.html">Privacy Policy</a>
-          <a href="../accessibility.html">Accessibility</a>
-        </nav>
-
-        <nav class="archive-footer__social" aria-label="Social media">
-          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </nav>
-      </footer>
+      <div data-footer></div>
     </div>
 
+    <script src="/Header-Footer/header.js"></script>
+    <script src="/Header-Footer/footer.js"></script>
     <script src="./dissent-and-politics.js"></script>
   </body>
 </html>

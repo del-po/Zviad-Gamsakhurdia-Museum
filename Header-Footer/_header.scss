@@ -21,6 +21,8 @@
 
   font-family: $font-body;
 
+  // margin-bottom: 30px;
+
   /* =====================================================
      TOP REGISTER
      ===================================================== */
@@ -48,7 +50,7 @@
     align-items: center;
     gap: 12px;
 
-    color: rgba(255, 255, 255, 0.72);;
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .museum-header__register-center {
@@ -56,7 +58,7 @@
     align-items: center;
     gap: 12px;
 
-    color: rgba(255, 255, 255, 0.72);;
+    color: rgba(255, 255, 255, 0.72);
 
     i {
       display: block;
@@ -73,7 +75,7 @@
     justify-content: flex-end;
     gap: 22px;
 
-    color: rgba(255, 255, 255, 0.72);;
+    color: rgba(255, 255, 255, 0.72);
   }
 
   /* =====================================================
@@ -92,7 +94,37 @@
 
     height: 142px;
 
-    border-bottom: 1px solid #171717;
+    position: relative;
+
+    &::after {
+      content: "";
+
+      position: absolute;
+      right: 0;
+      bottom: -7px;
+      left: 0;
+      z-index: 20;
+
+      height: 10px;
+
+      background:
+        linear-gradient(
+            to right,
+            #171717 0 55%,
+            #fedd00 55% 78%,
+            #d8d8d4 78% 89%,
+            #ecece8 89% 100%
+          )
+          left top / 90px 3px no-repeat,
+        linear-gradient(
+            to right,
+            #171717 0 62%,
+            #fedd00 62% 78%,
+            #d8d8d4 78% 90%,  
+            #ecece8 90% 100%
+          )
+          left bottom / 100% 7px no-repeat;
+    }
 
     background: #ffffff;
   }
