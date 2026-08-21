@@ -8,7 +8,44 @@
 
     <div class="museum-header__register-center">
       <span>1939</span>
-      <i></i>
+
+      <span class="museum-header__register-pulse" aria-hidden="true">
+        <svg
+          class="museum-header__heartbeat-svg"
+          viewBox="0 0 120 26"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <path
+              id="museumHeartbeatShape"
+              d="
+            M 0 13
+            L 28 13
+            L 35 13
+            L 40 8
+            L 45 18
+            L 51 2
+            L 58 22
+            L 64 13
+            L 72 13
+            L 78 10
+            L 83 13
+            L 120 13
+          "
+            />
+          </defs>
+
+          <!-- LAYER 1 — permanent faded path -->
+          <use
+            href="#museumHeartbeatShape"
+            class="museum-header__heartbeat-base"
+          />
+
+          <!-- JS will continuously place new pulses here -->
+          <g data-heartbeat-pulses></g>
+        </svg>
+      </span>
+
       <span>1993</span>
     </div>
 
@@ -123,4 +160,5 @@
       <span></span>
     </button>
   </div>
+  <div class="museum-header__bottom" aria-hidden="true"></div>
 </header>

@@ -52,22 +52,69 @@
     });
   }
 
+  const KHIBULA_COORDINATES = {
+    latitude: 42.451944,
+    longitude: 41.980556,
+  };
+
+  function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+    const earthRadiusKm = 6371;
+
+    const toRadians = (degrees) => {
+      return degrees * (Math.PI / 180);
+    };
+
+    const latitudeDifference = toRadians(lat2 - lat1);
+    const longitudeDifference = toRadians(lon2 - lon1);
+
+    const a =
+      Math.sin(latitudeDifference / 2) ** 2 +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(longitudeDifference / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return earthRadiusKm * c;
+  }
+
   function updateVisitorCoordinates() {
     const latitudeElement = document.getElementById("visitor-latitude");
+
     const longitudeElement = document.getElementById("visitor-longitude");
+
+    const khibulaDistanceElement = document.getElementById("khibula-distance");
+
+    const khibulaDistanceLabel = document.getElementById(
+      "khibula-distance-label",
+    );
 
     if (!latitudeElement || !longitudeElement) return;
 
     if (!("geolocation" in navigator)) {
       latitudeElement.textContent = "LOCATION";
       longitudeElement.textContent = "UNAVAILABLE";
+
+      if (khibulaDistanceElement) {
+        khibulaDistanceElement.textContent = "—";
+      }
+
+      if (khibulaDistanceLabel) {
+        khibulaDistanceLabel.textContent = "DISTANCE UNAVAILABLE";
+      }
+
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const latitude = position.coords.latitude;
+
         const longitude = position.coords.longitude;
+
+        /* ---------------------------------------
+         VISITOR COORDINATES
+         --------------------------------------- */
 
         latitudeElement.textContent = `${Math.abs(latitude).toFixed(4)}° ${
           latitude >= 0 ? "N" : "S"
@@ -76,11 +123,38 @@
         longitudeElement.textContent = `${Math.abs(longitude).toFixed(4)}° ${
           longitude >= 0 ? "E" : "W"
         }`;
+
+        /* ---------------------------------------
+         DISTANCE TO KHIBULA
+         --------------------------------------- */
+
+        const distanceToKhibula = calculateDistanceKm(
+          latitude,
+          longitude,
+          KHIBULA_COORDINATES.latitude,
+          KHIBULA_COORDINATES.longitude,
+        );
+
+        if (khibulaDistanceElement) {
+          khibulaDistanceElement.textContent = Math.round(distanceToKhibula);
+        }
+
+        if (khibulaDistanceLabel) {
+          khibulaDistanceLabel.textContent = "KM FROM KHIBULA";
+        }
       },
 
       () => {
         latitudeElement.textContent = "LOCATION";
         longitudeElement.textContent = "PRIVATE";
+
+        if (khibulaDistanceElement) {
+          khibulaDistanceElement.textContent = "—";
+        }
+
+        if (khibulaDistanceLabel) {
+          khibulaDistanceLabel.textContent = "DISTANCE PRIVATE";
+        }
       },
 
       {

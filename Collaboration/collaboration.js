@@ -22,6 +22,14 @@
 
         if (!panel) return;
 
+        const theme = String(
+          slot.dataset.collaborationTheme || "",
+        ).toLowerCase();
+
+        if (theme === "light" || theme === "white") {
+          panel.classList.add("collaboration-panel--light");
+        }
+
         const prefersReducedMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;

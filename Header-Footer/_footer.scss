@@ -161,31 +161,86 @@
     padding-bottom: 7px;
 
     text-align: right;
+  }
 
-    span:first-child {
-      color: #fedd00;
+  .site-footer__edition-years {
+    display: flex;
+    align-items: center;
 
-      font-family: $font-heading;
+    gap: 10px;
 
-      font-size: clamp(20px, 2.1vw, 34px);
+    color: #fedd00;
 
-      letter-spacing: -0.045em;
+    font-family: $font-heading;
+
+    font-size: clamp(20px, 2.1vw, 34px);
+
+    letter-spacing: -0.045em;
+  }
+
+  .site-footer__edition-label {
+    max-width: 380px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+  }
+
+  /* =====================================================
+   FOOTER HEARTBEAT
+   ===================================================== */
+
+  .site-footer__heartbeat {
+    display: block;
+
+    width: 54px;
+    height: 20px;
+
+    flex: 0 0 auto;
+
+    overflow: hidden;
+
+    svg {
+      display: block;
+
+      width: 100%;
+      height: 100%;
     }
+  }
 
-    span:last-child {
-      max-width: 380px;
+  /* faded permanent path */
 
-      color: rgba(255, 255, 255, 0.72);
+  .site-footer__heartbeat-base {
+    fill: none;
 
-      font-size: 12px;
-      font-weight: 700;
+    stroke: rgba(254, 221, 0, 0.14);
+    stroke-width: 1.2;
 
-      line-height: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 
-      letter-spacing: 0.13em;
+  /* vivid moving pulse */
 
-      text-transform: uppercase;
-    }
+  .site-footer__heartbeat-pulse {
+    fill: none;
+
+    stroke-width: 1.55;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    vector-effect: non-scaling-stroke;
+
+    filter: drop-shadow(0 0 1px rgba(254, 221, 0, 0.9))
+      drop-shadow(0 0 2px rgba(254, 221, 0, 0.4));
   }
 
   /* =====================================================
@@ -315,8 +370,6 @@
     padding: 28px;
 
     border: 1px solid rgba(255, 255, 255, 0.15);
-
-    border-radius: 10px;
 
     background: white;
 

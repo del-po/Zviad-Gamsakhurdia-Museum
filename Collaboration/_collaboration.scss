@@ -1,6 +1,20 @@
 @use "../fonts" as *;
 
 .collaboration-panel {
+  --collab-bg: var(--ink);
+  --collab-text: white;
+  --collab-muted: rgba(255, 255, 255, 0.54);
+  --collab-body: rgba(255, 255, 255, 0.67);
+  --collab-line: rgba(255, 255, 255, 0.2);
+  --collab-submit-text: var(--yellow);
+  --collab-submit-hover-bg: var(--yellow);
+  --collab-submit-hover-text: var(--ink);
+  --collab-contact-text: white;
+  --collab-contact-arrow: var(--yellow);
+  --collab-contact-hover-bg: var(--yellow);
+  --collab-contact-hover-text: var(--ink);
+  --collab-contact-hover-arrow: var(--ink);
+
   display: grid;
   grid-template-columns:
     minmax(120px, 0.18fr)
@@ -8,23 +22,52 @@
     minmax(240px, 0.25fr);
   align-items: stretch;
   min-height: 450px;
-  background: var(--ink);
-  color: white;
+
+  background:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    var(--collab-bg);
+  background-size: 32px 32px;
+
+  color: var(--collab-text);
+
+  &--light {
+    --collab-bg: white;
+    --collab-text: var(--ink);
+    --collab-muted: rgba(23, 23, 23, 0.54);
+    --collab-body: rgba(23, 23, 23, 0.68);
+    --collab-line: rgba(23, 23, 23, 0.2);
+    --collab-submit-text: var(--ink);
+    --collab-submit-hover-bg: var(--yellow);
+    --collab-submit-hover-text: var(--ink);
+    --collab-contact-text: var(--ink);
+    --collab-contact-arrow: var(--ink);
+    --collab-contact-hover-bg: var(--yellow);
+    --collab-contact-hover-text: var(--ink);
+    --collab-contact-hover-arrow: var(--ink);
+
+    background:
+      linear-gradient(to right, rgba(23, 23, 23, 0.045) 1px, transparent 1px),
+      white;
+    background-size: 32px 32px;
+  }
 
   &__submit {
     display: grid;
     place-items: center;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--yellow);
+
+    border-right: 1px solid var(--collab-line);
+
+    color: var(--collab-submit-text);
     text-decoration: none;
+
     transition:
       background 200ms ease,
       color 200ms ease;
 
     &:hover,
     &:focus-visible {
-      background: var(--yellow);
-      color: var(--ink);
+      background: var(--collab-submit-hover-bg);
+      color: var(--collab-submit-hover-text);
     }
   }
 
@@ -45,14 +88,16 @@
     flex-direction: column;
     justify-content: center;
     padding: clamp(48px, 7vw, 110px);
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
+
+    border-right: 1px solid var(--collab-line);
 
     .section-label {
-      color: rgba(255, 255, 255, 0.54);
+      color: var(--collab-muted);
     }
 
     h2 {
       margin: 22px 0 28px;
+
       font-family: $font-heading;
       font-size: clamp(40px, 5vw, 84px);
       font-weight: 400;
@@ -64,7 +109,8 @@
     > p:last-child {
       max-width: 760px;
       margin: 0;
-      color: rgba(255, 255, 255, 0.67);
+
+      color: var(--collab-body);
       font-size: 11px;
       line-height: 1.85;
       text-align: justify;
@@ -76,31 +122,39 @@
     flex-direction: column;
     justify-content: center;
     padding: 34px;
-    color: white;
+
+    color: var(--collab-contact-text);
+
     font-family: $font-heading;
     font-size: clamp(24px, 3vw, 48px);
     line-height: 0.95;
     text-decoration: none;
     text-transform: uppercase;
+
     transition:
       background 200ms ease,
       color 200ms ease;
 
     b {
       align-self: flex-end;
-      color: var(--yellow);
+
+      color: var(--collab-contact-arrow);
+
       font-family: $font-body;
       font-size: 28px;
-      transition: transform 180ms ease;
+
+      transition:
+        color 200ms ease,
+        transform 180ms ease;
     }
 
     &:hover,
     &:focus-visible {
-      background: var(--yellow);
-      color: var(--ink);
+      background: var(--collab-contact-hover-bg);
+      color: var(--collab-contact-hover-text);
 
       b {
-        color: var(--ink);
+        color: var(--collab-contact-hover-arrow);
         transform: translate(5px, -5px);
       }
     }
@@ -118,7 +172,7 @@
     &__contact {
       grid-column: 1 / -1;
       min-height: 230px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid var(--collab-line);
     }
   }
 }
@@ -130,7 +184,7 @@
     &__submit {
       min-height: 180px;
       border-right: 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid var(--collab-line);
     }
 
     &__copy {

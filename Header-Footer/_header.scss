@@ -11,12 +11,15 @@
 
 .museum-header {
   position: relative;
+
   z-index: 1000;
 
   width: 100%;
+
   min-width: 320px;
 
   background: #ffffff;
+
   color: #171717;
 
   font-family: $font-body;
@@ -36,7 +39,8 @@
 
     padding: 0 clamp(24px, 3.5vw, 64px);
 
-    background: #171717;
+    background: black;
+
     color: #ececec;
 
     font-size: 12px;
@@ -49,33 +53,65 @@
     display: flex;
     align-items: center;
     gap: 12px;
-
-    color: rgba(255, 255, 255, 0.72);
   }
-
   .museum-header__register-center {
     display: flex;
     align-items: center;
     gap: 12px;
+  }
 
-    color: rgba(255, 255, 255, 0.72);
+  .museum-header__register-pulse {
+    display: block;
 
-    i {
+    width: 52px;
+    height: 18px;
+
+    flex: 0 0 auto;
+    overflow: hidden;
+
+    svg {
       display: block;
-
-      width: 30px;
-      height: 1px;
-
-      background: #fedd00;
+      width: 100%;
+      height: 100%;
     }
+  }
+
+  /* =====================================================
+   LAYER 1 — FADED ECG PATH
+   ===================================================== */
+
+  .museum-header__heartbeat-base {
+    fill: none;
+
+    stroke: rgba(254, 221, 0, 0.2);
+    stroke-width: 1.2;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* =====================================================
+   LAYER 2 — JS-GENERATED PULSES
+   ===================================================== */
+
+  .museum-header__heartbeat-pulse {
+    fill: none;
+
+    stroke-width: 1.55;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    vector-effect: non-scaling-stroke;
+
+    filter: drop-shadow(0 0 1px rgba(254, 221, 0, 0.9))
+      drop-shadow(0 0 2px rgba(254, 221, 0, 0.4));
   }
 
   .museum-header__register-right {
     display: flex;
     justify-content: flex-end;
     gap: 22px;
-
-    color: rgba(255, 255, 255, 0.72);
   }
 
   /* =====================================================
@@ -92,41 +128,45 @@
       minmax(560px, 1fr)
       clamp(225px, 15vw, 280px);
 
-    height: 142px;
-
-    position: relative;
-
-    &::after {
-      content: "";
-
-      position: absolute;
-      right: 0;
-      bottom: -7px;
-      left: 0;
-      z-index: 20;
-
-      height: 10px;
-
-      background:
-        linear-gradient(
-            to right,
-            #171717 0 55%,
-            #fedd00 55% 78%,
-            #d8d8d4 78% 89%,
-            #ecece8 89% 100%
-          )
-          left top / 90px 3px no-repeat,
-        linear-gradient(
-            to right,
-            #171717 0 62%,
-            #fedd00 62% 78%,
-            #d8d8d4 78% 90%,
-            #ecece8 90% 100%
-          )
-          left bottom / 100% 7px no-repeat;
-    }
+    height: 170px;
 
     background: #ffffff;
+  }
+
+  .museum-header__bottom {
+    width: 100%;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    background:
+    /* special left pattern */
+      linear-gradient(
+          to right,
+          #171717 0 55%,
+          #fedd00 55% 78%,
+          #d8d8d4 78% 89%,
+          #ecece8 89% 100%
+        )
+        left top / 90px 13px no-repeat,
+      /* upper full-width layer */
+      linear-gradient(
+          to right,
+          #171717 0 62%,
+          #fedd00 62% 78%,
+          #d8d8d4 78% 90%,
+          #ecece8 90% 100%
+        )
+        left top / 100% 13px no-repeat,
+      /* lower full-width layer */
+      linear-gradient(
+          to right,
+          #171717 0 62%,
+          #fedd00 62% 78%,
+          #d8d8d4 78% 90%,
+          #ecece8 90% 100%
+        )
+        left bottom / 100% 29px no-repeat;
   }
 
   /* =====================================================
@@ -425,7 +465,7 @@
 
     overflow: hidden;
 
-    background: #171717;
+    background: black;
     color: #ffffff;
   }
 
@@ -885,7 +925,7 @@
     .header-menu {
       position: fixed;
 
-      top: 124px;
+      top: 166px;
       right: 0;
       bottom: 0;
       left: 0;

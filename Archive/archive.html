@@ -8,58 +8,29 @@
       content="Search and explore documents, correspondence, photographs, audio-visual records, publications and government materials connected with Zviad Gamsakhurdia."
     />
     <title>Archive | Zviad Gamsakhurdia Digital Museum</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
 
   <body>
     <a class="skip-link" href="#archive-content">Skip to content</a>
 
     <div class="archive-page">
-      <header class="site-header" id="site-header">
-        <a class="brand" href="./index.html" aria-label="Digital Museum home">
-          <span class="brand-mark" aria-hidden="true">ZG</span>
-          <span class="brand-copy">
-            <span>Zviad Gamsakhurdia</span>
-            <span>Digital Museum</span>
-          </span>
-        </a>
-
-        <button
-          class="menu-button"
-          type="button"
-          aria-expanded="false"
-          aria-controls="main-navigation"
-        >
-          <span>Menu</span>
-          <span class="menu-button__line" aria-hidden="true"></span>
-        </button>
-
-        <nav
-          class="main-navigation"
-          id="main-navigation"
-          aria-label="Main navigation"
-        >
-          <a href="./index.html">Home</a>
-          <a href="./Family/family.html">Life &amp; Family</a>
-          <a href="./Dissent-and-Politics/dissent-and-politics.html">
-            Dissent &amp; Politics
-          </a>
-          <a href="./Works/works.html">Works</a>
-          <a class="active" href="./archive.html" aria-current="page">Archive</a>
-          <a href="./Blog/blog.html">Blog</a>
-        </nav>
-      </header>
+      <div data-header></div>
 
       <main id="archive-content">
         <section class="archive-hero" aria-labelledby="archive-title">
           <div class="archive-hero__copy">
-            <p class="section-label">Documents / Images / Voices / Evidence</p>
+            <p class="section-label">Documents / Photos / Video / Audio</p>
             <h1 id="archive-title">The Record Remains Open.</h1>
             <p class="archive-hero__description">
-              A research archive for tracing a life through manuscripts,
-              correspondence, photographs, recordings, publications, press and
-              records of public office. Every item should remain connected to
-              its date, source, rights status and historical context.
+              The Digital Archive brings together documents, photographs, video
+              and audio relating to Zviad Gamsakhurdia’s life, work and public
+              activity, bringing different forms of historical evidence into one
+              accessible collection. This central Archive page allows visitors
+              to search across all materials at once, while separate dedicated
+              pages for Documents, Photos, Video and Audio provide more advanced
+              browsing, filtering and viewing tools tailored to each type of
+              material.
             </p>
 
             <a class="text-link" href="#search-the-archive">
@@ -68,61 +39,23 @@
             </a>
           </div>
 
-          <div class="archive-hero__visual" aria-hidden="true">
-            <div class="archive-hero__grid"></div>
-            <span class="archive-orbit archive-orbit--outer"></span>
-            <span class="archive-orbit archive-orbit--inner"></span>
+          <div
+            class="archive-hero__visual archive-hero__visual--rain"
+            aria-hidden="true"
+          >
+            <canvas class="archive-rain" id="archive-rain"></canvas>
 
-            <div class="catalogue-machine">
-              <div class="catalogue-machine__top">
-                <span>ARCHIVE INDEX</span>
-                <strong>1939—1993</strong>
-              </div>
+            <div class="archive-rain__grid"></div>
+            <div class="archive-rain__veil"></div>
 
-              <div class="catalogue-drawer catalogue-drawer--one">
-                <span>01</span>
-                <b>MANUSCRIPTS</b>
-                <i></i>
-              </div>
-              <div class="catalogue-drawer catalogue-drawer--two">
-                <span>02</span>
-                <b>PHOTOGRAPHS</b>
-                <i></i>
-              </div>
-              <div class="catalogue-drawer catalogue-drawer--three">
-                <span>03</span>
-                <b>AUDIO / FILM</b>
-                <i></i>
-              </div>
-              <div class="catalogue-drawer catalogue-drawer--four">
-                <span>04</span>
-                <b>PUBLIC RECORDS</b>
-                <i></i>
-              </div>
-
-              <div class="catalogue-card catalogue-card--back">
-                <small>FILE</small>
-                <strong>ZG / A / 0091</strong>
-                <span></span><span></span><span></span>
-              </div>
-              <div class="catalogue-card catalogue-card--front">
-                <small>ACCESSION</small>
-                <strong>DATE / SOURCE</strong>
-                <span></span><span></span><span></span>
-                <i class="catalogue-card__stamp">VERIFIED</i>
-              </div>
-
-              <span class="catalogue-scan"></span>
+            <div class="archive-rain__top">
+              <span>HISTORICAL RECORD</span>
             </div>
 
-            <span class="archive-note archive-note--one">PROVENANCE</span>
-            <span class="archive-note archive-note--two">CONTEXT</span>
-            <span class="archive-note archive-note--three">ACCESS</span>
-          </div>
-
-          <div class="archive-hero__index" aria-hidden="true">
-            <span>Digital Archive</span>
-            <span>Living Catalogue / 2026</span>
+            <div class="archive-rain__bottom">
+              <span>DOCUMENTS ● IMAGES ● AUDIO ● VIDEO</span>
+              <span>DIGITAL COLLECTION</span>
+            </div>
           </div>
         </section>
 
@@ -130,168 +63,277 @@
           <div class="collection-map__heading reveal-on-scroll">
             <div>
               <p class="section-label">Collection map</p>
-              <h2 id="collection-map-title">One life, preserved in many forms.</h2>
+
+              <h2 id="collection-map-title">
+                One life, preserved in many forms.
+              </h2>
             </div>
+
             <p>
-              The archive is organized by material type so that readers can
-              move from a public event to the document, image, recording or
-              publication that records it.
+              The archive is divided into four principal material
+              collections—Documents, Photos, Video and Audio—each with its own
+              dedicated page and browsing tools designed specifically for that
+              type of material.
             </p>
           </div>
 
           <div class="collection-map__grid">
-            <button class="collection-tile reveal-on-scroll" type="button" data-collection-jump="document">
+            <!-- =========================================
+         01 — DOCUMENTS
+    ========================================== -->
+
+            <a
+              class="collection-tile collection-tile--documents reveal-on-scroll"
+              href="/Archive/documents.html"
+            >
               <span class="collection-tile__number">01</span>
-              <div class="collection-tile__icon collection-tile__icon--document" aria-hidden="true">
-                <i></i><i></i><i></i><i></i>
-              </div>
-              <div>
-                <h3>Documents &amp; Manuscripts</h3>
-                <p>Drafts, appeals, declarations, notes, speeches and signed records.</p>
-              </div>
-              <b>Explore ↘</b>
-            </button>
 
-            <button class="collection-tile reveal-on-scroll" type="button" data-collection-jump="correspondence">
-              <span class="collection-tile__number">02</span>
-              <div class="collection-tile__icon collection-tile__icon--letter" aria-hidden="true">
-                <i></i><i></i>
-              </div>
-              <div>
-                <h3>Correspondence</h3>
-                <p>Personal letters, institutional exchanges and international appeals.</p>
-              </div>
-              <b>Explore ↘</b>
-            </button>
+              <div
+                class="collection-tile__icon collection-tile__icon--documents"
+                aria-hidden="true"
+              >
+                <div class="document-reader">
+                  <span class="document-reader__top">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </span>
 
-            <button class="collection-tile reveal-on-scroll" type="button" data-collection-jump="photograph">
-              <span class="collection-tile__number">03</span>
-              <div class="collection-tile__icon collection-tile__icon--photo" aria-hidden="true">
-                <i></i><i></i><i></i>
-              </div>
-              <div>
-                <h3>Photographs</h3>
-                <p>Family photographs, demonstrations, official visits and exile.</p>
-              </div>
-              <b>Explore ↘</b>
-            </button>
+                  <div class="document-reader__viewport">
+                    <span class="document-reader__paper">
+                      <b>ARCHIVE / 01</b>
 
-            <button class="collection-tile reveal-on-scroll" type="button" data-collection-jump="audiovisual">
-              <span class="collection-tile__number">04</span>
-              <div class="collection-tile__icon collection-tile__icon--sound" aria-hidden="true">
-                <i></i><i></i><i></i><i></i><i></i>
-              </div>
-              <div>
-                <h3>Audio &amp; Moving Image</h3>
-                <p>Speeches, interviews, broadcasts, documentary footage and testimony.</p>
-              </div>
-              <b>Explore ↘</b>
-            </button>
+                      <i class="document-line document-line--title"></i>
+                      <i class="document-line document-line--one"></i>
+                      <i class="document-line document-line--two"></i>
+                      <i class="document-line document-line--three"></i>
+                      <i class="document-line document-line--four"></i>
+                      <i class="document-line document-line--five"></i>
+                    </span>
 
-            <button class="collection-tile reveal-on-scroll" type="button" data-collection-jump="publication">
-              <span class="collection-tile__number">05</span>
-              <div class="collection-tile__icon collection-tile__icon--press" aria-hidden="true">
-                <i></i><i></i><i></i>
-              </div>
-              <div>
-                <h3>Press &amp; Publications</h3>
-                <p>Books, articles, samizdat, newspapers, leaflets and international coverage.</p>
-              </div>
-              <b>Explore ↘</b>
-            </button>
+                    <span class="document-reader__scan"></span>
+                  </div>
 
-            <button class="collection-tile reveal-on-scroll" type="button" data-collection-jump="government">
-              <span class="collection-tile__number">06</span>
-              <div class="collection-tile__icon collection-tile__icon--government" aria-hidden="true">
-                <i></i><i></i><i></i><i></i>
-              </div>
-              <div>
-                <h3>Government &amp; Political Records</h3>
-                <p>Supreme Council, referendum, presidency, legislation and diplomatic records.</p>
-              </div>
-              <b>Explore ↘</b>
-            </button>
-          </div>
-        </section>
-
-        <section class="featured-holdings" aria-labelledby="featured-holdings-title">
-          <div class="featured-holdings__heading reveal-on-scroll">
-            <p class="section-label">Highlighted holdings</p>
-            <h2 id="featured-holdings-title">Documents that connect private conviction to public history.</h2>
-          </div>
-
-          <div class="featured-holdings__grid">
-            <article class="featured-holding featured-holding--large reveal-on-scroll">
-              <div class="featured-holding__visual featured-holding__visual--appeal" aria-hidden="true">
-                <span class="document-sheet document-sheet--one"></span>
-                <span class="document-sheet document-sheet--two"></span>
-                <span class="document-signature">ZG</span>
-                <i class="document-seal"></i>
-                <b>WORLD / APPEAL</b>
-              </div>
-              <div class="featured-holding__copy">
-                <div class="featured-holding__meta">
-                  <span>Government record</span>
-                  <time datetime="1991">1991</time>
+                  <span class="document-reader__status">
+                    <i></i>
+                    <b>READING DOCUMENT</b>
+                  </span>
                 </div>
-                <h3>Appeal to the Peoples of the World</h3>
+              </div>
+
+              <div>
+                <h3>Documents</h3>
+
                 <p>
-                  A public appeal associated with the restoration of Georgian
-                  independence and addressed beyond the borders of the republic.
+                  Manuscripts, correspondence, declarations, publications,
+                  government records and other written materials.
                 </p>
-                <button class="featured-holding__action" type="button" data-record-focus="zg-a-1991-04">
-                  Find in catalogue <span>↘</span>
-                </button>
               </div>
-            </article>
 
-            <article class="featured-holding reveal-on-scroll">
-              <div class="featured-holding__visual featured-holding__visual--act" aria-hidden="true">
-                <span class="act-line act-line--one"></span>
-                <span class="act-line act-line--two"></span>
-                <span class="act-line act-line--three"></span>
-                <strong>9 IV</strong>
-                <small>ACT / RESTORATION</small>
-              </div>
-              <div class="featured-holding__copy">
-                <div class="featured-holding__meta">
-                  <span>Draft document</span>
-                  <time datetime="1991">1991</time>
-                </div>
-                <h3>Working Draft of the Act of Restoration of Independence</h3>
-                <button class="featured-holding__action" type="button" data-record-focus="zg-a-1991-03">
-                  Find in catalogue <span>↘</span>
-                </button>
-              </div>
-            </article>
+              <b class="collection-tile__action">
+                <span>Explore collection</span>
+                <i>↗</i>
+              </b>
+            </a>
 
-            <article class="featured-holding reveal-on-scroll">
-              <div class="featured-holding__visual featured-holding__visual--voice" aria-hidden="true">
-                <div class="voice-wave">
-                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <!-- =========================================
+         02 — PHOTOS
+    ========================================== -->
+
+            <a
+              class="collection-tile collection-tile--photos reveal-on-scroll"
+              href="/Archive/photos.html"
+            >
+              <span class="collection-tile__number">02</span>
+
+              <div
+                class="collection-tile__icon collection-tile__icon--photos"
+                aria-hidden="true"
+              >
+                <div class="photo-camera">
+                  <div class="photo-camera__scene">
+                    <span class="photo-scene__sun"></span>
+
+                    <svg
+                      class="photo-scene__subject"
+                      viewBox="0 0 100 120"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="
+      M50 9
+      C38 9 30 18 29 31
+      C28 42 32 52 39 59
+      L39 69
+      C36 74 29 78 20 81
+      C10 85 5 94 3 111
+      L97 111
+      C95 94 90 85 80 81
+      C71 78 64 74 61 69
+      L61 59
+      C68 52 72 42 71 31
+      C70 18 62 9 50 9
+      Z
+    "
+                      />
+                    </svg>
+
+                    <span class="photo-focus-box"></span>
+
+                    <span class="photo-capture-frame"></span>
+                  </div>
+
+                  <span class="photo-camera__meta">
+                    <b>PHOTO</b>
+                    <i>02</i>
+                  </span>
                 </div>
-                <span class="voice-reel"></span>
-                <small>VOICE / TESTIMONY</small>
               </div>
-              <div class="featured-holding__copy">
-                <div class="featured-holding__meta">
-                  <span>Audio-visual</span>
-                  <time datetime="1991">1991</time>
+
+              <div>
+                <h3>Photos</h3>
+
+                <p>
+                  Family photographs, demonstrations, public events, official
+                  visits, exile and historical locations.
+                </p>
+              </div>
+
+              <b class="collection-tile__action">
+                <span>Explore collection</span>
+                <i>↗</i>
+              </b>
+            </a>
+
+            <!-- =========================================
+         03 — VIDEO
+    ========================================== -->
+
+            <a
+              class="collection-tile collection-tile--video reveal-on-scroll"
+              href="/Archive/video.html"
+            >
+              <span class="collection-tile__number">03</span>
+
+              <div
+                class="collection-tile__icon collection-tile__icon--video"
+                aria-hidden="true"
+              >
+                <div class="film-window">
+                  <div class="film-strip">
+                    <span><i></i></span>
+                    <span><i></i></span>
+                    <span><i></i></span>
+                    <span><i></i></span>
+                    <span><i></i></span>
+                    <span><i></i></span>
+                  </div>
+
+                  <div class="film-scan"></div>
                 </div>
-                <h3>Speeches, Broadcasts and Recorded Public Addresses</h3>
-                <button class="featured-holding__action" type="button" data-record-focus="zg-av-1991-01">
-                  Find in catalogue <span>↘</span>
-                </button>
+
+                <span class="film-reel film-reel--one">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                </span>
+
+                <span class="film-reel film-reel--two">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                </span>
               </div>
-            </article>
+
+              <div>
+                <h3>Video</h3>
+
+                <p>
+                  Speeches, television broadcasts, interviews, demonstrations,
+                  documentary footage and recorded public events.
+                </p>
+              </div>
+
+              <b class="collection-tile__action">
+                <span>Explore collection</span>
+                <i>↗</i>
+              </b>
+            </a>
+
+            <!-- =========================================
+         04 — AUDIO
+    ========================================== -->
+
+            <a
+              class="collection-tile collection-tile--audio reveal-on-scroll"
+              href="/Archive/audio.html"
+            >
+              <span class="collection-tile__number">04</span>
+
+              <div
+                class="collection-tile__icon collection-tile__icon--audio"
+                aria-hidden="true"
+              >
+                <div class="tape-machine">
+                  <span class="tape-reel tape-reel--left">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </span>
+
+                  <span class="tape-reel tape-reel--right">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </span>
+
+                  <span class="tape-line"></span>
+
+                  <div class="audio-wave">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3>Audio</h3>
+
+                <p>
+                  Recorded speeches, interviews, radio broadcasts, testimony and
+                  other preserved voices.
+                </p>
+              </div>
+
+              <b class="collection-tile__action">
+                <span>Explore collection</span>
+                <i>↗</i>
+              </b>
+            </a>
           </div>
         </section>
 
-        <section class="archive-search" id="search-the-archive" aria-labelledby="archive-search-title">
+        <section
+          class="archive-search"
+          id="search-the-archive"
+          aria-labelledby="archive-search-title"
+        >
           <div class="archive-search__intro reveal-on-scroll">
             <div>
               <p class="section-label">Research catalogue</p>
-              <h2 id="archive-search-title">Search across the historical record.</h2>
+              <h2 id="archive-search-title">
+                Search across the historical record.
+              </h2>
             </div>
             <p>
               Combine words, material types and the date scale. The catalogue
@@ -302,7 +344,9 @@
 
           <div class="archive-workspace reveal-on-scroll">
             <div class="archive-workspace__search">
-              <label for="archive-query">Search title, description, person or keyword</label>
+              <label for="archive-query"
+                >Search title, description, person or keyword</label
+              >
               <div class="archive-search-field">
                 <input
                   id="archive-query"
@@ -314,28 +358,66 @@
               </div>
             </div>
 
-            <div class="archive-workspace__filters" aria-label="Filter by material type">
+            <div
+              class="archive-workspace__filters"
+              aria-label="Filter by material type"
+            >
               <p>Material type</p>
               <div class="archive-filter-list">
-                <button class="archive-filter active" type="button" data-archive-filter="all" aria-pressed="true">
+                <button
+                  class="archive-filter active"
+                  type="button"
+                  data-archive-filter="all"
+                  aria-pressed="true"
+                >
                   All <span>12</span>
                 </button>
-                <button class="archive-filter" type="button" data-archive-filter="document" aria-pressed="false">
+                <button
+                  class="archive-filter"
+                  type="button"
+                  data-archive-filter="document"
+                  aria-pressed="false"
+                >
                   Documents <span>03</span>
                 </button>
-                <button class="archive-filter" type="button" data-archive-filter="correspondence" aria-pressed="false">
+                <button
+                  class="archive-filter"
+                  type="button"
+                  data-archive-filter="correspondence"
+                  aria-pressed="false"
+                >
                   Letters <span>02</span>
                 </button>
-                <button class="archive-filter" type="button" data-archive-filter="photograph" aria-pressed="false">
+                <button
+                  class="archive-filter"
+                  type="button"
+                  data-archive-filter="photograph"
+                  aria-pressed="false"
+                >
                   Photographs <span>02</span>
                 </button>
-                <button class="archive-filter" type="button" data-archive-filter="audiovisual" aria-pressed="false">
+                <button
+                  class="archive-filter"
+                  type="button"
+                  data-archive-filter="audiovisual"
+                  aria-pressed="false"
+                >
                   Audio / Film <span>02</span>
                 </button>
-                <button class="archive-filter" type="button" data-archive-filter="publication" aria-pressed="false">
+                <button
+                  class="archive-filter"
+                  type="button"
+                  data-archive-filter="publication"
+                  aria-pressed="false"
+                >
                   Publications <span>01</span>
                 </button>
-                <button class="archive-filter" type="button" data-archive-filter="government" aria-pressed="false">
+                <button
+                  class="archive-filter"
+                  type="button"
+                  data-archive-filter="government"
+                  aria-pressed="false"
+                >
                   Government <span>02</span>
                 </button>
               </div>
@@ -360,7 +442,9 @@
                   <small>To</small>
                   <output id="date-max-output" for="date-max">1993</output>
                 </div>
-                <p id="date-result-description">Showing the complete archival period.</p>
+                <p id="date-result-description">
+                  Showing the complete archival period.
+                </p>
               </div>
 
               <div class="date-scale">
@@ -392,16 +476,29 @@
 
                 <div class="date-scale__ticks" aria-hidden="true">
                   <span style="--tick-position: 0%"><i></i><b>1939</b></span>
-                  <span style="--tick-position: 20.37%"><i></i><b>1950</b></span>
-                  <span style="--tick-position: 38.89%"><i></i><b>1960</b></span>
-                  <span style="--tick-position: 57.41%"><i></i><b>1970</b></span>
-                  <span style="--tick-position: 75.93%"><i></i><b>1980</b></span>
-                  <span style="--tick-position: 94.44%"><i></i><b>1990</b></span>
+                  <span style="--tick-position: 20.37%"
+                    ><i></i><b>1950</b></span
+                  >
+                  <span style="--tick-position: 38.89%"
+                    ><i></i><b>1960</b></span
+                  >
+                  <span style="--tick-position: 57.41%"
+                    ><i></i><b>1970</b></span
+                  >
+                  <span style="--tick-position: 75.93%"
+                    ><i></i><b>1980</b></span
+                  >
+                  <span style="--tick-position: 94.44%"
+                    ><i></i><b>1990</b></span
+                  >
                   <span style="--tick-position: 100%"><i></i><b>1993</b></span>
                 </div>
               </div>
 
-              <div class="date-presets" aria-label="Suggested historical periods">
+              <div
+                class="date-presets"
+                aria-label="Suggested historical periods"
+              >
                 <button type="button" data-date-from="1939" data-date-to="1957">
                   <span>1939—1957</span>
                   <b>Upbringing &amp; school</b>
@@ -420,9 +517,23 @@
                 </button>
               </div>
             </div>
+
+            <div class="archive-workspace__clear">
+              <button
+                id="archive-clear-all"
+                class="archive-clear-all"
+                type="button"
+              >
+                <span>Clear everything</span>
+                <i aria-hidden="true">×</i>
+              </button>
+            </div>
           </div>
 
-          <div class="archive-results-heading reveal-on-scroll">
+          <div
+            class="archive-results-heading reveal-on-scroll"
+            id="archive-results-heading"
+          >
             <div>
               <p class="section-label">Catalogue results</p>
               <h3><span id="archive-result-count">12</span> records shown</h3>
@@ -443,7 +554,10 @@
                 <span>ZG-P-1956-01</span>
                 <strong>1956</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--leaflet" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--leaflet"
+                aria-hidden="true"
+              >
                 <span></span><span></span><span></span><i></i>
               </div>
               <div class="archive-record__content">
@@ -454,21 +568,46 @@
                 <h4>Student Proclamations and Early Anti-Soviet Activity</h4>
                 <p>
                   A catalogue point for leaflets, recollections and official
-                  records connected with Gamsakhurdia's school-age political activity.
+                  records connected with Gamsakhurdia's school-age political
+                  activity.
                 </p>
                 <ul>
                   <li>Youth activity</li>
                   <li>Political leaflet</li>
                   <li>Tbilisi</li>
                 </ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-p-1956-01-details">
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-p-1956-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-p-1956-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-p-1956-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Date certainty</dt><dd>Year established; individual item dates require verification.</dd></div>
-                    <div><dt>Provenance</dt><dd>To be linked to holding institution or contributing collection.</dd></div>
-                    <div><dt>Access</dt><dd>Metadata available; digital objects pending.</dd></div>
+                    <div>
+                      <dt>Date certainty</dt>
+                      <dd>
+                        Year established; individual item dates require
+                        verification.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Provenance</dt>
+                      <dd>
+                        To be linked to holding institution or contributing
+                        collection.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>Metadata available; digital objects pending.</dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -486,7 +625,10 @@
                 <span>ZG-C-1975-01</span>
                 <strong>1975</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--letter" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--letter"
+                aria-hidden="true"
+              >
                 <span></span><i></i><i></i><i></i>
               </div>
               <div class="archive-record__content">
@@ -499,15 +641,45 @@
                   Letters and exchanges that place Georgian dissident activity
                   within wider Soviet and international human-rights networks.
                 </p>
-                <ul><li>Human rights</li><li>Dissidence</li><li>Correspondence</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-c-1975-01-details">
+                <ul>
+                  <li>Human rights</li>
+                  <li>Dissidence</li>
+                  <li>Correspondence</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-c-1975-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-c-1975-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-c-1975-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Extent</dt><dd>Collection-level description; item inventory in preparation.</dd></div>
-                    <div><dt>Languages</dt><dd>Georgian and other languages as identified in source records.</dd></div>
-                    <div><dt>Rights</dt><dd>Publication rights must be determined item by item.</dd></div>
+                    <div>
+                      <dt>Extent</dt>
+                      <dd>
+                        Collection-level description; item inventory in
+                        preparation.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Languages</dt>
+                      <dd>
+                        Georgian and other languages as identified in source
+                        records.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Rights</dt>
+                      <dd>
+                        Publication rights must be determined item by item.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -525,28 +697,61 @@
                 <span>ZG-D-1977-01</span>
                 <strong>1977</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--report" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--report"
+                aria-hidden="true"
+              >
                 <span></span><span></span><span></span><span></span><i>H</i>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Document</span>
-                  <span class="status status--digitized">Digitized selection</span>
+                  <span class="status status--digitized"
+                    >Digitized selection</span
+                  >
                 </div>
                 <h4>Georgian Helsinki Group: Monitoring and Appeals</h4>
                 <p>
                   Reports, appeals and supporting documents associated with the
                   documentation of political and religious rights violations.
                 </p>
-                <ul><li>Helsinki movement</li><li>Human rights</li><li>Appeal</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-d-1977-01-details">
+                <ul>
+                  <li>Helsinki movement</li>
+                  <li>Human rights</li>
+                  <li>Appeal</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-d-1977-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-d-1977-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-d-1977-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Description level</dt><dd>Series and selected item records.</dd></div>
-                    <div><dt>Editorial need</dt><dd>Transcription, translation and cross-reference to related arrests.</dd></div>
-                    <div><dt>Access</dt><dd>Selected digital surrogates; external holdings may apply.</dd></div>
+                    <div>
+                      <dt>Description level</dt>
+                      <dd>Series and selected item records.</dd>
+                    </div>
+                    <div>
+                      <dt>Editorial need</dt>
+                      <dd>
+                        Transcription, translation and cross-reference to
+                        related arrests.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        Selected digital surrogates; external holdings may
+                        apply.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -564,28 +769,64 @@
                 <span>ZG-PH-1978-01</span>
                 <strong>1978</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--photograph" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--photograph"
+                aria-hidden="true"
+              >
                 <span></span><i></i><b></b>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Photograph</span>
-                  <span class="status status--restricted">Rights restricted</span>
+                  <span class="status status--restricted"
+                    >Rights restricted</span
+                  >
                 </div>
                 <h4>Arrest, Trial and Political-Imprisonment Image File</h4>
                 <p>
                   Photographs and reproduced press images connected with the
                   prosecution of Georgian dissidents in the late 1970s.
                 </p>
-                <ul><li>Trial</li><li>Political prisoner</li><li>Press image</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-ph-1978-01-details">
+                <ul>
+                  <li>Trial</li>
+                  <li>Political prisoner</li>
+                  <li>Press image</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-ph-1978-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-ph-1978-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-ph-1978-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Image identification</dt><dd>People, place and photographer require item-level confirmation.</dd></div>
-                    <div><dt>Rights</dt><dd>Display may be limited to thumbnails or descriptive metadata.</dd></div>
-                    <div><dt>Context</dt><dd>Must be paired with judicial and contemporaneous press records.</dd></div>
+                    <div>
+                      <dt>Image identification</dt>
+                      <dd>
+                        People, place and photographer require item-level
+                        confirmation.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Rights</dt>
+                      <dd>
+                        Display may be limited to thumbnails or descriptive
+                        metadata.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Context</dt>
+                      <dd>
+                        Must be paired with judicial and contemporaneous press
+                        records.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -603,8 +844,12 @@
                 <span>ZG-AV-1989-01</span>
                 <strong>1989</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--audio" aria-hidden="true">
-                <div><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span></span>
+              <div
+                class="archive-record__visual archive-record__visual--audio"
+                aria-hidden="true"
+              >
+                <div><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <span></span>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
@@ -616,15 +861,43 @@
                   Recorded speeches, rally footage and broadcasts documenting
                   the language, audiences and public settings of the movement.
                 </p>
-                <ul><li>Demonstration</li><li>Speech</li><li>Independence</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-av-1989-01-details">
+                <ul>
+                  <li>Demonstration</li>
+                  <li>Speech</li>
+                  <li>Independence</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-av-1989-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-av-1989-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-av-1989-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Format</dt><dd>Film, video and sound recordings; formats vary by holding.</dd></div>
-                    <div><dt>Research tools</dt><dd>Time-coded transcript, translation and event identification planned.</dd></div>
-                    <div><dt>Access</dt><dd>Streaming subject to rights and source quality.</dd></div>
+                    <div>
+                      <dt>Format</dt>
+                      <dd>
+                        Film, video and sound recordings; formats vary by
+                        holding.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Research tools</dt>
+                      <dd>
+                        Time-coded transcript, translation and event
+                        identification planned.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>Streaming subject to rights and source quality.</dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -642,28 +915,62 @@
                 <span>ZG-PH-1990-01</span>
                 <strong>1990</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--election" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--election"
+                aria-hidden="true"
+              >
                 <span></span><span></span><i></i><b>✓</b>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Photograph</span>
-                  <span class="status status--digitized">Digitized selection</span>
+                  <span class="status status--digitized"
+                    >Digitized selection</span
+                  >
                 </div>
-                <h4>Election, Supreme Council and Transfer of Political Authority</h4>
+                <h4>
+                  Election, Supreme Council and Transfer of Political Authority
+                </h4>
                 <p>
                   Photographic records of campaigning, public meetings and the
                   institutions formed through the 1990 election.
                 </p>
-                <ul><li>Election</li><li>Supreme Council</li><li>Public meeting</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-ph-1990-01-details">
+                <ul>
+                  <li>Election</li>
+                  <li>Supreme Council</li>
+                  <li>Public meeting</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-ph-1990-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-ph-1990-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-ph-1990-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Arrangement</dt><dd>Chronological and event-based image groups.</dd></div>
-                    <div><dt>Required metadata</dt><dd>Date, location, photographer, people shown and source.</dd></div>
-                    <div><dt>Access</dt><dd>Selected images available; full-resolution access may require request.</dd></div>
+                    <div>
+                      <dt>Arrangement</dt>
+                      <dd>Chronological and event-based image groups.</dd>
+                    </div>
+                    <div>
+                      <dt>Required metadata</dt>
+                      <dd>
+                        Date, location, photographer, people shown and source.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        Selected images available; full-resolution access may
+                        require request.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -681,28 +988,63 @@
                 <span>ZG-G-1991-01</span>
                 <strong>1991</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--referendum" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--referendum"
+                aria-hidden="true"
+              >
                 <span></span><span></span><i></i><strong>31 III</strong>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Government record</span>
-                  <span class="status status--digitized">Digitized selection</span>
+                  <span class="status status--digitized"
+                    >Digitized selection</span
+                  >
                 </div>
                 <h4>Referendum on the Restoration of State Independence</h4>
                 <p>
                   Ballot, official communications, photographs and related
                   records of the referendum held on 31 March 1991.
                 </p>
-                <ul><li>Referendum</li><li>Independence</li><li>31 March</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-g-1991-01-details">
+                <ul>
+                  <li>Referendum</li>
+                  <li>Independence</li>
+                  <li>31 March</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-g-1991-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-g-1991-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-g-1991-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Record group</dt><dd>Supreme Council and referendum-related documentation.</dd></div>
-                    <div><dt>Cross-references</dt><dd>Photographs, international visitors, newspapers and broadcasts.</dd></div>
-                    <div><dt>Access</dt><dd>Digital copies and external archive references to be linked.</dd></div>
+                    <div>
+                      <dt>Record group</dt>
+                      <dd>
+                        Supreme Council and referendum-related documentation.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Cross-references</dt>
+                      <dd>
+                        Photographs, international visitors, newspapers and
+                        broadcasts.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        Digital copies and external archive references to be
+                        linked.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -720,28 +1062,62 @@
                 <span>ZG-A-1991-03</span>
                 <strong>1991</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--act" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--act"
+                aria-hidden="true"
+              >
                 <span></span><span></span><span></span><i>9 IV</i>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Document / Draft</span>
-                  <span class="status status--verified">Verified reference</span>
+                  <span class="status status--verified"
+                    >Verified reference</span
+                  >
                 </div>
-                <h4>Working Draft of the Act of Restoration of State Independence</h4>
+                <h4>
+                  Working Draft of the Act of Restoration of State Independence
+                </h4>
                 <p>
-                  A manuscript record connected with the text adopted on 9
-                  April 1991 and the restoration of Georgian state independence.
+                  A manuscript record connected with the text adopted on 9 April
+                  1991 and the restoration of Georgian state independence.
                 </p>
-                <ul><li>Act of Independence</li><li>Draft</li><li>9 April</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-a-1991-03-details">
+                <ul>
+                  <li>Act of Independence</li>
+                  <li>Draft</li>
+                  <li>9 April</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-a-1991-03-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-a-1991-03-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-a-1991-03-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Document type</dt><dd>Working manuscript / draft.</dd></div>
-                    <div><dt>Holding reference</dt><dd>To be linked to the National Archives catalogue entry.</dd></div>
-                    <div><dt>Editorial treatment</dt><dd>High-resolution images, diplomatic transcription and revision comparison.</dd></div>
+                    <div>
+                      <dt>Document type</dt>
+                      <dd>Working manuscript / draft.</dd>
+                    </div>
+                    <div>
+                      <dt>Holding reference</dt>
+                      <dd>
+                        To be linked to the National Archives catalogue entry.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Editorial treatment</dt>
+                      <dd>
+                        High-resolution images, diplomatic transcription and
+                        revision comparison.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -759,28 +1135,63 @@
                 <span>ZG-A-1991-04</span>
                 <strong>1991</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--appeal" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--appeal"
+                aria-hidden="true"
+              >
                 <span></span><span></span><i></i><b>ZG</b>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Document / Appeal</span>
-                  <span class="status status--verified">Verified reference</span>
+                  <span class="status status--verified"
+                    >Verified reference</span
+                  >
                 </div>
                 <h4>Appeal to the Peoples of the World</h4>
                 <p>
                   A public appeal by the chairman of the Supreme Council,
                   preserved and presented by the National Archives of Georgia.
                 </p>
-                <ul><li>International appeal</li><li>Supreme Council</li><li>Independence</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-a-1991-04-details">
+                <ul>
+                  <li>International appeal</li>
+                  <li>Supreme Council</li>
+                  <li>Independence</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-a-1991-04-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-a-1991-04-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-a-1991-04-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Holding reference</dt><dd>National Archives of Georgia, public document feature.</dd></div>
-                    <div><dt>Research treatment</dt><dd>Original-language image, transcription, English translation and historical note.</dd></div>
-                    <div><dt>Access</dt><dd>External digital reference available; museum record to provide contextual metadata.</dd></div>
+                    <div>
+                      <dt>Holding reference</dt>
+                      <dd>
+                        National Archives of Georgia, public document feature.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Research treatment</dt>
+                      <dd>
+                        Original-language image, transcription, English
+                        translation and historical note.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        External digital reference available; museum record to
+                        provide contextual metadata.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -798,7 +1209,10 @@
                 <span>ZG-AV-1991-01</span>
                 <strong>1991</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--broadcast" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--broadcast"
+                aria-hidden="true"
+              >
                 <span></span><i></i><i></i><b></b>
               </div>
               <div class="archive-record__content">
@@ -809,17 +1223,48 @@
                 <h4>Presidential Speeches and Broadcast Addresses</h4>
                 <p>
                   A proposed series for official speeches, interviews, press
-                  conferences and television broadcasts from the presidential period.
+                  conferences and television broadcasts from the presidential
+                  period.
                 </p>
-                <ul><li>Presidency</li><li>Broadcast</li><li>Public address</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-av-1991-01-details">
+                <ul>
+                  <li>Presidency</li>
+                  <li>Broadcast</li>
+                  <li>Public address</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-av-1991-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-av-1991-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-av-1991-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Arrangement</dt><dd>By exact date, event, broadcaster and source recording.</dd></div>
-                    <div><dt>Research tools</dt><dd>Transcript, translation, named-person index and subject headings.</dd></div>
-                    <div><dt>Access</dt><dd>Metadata first; streaming files subject to rights clearance.</dd></div>
+                    <div>
+                      <dt>Arrangement</dt>
+                      <dd>
+                        By exact date, event, broadcaster and source recording.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Research tools</dt>
+                      <dd>
+                        Transcript, translation, named-person index and subject
+                        headings.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        Metadata first; streaming files subject to rights
+                        clearance.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -837,7 +1282,10 @@
                 <span>ZG-C-1992-01</span>
                 <strong>1992</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--exile" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--exile"
+                aria-hidden="true"
+              >
                 <span></span><i></i><b></b><small>EXILE</small>
               </div>
               <div class="archive-record__content">
@@ -851,15 +1299,45 @@
                   overthrow, including efforts to address foreign governments
                   and international institutions.
                 </p>
-                <ul><li>Exile</li><li>Overthrow</li><li>International correspondence</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-c-1992-01-details">
+                <ul>
+                  <li>Exile</li>
+                  <li>Overthrow</li>
+                  <li>International correspondence</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-c-1992-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-c-1992-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-c-1992-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Provenance</dt><dd>Multiple personal, institutional and reproduced sources expected.</dd></div>
-                    <div><dt>Authenticity</dt><dd>Signatures, copies, transmission history and publication history require review.</dd></div>
-                    <div><dt>Access</dt><dd>Item-level rights and privacy assessment required.</dd></div>
+                    <div>
+                      <dt>Provenance</dt>
+                      <dd>
+                        Multiple personal, institutional and reproduced sources
+                        expected.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Authenticity</dt>
+                      <dd>
+                        Signatures, copies, transmission history and publication
+                        history require review.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        Item-level rights and privacy assessment required.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -877,28 +1355,65 @@
                 <span>ZG-G-1993-01</span>
                 <strong>1993</strong>
               </div>
-              <div class="archive-record__visual archive-record__visual--fracture" aria-hidden="true">
+              <div
+                class="archive-record__visual archive-record__visual--fracture"
+                aria-hidden="true"
+              >
                 <span></span><span></span><i></i><b></b>
               </div>
               <div class="archive-record__content">
                 <div class="archive-record__meta">
                   <span>Government / Conflict record</span>
-                  <span class="status status--sensitive">Sensitive history</span>
+                  <span class="status status--sensitive"
+                    >Sensitive history</span
+                  >
                 </div>
                 <h4>Final Months, Armed Conflict and Competing Testimony</h4>
                 <p>
                   Government documents, field reports, photographs, testimony
-                  and later investigations concerning the final phase of the civil war.
+                  and later investigations concerning the final phase of the
+                  civil war.
                 </p>
-                <ul><li>Civil war</li><li>Samegrelo</li><li>Testimony</li></ul>
-                <button class="record-toggle" type="button" aria-expanded="false" aria-controls="zg-g-1993-01-details">
+                <ul>
+                  <li>Civil war</li>
+                  <li>Samegrelo</li>
+                  <li>Testimony</li>
+                </ul>
+                <button
+                  class="record-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="zg-g-1993-01-details"
+                >
                   View record details <span>+</span>
                 </button>
-                <div class="archive-record__details" id="zg-g-1993-01-details" hidden>
+                <div
+                  class="archive-record__details"
+                  id="zg-g-1993-01-details"
+                  hidden
+                >
                   <dl>
-                    <div><dt>Editorial warning</dt><dd>Contested claims must be attributed and separated from established chronology.</dd></div>
-                    <div><dt>Source comparison</dt><dd>Official records, participant testimony, journalism and later investigations.</dd></div>
-                    <div><dt>Access</dt><dd>Sensitive personal data and graphic material require controlled presentation.</dd></div>
+                    <div>
+                      <dt>Editorial warning</dt>
+                      <dd>
+                        Contested claims must be attributed and separated from
+                        established chronology.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Source comparison</dt>
+                      <dd>
+                        Official records, participant testimony, journalism and
+                        later investigations.
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>
+                        Sensitive personal data and graphic material require
+                        controlled presentation.
+                      </dd>
+                    </div>
                   </dl>
                 </div>
               </div>
@@ -906,144 +1421,18 @@
           </div>
 
           <p class="archive-no-results" id="archive-no-results" hidden>
-            No catalogue records match the selected words, material type and date range.
+            No catalogue records match the selected words, material type and
+            date range.
           </p>
         </section>
-
-        <section class="archive-method" aria-labelledby="archive-method-title">
-          <div class="archive-method__heading reveal-on-scroll">
-            <p class="section-label">How to read the archive</p>
-            <h2 id="archive-method-title">A digital object is only as reliable as its description.</h2>
-          </div>
-
-          <div class="archive-method__grid">
-            <article class="method-card reveal-on-scroll">
-              <span>01</span>
-              <h3>Provenance</h3>
-              <p>
-                Every record should name the holding institution, donor,
-                collection, accession history or known chain of custody.
-              </p>
-            </article>
-            <article class="method-card reveal-on-scroll">
-              <span>02</span>
-              <h3>Date &amp; Certainty</h3>
-              <p>
-                Exact dates, approximate dates and later attributions should be
-                visibly distinguished rather than merged into one chronology.
-              </p>
-            </article>
-            <article class="method-card reveal-on-scroll">
-              <span>03</span>
-              <h3>Authenticity &amp; Version</h3>
-              <p>
-                Originals, certified copies, drafts, reproductions, published
-                versions and disputed items require different labels.
-              </p>
-            </article>
-            <article class="method-card reveal-on-scroll">
-              <span>04</span>
-              <h3>Rights &amp; Access</h3>
-              <p>
-                Copyright, privacy, personal data, donor restrictions and
-                source-institution terms determine what may be displayed.
-              </p>
-            </article>
-            <article class="method-card reveal-on-scroll">
-              <span>05</span>
-              <h3>Transcription &amp; Translation</h3>
-              <p>
-                Searchable text should remain linked to the original image,
-                with editorial insertions and uncertain readings identified.
-              </p>
-            </article>
-            <article class="method-card reveal-on-scroll">
-              <span>06</span>
-              <h3>Context &amp; Disagreement</h3>
-              <p>
-                A record page should explain who created an item, why, for whom
-                and how later sources agree or conflict with it.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section class="access-key reveal-on-scroll" aria-labelledby="access-key-title">
-          <div class="access-key__copy">
-            <p class="section-label">Catalogue language</p>
-            <h2 id="access-key-title">What the access labels mean.</h2>
-            <p>
-              The archive can publish a useful record even when the underlying
-              object cannot yet be displayed. Clear labels prevent an absent
-              scan from being mistaken for an absent source.
-            </p>
-          </div>
-
-          <div class="access-key__list">
-            <div><span class="status status--verified">Verified reference</span><p>Identity and external holding reference confirmed.</p></div>
-            <div><span class="status status--digitized">Digitized selection</span><p>One or more digital objects are available.</p></div>
-            <div><span class="status status--metadata">Metadata record</span><p>Description exists; image or file is not yet published.</p></div>
-            <div><span class="status status--review">Under review</span><p>Provenance, date, description or rights require further work.</p></div>
-            <div><span class="status status--restricted">Rights restricted</span><p>Access is limited by copyright, privacy or donor terms.</p></div>
-            <div><span class="status status--sensitive">Sensitive history</span><p>Material requires contextual and trauma-aware presentation.</p></div>
-          </div>
-        </section>
-
-        <section class="archive-contribution reveal-on-scroll">
-          <div class="archive-contribution__visual" aria-hidden="true">
-            <span class="contribution-ring contribution-ring--one"></span>
-            <span class="contribution-ring contribution-ring--two"></span>
-            <strong>+</strong>
-            <small>ADD TO THE RECORD</small>
-          </div>
-
-          <div class="archive-contribution__copy">
-            <p class="section-label">Contribute to the archive</p>
-            <h2>Do you hold a document, photograph, recording or recollection?</h2>
-            <p>
-              Readers, families, institutions, journalists and researchers are
-              invited to identify materials relevant to the museum. A useful
-              submission includes the source, approximate date, people shown or
-              named, ownership information and permission to contact the holder.
-            </p>
-          </div>
-
-          <div class="archive-contribution__actions">
-            <a href="./contact.html">
-              <span>Submit archive information</span>
-              <b>↗</b>
-            </a>
-            <a href="./editorial-policy.html">
-              <span>Read the editorial policy</span>
-              <b>↗</b>
-            </a>
-          </div>
-        </section>
       </main>
-
-      <footer class="archive-footer">
-        <div class="archive-footer__copyright">
-          <span>Zviad Gamsakhurdia Digital Museum</span>
-          <a href="https://www.ailaw.llc" target="_blank" rel="noopener noreferrer">
-            © 2026 AI Law LLC
-          </a>
-        </div>
-
-        <nav class="archive-footer__pages" aria-label="Secondary navigation">
-          <a href="./about.html">About</a>
-          <a href="./contact.html">Contact</a>
-          <a href="./editorial-policy.html">Editorial Policy</a>
-          <a href="./privacy-policy.html">Privacy Policy</a>
-          <a href="./accessibility.html">Accessibility</a>
-        </nav>
-
-        <nav class="archive-footer__social" aria-label="Social media">
-          <a href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
-        </nav>
-      </footer>
+      <div data-collaboration data-collaboration-theme="light"></div>
+      <div data-footer></div>
     </div>
 
-    <script src="./archive.js"></script>
+    <script src="/Header-Footer/header.js"></script>
+    <script src="/Header-Footer/footer.js"></script>
+    <script src="/Archive/archive.js"></script>
+    <script src="/Collaboration/collaboration.js"></script>
   </body>
 </html>
